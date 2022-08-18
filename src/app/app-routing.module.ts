@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { Paths } from '@core/models';
 import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, StatisticComponent } from '@feature/pages';
 

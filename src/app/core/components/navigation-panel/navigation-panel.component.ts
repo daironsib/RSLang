@@ -11,7 +11,5 @@ export class NavigationPanelComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }
