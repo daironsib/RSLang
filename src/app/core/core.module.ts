@@ -4,7 +4,6 @@ import { NavigationPanelComponent } from './components/navigation-panel/navigati
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 
-
 @NgModule({
   declarations: [
     NavigationPanelComponent
