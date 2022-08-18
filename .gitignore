@@ -2,3 +2,4 @@
 .angular
 .idea
 /dist
+.DS_Store
