@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FooterService } from '@core/services/footer.service';
 
 @Component({
   selector: 'app-dictionary',
@@ -6,8 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dictionary.component.scss']
 })
 export class DictionaryComponent implements OnInit {
+  public footerState: boolean;
 
-  constructor() { }
+  constructor(public state: FooterService) {
+    this.footerState = true;
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.state.setFooterState(this.footerState);
+  }
 }

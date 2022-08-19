@@ -7,10 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { TokenStorageService } from './services/token-storage.service';
+import { FooterComponent } from './components/footer/footer.component';
+import { FooterService } from './services/footer.service';
 
 @NgModule({
   declarations: [
-    NavigationPanelComponent
+    NavigationPanelComponent,
+    FooterComponent
   ],
   imports: [
     HttpClientModule,
@@ -20,11 +23,13 @@ import { TokenStorageService } from './services/token-storage.service';
     MatIconModule
   ],
   exports: [
-    NavigationPanelComponent
+    NavigationPanelComponent,
+    FooterComponent
   ],
   providers: [
   	ApiService,
-  	TokenStorageService
+  	TokenStorageService,
+    FooterService
   ]
 })
 export class CoreModule { }
