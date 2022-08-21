@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
 
 const PAGES = [
@@ -12,7 +14,7 @@ const PAGES = [
   GamesComponent,
   StatisticComponent,
   LoginComponent,
-  RegisterComponent
+  RegisterComponent,
 ]
 
 @NgModule({
@@ -23,7 +25,10 @@ const PAGES = [
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    RouterModule.forChild([]), 
+    FormsModule,
+    RouterModule
   ],
   exports: [
     ...PAGES
