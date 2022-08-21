@@ -1,20 +1,22 @@
 <div class="register-container">
-    <button mat-stroked-button [routerLink]="['/', paths.Login]" color="primary">Login</button>
+    <h3 class="register-container__title">Create a new account</h3>
+    <hr class="register-container__line">
     <mat-form-field appearance="fill">
         <mat-label>Enter your username</mat-label>
         <input matInput placeholder="your username" required>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
         <mat-label>Enter your email</mat-label>
         <input matInput placeholder="email@example.com" required>
         <mat-error>you email is invalid</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-          <mat-label>Enter your password</mat-label>
-          <input matInput >
-          <button mat-icon-button matSuffix>
-          </button>
-      </mat-form-field>
-      <button mat-stroked-button color="primary">Register</button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput placeholder="your password">
+        <button mat-icon-button matSuffix>
+        </button>
+    </mat-form-field>
+    <button class="register-container__button" mat-stroked-button color="primary">Register</button>
+    <hr class="register-container__line">
 </div>
 

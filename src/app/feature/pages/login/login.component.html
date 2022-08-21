@@ -1,15 +1,21 @@
 <div class="login-container">
-    <button mat-stroked-button [routerLink]="['/', paths.Register]" color="primary">Register</button>
+    <h3 class="login-container__title">Log in to your account</h3>
+    <hr class="login-container__line">
     <mat-form-field appearance="fill">
       <mat-label>Enter your email</mat-label>
       <input matInput placeholder="email@example.com" required>
-      <mat-error>you email is invalid</mat-error>
+      <mat-error>your email is invalid</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input matInput >
+        <input matInput placeholder="your password">
         <button mat-icon-button matSuffix>
         </button>
     </mat-form-field>
-    <button mat-stroked-button color="primary">Login</button>
+    <button class="login-container__button" mat-stroked-button color="primary">Sign In</button>
+    <hr class="login-container__line">
+    <div class="login-container__account"> Don`t have an account? Create new!</div>
+    <button mat-mini-fab [routerLink]="['/', paths.Register]" color="primary">
+        <mat-icon>person_add</mat-icon>
+    </button>
 </div>
