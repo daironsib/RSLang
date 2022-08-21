@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Paths } from '@core/models';
-import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, StatisticComponent } from '@feature/pages';
+import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, StatisticComponent, LoginComponent, RegisterComponent } from '@feature/pages';
 
 const routes: Routes = [
   {path: Paths.Home, component: HomeComponent},
-  {path: Paths.Authorization, component: AuthorizationComponent},
+  {path: Paths.Authorization, component: AuthorizationComponent, children: [
+    {path: Paths.Login, component: LoginComponent},
+    {path: Paths.Register, component: RegisterComponent}
+  ]},
   {path: Paths.Dictionary, component: DictionaryComponent},
   {path: Paths.Games, component: GamesComponent},
   {path: Paths.Statistic, component: StatisticComponent},

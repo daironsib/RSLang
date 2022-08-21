@@ -1,0 +1,20 @@
+<div class="register-container">
+    <button mat-stroked-button [routerLink]="['/', paths.Login]" color="primary">Statistic</button>
+    <mat-form-field appearance="fill">
+        <mat-label>Enter your username</mat-label>
+        <input matInput required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="email@example.com" required>
+        <mat-error>you email is invalid</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput >
+          <button mat-icon-button matSuffix>
+          </button>
+      </mat-form-field>
+      <button mat-stroked-button color="primary">Register</button>
+</div>
+
