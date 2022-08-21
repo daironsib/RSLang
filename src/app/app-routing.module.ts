@@ -5,13 +5,12 @@ import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeCompon
 
 const routes: Routes = [
   {path: Paths.Home, component: HomeComponent},
-  {path: Paths.Authorization, component: AuthorizationComponent, children: [
-    {path: Paths.Login, component: LoginComponent},
-    {path: Paths.Register, component: RegisterComponent}
-  ]},
+  {path: Paths.Authorization, component: AuthorizationComponent},
   {path: Paths.Dictionary, component: DictionaryComponent},
   {path: Paths.Games, component: GamesComponent},
   {path: Paths.Statistic, component: StatisticComponent},
+  {path: Paths.Login, component: LoginComponent},
+  {path: Paths.Register, component: RegisterComponent}
 ];
 
 @NgModule({
