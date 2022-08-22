@@ -1,22 +1,83 @@
 <div class="register-container">
     <h3 class="register-container__title">Create a new account</h3>
     <hr class="register-container__line">
-    <mat-form-field appearance="fill">
-        <mat-label>Enter your username</mat-label>
-        <input matInput placeholder="your username" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="email@example.com" required>
-        <mat-error>you email is invalid</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Enter your password</mat-label>
-        <input matInput placeholder="your password">
-        <button mat-icon-button matSuffix>
-        </button>
-    </mat-form-field>
-    <button class="register-container__button" mat-stroked-button color="primary">Register</button>
-    <hr class="register-container__line">
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-input"
+          name="name"
+          [(ngModel)]="form.name"
+          required
+          minlength="3"
+          maxlength="20"
+          #name="ngModel"
+          placeholder="your name"
+        />
+        <div class="alert alert-danger" *ngIf="name.errors && f.submitted">
+          <div *ngIf="name.errors?.['required']">Name is required</div>
+          <div *ngIf="name.errors?.['minlength']">
+            Name must be at least 3 characters
+          </div>
+          <div *ngIf="name.errors?.['maxlength']">
+            Name must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-input"
+          name="email"
+          [(ngModel)]="form.email"
+          required
+          email
+          #email="ngModel"
+          placeholder="your email"
+        />
+        <div class="alert alert-danger" *ngIf="email.errors && f.submitted">
+          <div *ngIf="email.errors?.['required']">Email is required</div>
+          <div *ngIf="email.errors?.['email']">
+            Email must be a valid email address
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-input"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="8"
+          #password="ngModel"
+          placeholder="your password"
+        />
+        <div class="alert alert-danger" *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors?.['required']">Password is required</div>
+          <div *ngIf="password.errors?.['minlength']">
+            Password must be at least 8 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="register-container__button" mat-stroked-button color="primary">Register</button>
+      </div>
+      <div class="alert alert-danger" *ngIf="f.submitted && isSignUpFailed">
+        {{ errorMessage }}
+      </div>
+    </form>
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Your registration is successful!
+    </div>
 </div>
 
