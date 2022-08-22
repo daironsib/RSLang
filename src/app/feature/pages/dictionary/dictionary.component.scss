@@ -1,0 +1,23 @@
+.dictionary-container {
+    padding: 10px 200px;
+}
+
+.dictionary-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dictionary-container__btns {
+    display: flex;
+    gap: 5px;
+}
+
+.dictionary__btn {
+    border: 2px solid #7b1fa2;
+    transition: 0.3s ease-in-out;
+}
+
+.dictionary__btn:hover {
+    background-color: #7b1fa2;
+    color: white;
+}

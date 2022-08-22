@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
 
 const PAGES = [
@@ -28,7 +30,9 @@ const PAGES = [
     MatFormFieldModule,
     RouterModule.forChild([]), 
     FormsModule,
-    RouterModule
+    RouterModule,
+    MatTabsModule,
+    MatPaginatorModule
   ],
   exports: [
     ...PAGES
