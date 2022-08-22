@@ -9,11 +9,13 @@ import { ApiService } from './services/api.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { FooterService } from './services/footer.service';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     NavigationPanelComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     HttpClientModule,
@@ -24,7 +26,8 @@ import { FooterService } from './services/footer.service';
   ],
   exports: [
     NavigationPanelComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderComponent
   ],
   providers: [
   	ApiService,
