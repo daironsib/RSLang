@@ -1,1 +1,29 @@
-<p>dictionary works!</p>
+<div class="dictionary-container">
+    <div class="dictionary-header">
+        <div class="dictionary-container__btns">
+            <button class="dictionary__btn" mat-stroked-button color="primary">Section 1</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary">Section 2</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary">Section 3</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary">Section 4</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary">Section 5</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary">Section 6</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary">Section "Hard"</button>
+        </div>
+        <div class="dictionary-container__btns">
+            <button class="dictionary__btn" mat-stroked-button color="primary">
+                <mat-icon> directions_run</mat-icon>Sprint
+            </button>
+            <button class="dictionary__btn" mat-stroked-button color="primary">
+                <mat-icon>record_voice_over</mat-icon>Audiocall
+            </button>
+        </div>
+    </div>
+    <div class="dictionary-body">
+        <h1>Here we pass word cards</h1>
+    </div>
+    <div class="dictionary-paginator">
+        <mat-paginator [length]="600" [pageSize]="20" aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
+
