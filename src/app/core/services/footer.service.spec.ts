@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { FooterService } from './footer.service';
 
 describe('FooterService', () => {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FooterService } from '@core/services/footer.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
