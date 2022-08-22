@@ -5,6 +5,8 @@ import { AuthorizationComponent } from './pages/authorization/authorization.comp
 import { DictionaryComponent } from './pages/dictionary/dictionary.component';
 import { GamesComponent } from './pages/games/games.component';
 import { StatisticComponent } from './pages/statistic/statistic.component';
+import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card'; 
 
 const PAGES = [
   HomeComponent,
@@ -19,7 +21,9 @@ const PAGES = [
     ...PAGES
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule,
+    MatCardModule
   ],
   exports: [
     ...PAGES
