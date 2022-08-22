@@ -1,4 +1,11 @@
-<button mat-stroked-button [routerLink]="[paths.Home]" color="primary">Home</button>
-<button mat-stroked-button [routerLink]="['/', paths.Dictionary]" color="primary">Dictionary</button>
-<button mat-stroked-button [routerLink]="['/', paths.Games]" color="primary">Games</button>
-<button mat-stroked-button [routerLink]="['/', paths.Statistic]" color="primary">Statistic</button>
+<nav class="nav-container">
+    <div class="nav-container__btns">
+        <button mat-stroked-button [routerLink]="[paths.Home]" color="primary">Home</button>
+        <button mat-stroked-button [routerLink]="['/', paths.Dictionary]" color="primary">Dictionary</button>
+        <button mat-stroked-button [routerLink]="['/', paths.Games]" color="primary">Games</button>
+        <button mat-stroked-button [routerLink]="['/', paths.Statistic]" color="primary">Statistic</button>
+    </div>
+    <button mat-fab [routerLink]="['/', paths.Login]" color="primary">
+        <mat-icon>person icon</mat-icon>
+    </button>
+</nav>

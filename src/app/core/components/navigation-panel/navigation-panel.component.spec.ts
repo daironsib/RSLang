@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NavigationPanelComponent } from './navigation-panel.component';
 
 describe('NavigationPanelComponent', () => {

@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './pages/home/home.component';
-import { AuthorizationComponent } from './pages/authorization/authorization.component';
-import { DictionaryComponent } from './pages/dictionary/dictionary.component';
-import { GamesComponent } from './pages/games/games.component';
-import { StatisticComponent } from './pages/statistic/statistic.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
 
 const PAGES = [
   HomeComponent,
   AuthorizationComponent,
   DictionaryComponent,
   GamesComponent,
-  StatisticComponent
+  StatisticComponent,
+  LoginComponent,
+  RegisterComponent,
 ]
 
 @NgModule({
@@ -19,7 +22,13 @@ const PAGES = [
     ...PAGES
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    RouterModule.forChild([]), 
+    FormsModule,
+    RouterModule
   ],
   exports: [
     ...PAGES

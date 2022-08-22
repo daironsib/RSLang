@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationPanelComponent } from './components/navigation-panel/navigation-panel.component';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { TokenStorageService } from './services/token-storage.service';
@@ -15,7 +16,8 @@ import { TokenStorageService } from './services/token-storage.service';
     HttpClientModule,
     CommonModule,
     RouterModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   exports: [
     NavigationPanelComponent
