@@ -4,12 +4,16 @@ import { NavigationPanelComponent } from './components/navigation-panel/navigati
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from './services/api.service';
+import { TokenStorageService } from './services/token-storage.service';
 
 @NgModule({
   declarations: [
     NavigationPanelComponent
   ],
   imports: [
+    HttpClientModule,
     CommonModule,
     RouterModule,
     MatButtonModule,
@@ -17,6 +21,10 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   exports: [
     NavigationPanelComponent
+  ],
+  providers: [
+  	ApiService,
+  	TokenStorageService
   ]
 })
 export class CoreModule { }
