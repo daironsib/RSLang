@@ -1,5 +1,9 @@
 .dictionary-container {
-    padding: 10px 200px;
+    padding: 20px 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 70vh;
 }
 
 .dictionary-header {
