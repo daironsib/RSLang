@@ -28,6 +28,7 @@ export class DictionaryComponent implements OnInit {
     this.currentGroupIndex = group;
     const words: Observable<IWord[]> = this.apiService.getWords(group, page);
     words.subscribe((value) => (this.words = value));
+  console.log(this.words);
   }
   
   getPage(event: PageEvent) {
