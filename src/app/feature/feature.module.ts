@@ -9,6 +9,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card'; 
 import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
+import { WordComponent } from '../word/word.component';
 
 const PAGES = [
   HomeComponent,
@@ -22,7 +23,8 @@ const PAGES = [
 
 @NgModule({
   declarations: [
-    ...PAGES
+    ...PAGES,
+    WordComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ const PAGES = [
     MatCardModule
   ],
   exports: [
-    ...PAGES
+    ...PAGES,
+    WordComponent
   ]
 })
 export class FeatureModule { }
