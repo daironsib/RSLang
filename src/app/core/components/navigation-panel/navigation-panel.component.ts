@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Paths } from '@core/models';
+import { TokenStorageService } from '@core/services/token-storage.service';
 
 @Component({
   selector: 'app-navigation-panel',
@@ -9,7 +10,7 @@ import { Paths } from '@core/models';
 export class NavigationPanelComponent implements OnInit {
   public paths = Paths;
 
-  constructor() { }
+  constructor(public tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void { }
 }

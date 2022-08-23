@@ -5,7 +5,20 @@
         <button mat-stroked-button [routerLink]="['/', paths.Games]" color="primary">Games</button>
         <button mat-stroked-button [routerLink]="['/', paths.Statistic]" color="primary">Statistic</button>
     </div>
-    <button mat-fab [routerLink]="['/', paths.Login]" color="primary">
-        <mat-icon>person icon</mat-icon>
-    </button>
+    <div *ngIf="tokenStorageService.getToken(); else login">
+        <div class="logout-menu">
+            <div class="user-info">
+                <span class="user-name">NAME</span>
+                <span class="user-email">email@mail.com</span>
+            </div>
+            <button mat-fab color="primary" (click)="tokenStorageService.signOut()">
+                <mat-icon>exit_to_app</mat-icon>
+            </button>
+        </div>
+    </div>
+    <ng-template #login>
+        <button mat-fab [routerLink]="['/', paths.Login]" color="primary">
+            <mat-icon>person icon</mat-icon>
+        </button>
+    </ng-template>
 </nav>
