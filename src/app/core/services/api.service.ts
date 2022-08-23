@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from '@core/services/token-storage.service';
 import { ILogin, IRegister, ISettings, IStatistics, IUserWords, IWord } from '@core/models';
@@ -34,10 +34,6 @@ export class ApiService {
   }
 
   // Words
-
-  public getWords(): Observable<IWord[]> {
-    return this.http.get<IWord[]>(this.WORDS_URL);
-  }
 
   public getWordsID(id: string): Observable<IWord> {
     return this.http.get<IWord>(`${this.WORDS_URL}/${id}`);
@@ -95,5 +91,12 @@ export class ApiService {
       wordsPerDay,
       'optional': {}
     }, this.httpHeader);
+  }
+  
+  public getWords(group: string, page: string): Observable<IWord[]> {
+    return this.http.get<IWord[]>(this.WORDS_URL, {
+      params: new HttpParams().set('group', group)
+      .set('page', page)
+    });
   }
 }
