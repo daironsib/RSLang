@@ -1,13 +1,20 @@
 <div class="dictionary-container">
     <div class="dictionary-header">
         <div class="dictionary-container__btns">
-            <button class="dictionary__btn" mat-stroked-button color="primary">Section 1</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary">Section 2</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary">Section 3</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary">Section 4</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary">Section 5</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary">Section 6</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary">Section "Hard"</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="0"
+                (click)="showGroup('0', '0')">Section 1</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="1"
+                (click)="showGroup('1', '0')">Section 2</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="2"
+                (click)="showGroup('2', '0')">Section 3</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="3"
+                (click)="showGroup('3', '0')">Section 4</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="4"
+                (click)="showGroup('4', '0')">Section 5</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="5"
+                (click)="showGroup('5', '0')">Section 6</button>
+            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="6"
+                (click)="showGroup('hard', '0')">Section "Hard"</button>
         </div>
         <div class="dictionary-container__btns">
             <button class="dictionary__btn" mat-stroked-button color="primary">
@@ -20,10 +27,17 @@
     </div>
     <div class="dictionary-body">
         <h1>Here we pass word cards</h1>
+        <div *ngFor="let word of this.words; let i = index">
+            <div>{{ word.wordTranslate }}</div>
+        </div>
     </div>
     <div class="dictionary-paginator">
-        <mat-paginator [length]="600" [pageSize]="20" aria-label="Select page">
+        <mat-paginator 
+            [length]="600" 
+            [pageSize]="20" 
+            [pageIndex]="this.pageNo"
+            (page)="getPage($event)" 
+            aria-label="Select page">
         </mat-paginator>
     </div>
 </div>
-

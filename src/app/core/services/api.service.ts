@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { IWord } from '@core/models/word';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,4 +32,11 @@ export class ApiService {
   }
 
   public logOut() {}
+  
+  public getWords(group: string, page: string): Observable<IWord[]> {
+    return this.http.get<IWord[]>(this.WORDS_URL, {
+      params: new HttpParams().set('group', group)
+      .set('page', page)
+    });
+  }
 }
