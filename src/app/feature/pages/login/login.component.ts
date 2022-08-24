@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   };
   public isLoggedIn: boolean = false;
   public isLoginFailed: boolean = false;
-  public errorMessage: string = '';
 
   constructor(private api: ApiService, private tokenStorage: TokenStorageService, private router: Router) { }
 
@@ -44,7 +43,6 @@ export class LoginComponent implements OnInit {
         }
       },
       err => {
-        this.errorMessage = err.error;
         this.isLoginFailed = true;
       }
     );

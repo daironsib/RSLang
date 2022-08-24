@@ -16,7 +16,9 @@ export class RegisterComponent implements OnInit {
   };
   public isSuccessful: boolean = false;
   public isSignUpFailed: boolean = false;
-  public errorMessage: string = '';
+  public isWrongEmailOrPassword: boolean = false;
+  public isEmailExists: boolean = false;
+  
   public paths = Paths;
 
   constructor(private api: ApiService, private router: Router) {}
@@ -35,7 +37,12 @@ export class RegisterComponent implements OnInit {
         }, 3000);
       },
       err => {
-        this.errorMessage = err.error.error.errors[0].message;
+        if (err.status === 417) {
+          this.isEmailExists = true;
+        } else {
+          this.isWrongEmailOrPassword = true;
+        }
+
         this.isSignUpFailed = true;
       }
     );
