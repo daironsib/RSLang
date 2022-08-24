@@ -58,6 +58,13 @@
   line-height: 150%;
 }
 
+.about_games h2 {
+  font-size: 4em;
+  line-height: 120%;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
 .about_game-card {
   display: flex;
   height: 400px;
@@ -71,8 +78,7 @@
 .about_game-image {
   max-width: 50%;
   display: flex;
-  justify-content: end;
-  
+
   img {
     height: 100%;
     width: auto;
@@ -84,9 +90,9 @@
   text-align: right;
 
   .about_game-image {
-    justify-content: start;
+    justify-content: end;
   }
-  
+
   .about_play-btn {
     margin-left: auto;
   }
@@ -117,35 +123,35 @@
 }
 
 .about_team {
-    margin: 10% auto;
-    
-    h2 {
-        font-size: 4em;
-        line-height: 120%;
-        text-align: center;
-        margin-bottom: 1em;
-    }
+  margin: 10% auto;
+
+  h2 {
+    font-size: 4em;
+    line-height: 120%;
+    text-align: center;
+    margin-bottom: 1em;
+  }
 }
 
 .about_team-members {
-    display: flex;
+  display: flex;
 }
 
 .about_team-member {
-    margin-right: 2em;
-    
-    &:last-child {
-        margin-right: 0;
-    }
+  margin-right: 2em;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .about_member-name {
-    text-align: center;
+  text-align: center;
 }
 
 .about_member-gh {
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
