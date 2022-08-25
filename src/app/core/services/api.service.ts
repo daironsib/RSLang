@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from '@core/services/token-storage.service';
-import { ILogin, IRegister, ISettings, IStatistics, IUserWords, IWord } from '@core/models/api';
+import { ILogin, IRegister, ISettings, IStatistics, IUserWords, IWord } from '@core/models';
 
 @Injectable()
 export class ApiService {
