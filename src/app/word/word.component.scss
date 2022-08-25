@@ -1,8 +1,11 @@
 .wordCard {
     height: 250px;
     display: flex;
+    gap: 0.6rem;
     border: 2px solid #7b1fa2;
+    border-radius: 10px;
     margin: 0 auto;
+    padding: 0.6rem;
 }
 
 .wordCard-image img {
@@ -12,20 +15,19 @@
 }
 
 .wordCard-header__container {
-    width: calc(80vw - 420px);
+    width: calc(80vw - 400px);
     display: flex;
     justify-content: space-between;
 }
 
 .wordCard-header__btns {
     display: flex;
-    gap: 1rem;
+    gap: 0.6rem;
 }
 
 .wordCard-header {
     background-size: cover;
     background-repeat: no-repeat;
-    padding: 10px;
 }
 
 .wordCard-header__block {
@@ -42,7 +44,7 @@
 
 .wordCard-header__panel {
     display: flex;
-    gap: 1rem;
+    gap: 0.6rem;
     align-items: center;
 }
 
@@ -64,7 +66,7 @@
 }
 
 .wordCard-footer__block {
-    margin-top: 1rem;
+    margin-top: 0.6rem;
 }
 
 .dictionary__btn {
