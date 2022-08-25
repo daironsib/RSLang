@@ -72,8 +72,11 @@
       <div class="form-group">
         <button class="register-container__button" mat-stroked-button color="primary">Register</button>
       </div>
-      <div class="alert alert-danger" *ngIf="f.submitted && isSignUpFailed">
-        {{ errorMessage }}
+      <div class="alert alert-danger" *ngIf="f.submitted && isWrongEmailOrPassword">
+        Incorrect e-mail or password
+      </div>
+      <div class="alert alert-danger" *ngIf="f.submitted && isEmailExists">
+        User with this e-mail exists
       </div>
     </form>
     <div class="alert alert-success" *ngIf="isSuccessful">
