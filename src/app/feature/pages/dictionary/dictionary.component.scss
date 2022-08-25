@@ -13,7 +13,7 @@
 
 .dictionary-container__btns {
     display: flex;
-    gap: 5px;
+    gap: 0.5rem;
 }
 
 .dictionary__btn {
@@ -24,4 +24,8 @@
 .dictionary__btn:hover {
     background-color: #7b1fa2;
     color: white;
+}
+
+.dictionary-body {
+    padding: 30px;
 }

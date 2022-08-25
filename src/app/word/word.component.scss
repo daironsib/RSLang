@@ -1,0 +1,80 @@
+.wordCard {
+    height: 250px;
+    display: flex;
+    gap: 0.6rem;
+    border: 2px solid #7b1fa2;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 0.6rem;
+}
+
+.wordCard-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.wordCard-header__container {
+    width: calc(80vw - 400px);
+    display: flex;
+    justify-content: space-between;
+}
+
+.wordCard-header__btns {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.wordCard-header {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.wordCard-header__block {
+    display: flex;
+    flex-direction: column;
+}
+
+.wordCard-header__title {
+    font-family: 'Red Hat Text';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.wordCard-header__panel {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.wordCard-header__text {
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+.wordCard-footer__text {
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0;
+}
+
+.wordCard-footer__subtext {
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0;
+}
+
+.wordCard-footer__block {
+    margin-top: 0.6rem;
+}
+
+.dictionary__btn {
+    border: 2px solid #7b1fa2;
+    transition: 0.3s ease-in-out;
+}
+
+.dictionary__btn:hover {
+    background-color: #7b1fa2;
+    color: white;
+}
