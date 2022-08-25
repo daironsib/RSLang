@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { TokenStorageService } from '@core/services/token-storage.service';
+import { ILogin, IRegister, ISettings, IStatistics, IUserWords, IWord } from '@core/models/api';
 
 @Injectable()
 export class ApiService {
@@ -12,23 +10,90 @@ export class ApiService {
   private WORDS_URL = `${this.API_URL}words`;
   private USERS_URL = `${this.API_URL}users`;
   private SIGNIN_URL = `${this.API_URL}signin`;
+  private token = this.tokenStorage.getToken();
 
-  constructor(private http: HttpClient) {}
+  private httpHeader = {
+    headers: this.token ?
+    new HttpHeaders({ 
+      'Content-Type': 'application/json', 
+      'Authorization': `Bearer ${this.tokenStorage.getToken()}`
+    }) : 
+    new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
-  public register(name: string, email: string, password: string): Observable<any> {
-    return this.http.post(this.USERS_URL, {
-      name,
-      email,
-      password
-    }, httpOptions);
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
+
+  // Auth
+
+  public register(name: string, email: string, password: string): Observable<IRegister> {
+    return this.http.post<IRegister>(this.USERS_URL, { name, email, password }, this.httpHeader);
   }
 
-  public login(email: string, password: string): Observable<any> {
-    return this.http.post(this.SIGNIN_URL, {
-      email,
-      password
-    }, httpOptions);
+  public login(email: string, password: string): Observable<ILogin> {
+    return this.http.post<ILogin>(this.SIGNIN_URL, { email, password }, this.httpHeader);
   }
 
-  public logOut() {}
+  // Words
+
+  public getWords(): Observable<IWord[]> {
+    return this.http.get<IWord[]>(this.WORDS_URL);
+  }
+
+  public getWordsID(id: string): Observable<IWord> {
+    return this.http.get<IWord>(`${this.WORDS_URL}/${id}`);
+  }
+
+  // User Words
+
+  public getUserWords(id: string): Observable<IUserWords[]> {
+    return this.http.get<IUserWords[]>(`${this.USERS_URL}/${id}/words`, this.httpHeader);
+  }
+
+  public createUserWords(id: string, wordId: string, difficulty: string): Observable<IUserWords> {
+    return this.http.post<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, { difficulty, 'optional': {} }, this.httpHeader);
+  }
+
+  public getUserWordById(id: string, wordId: string): Observable<IUserWords> {
+    return this.http.get<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, this.httpHeader);
+  }
+
+  public updateUserWordById(id: string, wordId: string, difficulty: string): Observable<IUserWords> {
+    return this.http.put<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, { difficulty, 'optional': {} }, this.httpHeader);
+  }
+
+  public deleteUserWordById(id: string, wordId: string): Observable<any> {
+    return this.http.delete(`${this.USERS_URL}/${id}/words/${wordId}`, this.httpHeader);
+  }
+
+  // AggregatedWords
+
+  public getAggregatedWords(id: string): Observable<IWord> {
+    return this.http.get<IWord>(`${this.USERS_URL}/${id}/aggregatedWords`, this.httpHeader);
+  }
+
+  // Statistics
+
+  public getStatistics(id: string): Observable<IStatistics> {
+    return this.http.get<IStatistics>(`${this.USERS_URL}/${id}/statistics`, this.httpHeader);
+  }
+
+  public updateStatistics(id: string, learnedWords: number): Observable<IStatistics> {
+    return this.http.put<IStatistics>(`${this.USERS_URL}/${id}/statistics`, {
+      learnedWords,
+      'optional': {}
+    }, this.httpHeader);
+  }
+
+  // Settings
+
+  public getSettings(id: string): Observable<ISettings> {
+    return this.http.get<ISettings>(`${this.USERS_URL}/${id}/settings`, this.httpHeader);
+  }
+
+  public updateSettings(id: string, wordsPerDay: number): Observable<ISettings> {
+    return this.http.put<ISettings>(`${this.USERS_URL}/${id}/settings`, {
+      wordsPerDay,
+      'optional': {}
+    }, this.httpHeader);
+  }
 }
