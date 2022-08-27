@@ -2,19 +2,19 @@
     <div class="dictionary-header">
         <div class="dictionary-container__btns">
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="0"
-                (click)="showGroup('0', '0')">Section 1</button>
+                (click)="showGroup(0)">Section 1</button>
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="1"
-                (click)="showGroup('1', '0')">Section 2</button>
+                (click)="showGroup(1)">Section 2</button>
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="2"
-                (click)="showGroup('2', '0')">Section 3</button>
+                (click)="showGroup(2)">Section 3</button>
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="3"
-                (click)="showGroup('3', '0')">Section 4</button>
+                (click)="showGroup(3)">Section 4</button>
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="4"
-                (click)="showGroup('4', '0')">Section 5</button>
+                (click)="showGroup(4)">Section 5</button>
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="5"
-                (click)="showGroup('5', '0')">Section 6</button>
+                (click)="showGroup(5)">Section 6</button>
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="6"
-                (click)="showGroup('hard', '0')">Section "Hard"</button>
+                (click)="showGroup(6)">Section "Hard"</button>
         </div>
         <div class="dictionary-container__btns">
             <button class="dictionary__btn" mat-stroked-button color="primary">
@@ -26,9 +26,8 @@
         </div>
     </div>
     <div class="dictionary-body">
-        <div *ngFor="let word of this.words; let i = index">
-            <app-word></app-word>
-        </div>
+        <app-word *ngFor="let word of words; let i = index" [word]="word">
+        </app-word>
     </div>
     <div class="dictionary-paginator">
         <mat-paginator 

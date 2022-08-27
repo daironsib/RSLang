@@ -34,6 +34,13 @@ export class ApiService {
   }
 
   // Words
+  
+  public getWords(group: number, page: number): Observable<IWord[]> {
+    return this.http.get<IWord[]>(this.WORDS_URL, {
+      params: new HttpParams().set('group', group)
+      .set('page', page)
+    });
+  }
 
   public getWordsID(id: string): Observable<IWord> {
     return this.http.get<IWord>(`${this.WORDS_URL}/${id}`);
@@ -91,12 +98,5 @@ export class ApiService {
       wordsPerDay,
       'optional': {}
     }, this.httpHeader);
-  }
-  
-  public getWords(group: string, page: string): Observable<IWord[]> {
-    return this.http.get<IWord[]>(this.WORDS_URL, {
-      params: new HttpParams().set('group', group)
-      .set('page', page)
-    });
   }
 }
