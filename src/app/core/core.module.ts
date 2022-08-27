@@ -10,12 +10,14 @@ import { TokenStorageService } from '@core/services/token-storage.service';
 import { FooterComponent } from '@core/components/footer/footer.component';
 import { FooterService } from '@core/services/footer.service';
 import { HeaderComponent } from '@core/components/header/header.component';
+import { WordComponent } from '@core/components/word/word.component';
 
 @NgModule({
   declarations: [
     NavigationPanelComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    WordComponent
   ],
   imports: [
     HttpClientModule,
@@ -27,7 +29,8 @@ import { HeaderComponent } from '@core/components/header/header.component';
   exports: [
     NavigationPanelComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    WordComponent
   ],
   providers: [
   	ApiService,

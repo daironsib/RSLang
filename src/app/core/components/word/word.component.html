@@ -1,6 +1,6 @@
 <div class="wordCard">
     <div class="wordCard-image">
-        <img src="../../assets/images/mood.jpg" alt="image">
+        <img [src]="API_URL + word.image" alt="image">
     </div>
     <div class="wordCard-content">
         <div class="wordCard-header">
@@ -8,9 +8,12 @@
                 <div class="wordCard-header__container">
                     <div class="wordCard-header__panel">
                         <p class="wordCard-header__text">
-                            word - transcription 
+                            {{ word.word }} - {{ word.transcription }}
                         </p>
-                        <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="primary">
+                        <button 
+                            mat-mini-fab 
+                            color="primary"
+                            (click)="this.audioPlayerService.newAudio([word.audio, word.audioMeaning, word.audioExample])">
                             <mat-icon>volume_up</mat-icon>
                         </button>
                     </div>
@@ -21,31 +24,27 @@
                         <button class="dictionary__btn" mat-stroked-button color="primary">
                             <mat-icon>school</mat-icon> Mark as Hard
                         </button>
-                    </div> 
+                    </div>
                 </div>
-                
                 <h3 class="wordCard-header__title">
-                    wordTranslate
+                    {{word.wordTranslate}}
                 </h3>
             </div>
         </div>
         <div class="wordCard-footer">
             <div class="wordCard-footer__block">
-                <p class="wordCard-footer__text">
-                    textMeaning
-                </p>
+                <p class="wordCard-footer__text" [innerHTML]="word.textMeaning"></p>
                 <p class="wordCard-footer__subtext">
                     <mat-icon>subdirectory_arrow_right</mat-icon>
-                    textMeaningTranslate
+                    {{word.textMeaningTranslate}}
                 </p>
             </div>
             <div class="wordCard-footer__block">
-                <p class="wordCard-footer__text">
-                    textExample
+                <p class="wordCard-footer__text" [innerHTML]="word.textExample">
                 </p>
                 <p class="wordCard-footer__subtext">
                     <mat-icon>subdirectory_arrow_right</mat-icon>
-                    textExampleTranslate
+                    {{word.textExampleTranslate}}
                 </p>
             </div>
         </div>
