@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Subject } from "rxjs/internal/Subject";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/internal/Subject';
 
 @Injectable()
 export class AudioPlayerService {
-  private API_URL = "https://rslangbe.herokuapp.com/";
+  private API_URL = 'https://rslangbe.herokuapp.com/';
   public playbackEndedSource = new Subject<string>();
   public playbackEnded$ = this.playbackEndedSource.asObservable();
   public audio: HTMLAudioElement;
@@ -14,7 +14,7 @@ export class AudioPlayerService {
     this.audio = new Audio();
     this.playlist = [];
     this.currentAudio = 0;
-    this.audio.addEventListener("ended", () => {
+    this.audio.addEventListener('ended', () => {
       this.playbackEndedSource.next(this.playlist[this.currentAudio += 1]);
     });
   }
@@ -36,7 +36,7 @@ export class AudioPlayerService {
     this.playlist = src;
     console.log(this.currentAudio);
     const subscription = this.playbackEnded$.subscribe(() => {
-      if (this.currentAudio == this.playlist.length) {
+      if (this.currentAudio === this.playlist.length) {
         subscription.unsubscribe();
       } else {
         this.play(this.playlist[this.currentAudio]);

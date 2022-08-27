@@ -23,7 +23,7 @@ const PAGES = [
 
 @NgModule({
   declarations: [
-    ...PAGES,
+    ...PAGES
   ],
   imports: [
     CommonModule,
@@ -39,7 +39,7 @@ const PAGES = [
     CoreModule
   ],
   exports: [
-    ...PAGES,
+    ...PAGES
   ]
 })
 export class FeatureModule { }
