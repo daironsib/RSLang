@@ -1,0 +1,33 @@
+<div class="audio-game">
+  <div *ngIf="currentSlide === 1" class="screen1">
+    <h1>Audio Game</h1>
+    <div class="audio-game__text">
+      <h2>«Аудиовызов» - это тренировка, которая улучшает восприятие речи на слух.</h2>
+      <ul>
+        <li>Используйте мышь, чтобы выбрать.</li>
+        <li>Используйте цифровые клавиши от 1 до 5 для выбора ответа</li>
+        <li>Используйте пробел для повтроного звучания слова</li>
+        <li>Используйте клавишу Enter для подсказки или для перехода к следующему слову</li>
+      </ul>
+      <div class="audio-game__2-cols">
+        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+          <select name="difficulty">
+            <option value="1">Difficulty 0</option>
+            <option value="2" selected>Difficulty 1</option>
+            <option value="3">Difficulty 2</option>
+            <option value="4">Difficulty 3</option>
+            <option value="5">Difficulty 4</option>
+            <option value="6">Difficulty 5</option>
+          </select>
+          <button>Start</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="currentSlide === 2" class="screen2">
+    GAME
+  </div>
+  <div *ngIf="currentSlide === 3" class="screen3">
+    RESULTS
+  </div>
+</div>

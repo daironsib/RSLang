@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
@@ -29,25 +29,25 @@ ul {
 
   .form-label,
   .form-input {
-      margin-bottom: 15px;
+    margin-bottom: 15px;
   }
 
   .form-label {
-      font-weight: bold;
+    font-weight: bold;
   }
 
   .form-input {
-      height: 20px;
-      padding: 0 10px;
+    height: 20px;
+    padding: 0 10px;
   }
 }
 
 .alert {
   &.alert-danger {
-      color: red;
+    color: red;
   }
 
   &.alert-success {
-      color: green;
+    color: green;
   }
 }
