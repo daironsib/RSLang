@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { IWord } from '@core/models';
+import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
 
@@ -22,7 +23,40 @@ export class AudioGameComponent implements OnInit {
 
   constructor(private api: ApiService, public audioPlayerService: AudioPlayerService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (this.currentSlide === 2) {
+      if (event.keyCode === KEY_CODE.ENTER) {
+        this.dontKnow();
+      }
+
+      if (event.keyCode === KEY_CODE.SPACE) {
+        this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
+      }
+
+      if (event.keyCode === KEY_CODE.KEY1) {
+        this.checkVariant(this.variantWords[0]);
+      }
+
+      if (event.keyCode === KEY_CODE.KEY2) {
+        this.checkVariant(this.variantWords[1]);
+      }
+
+      if (event.keyCode === KEY_CODE.KEY3) {
+        this.checkVariant(this.variantWords[2]);
+      }
+
+      if (event.keyCode === KEY_CODE.KEY4) {
+        this.checkVariant(this.variantWords[3]);
+      }
+
+      if (event.keyCode === KEY_CODE.KEY5) {
+        this.checkVariant(this.variantWords[4]);
+      }
+    }
+  }
 
   private getRandomInt(min: number, max: number): number {
     min = Math.ceil(min);
@@ -35,12 +69,12 @@ export class AudioGameComponent implements OnInit {
 
     if (difficulty) {
       this.api.getWords(difficulty, this.getRandomInt(0, this.MAX_PAGE)).subscribe(
-      data => {
-        this.words = data;
-        this.generateVariants();
-        this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
-        this.changeScreen(2);
-      });
+        data => {
+          this.words = data;
+          this.generateVariants();
+          this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
+          this.changeScreen(2);
+        });
     }
   }
 
@@ -50,7 +84,7 @@ export class AudioGameComponent implements OnInit {
 
   public nextWord(): void {
     if (this.words.length !== 0 && this.currentIndexWord < this.words.length - 1) {
-      this.currentIndexWord ++;
+      this.currentIndexWord++;
       this.generateVariants();
       this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
     } else {
@@ -64,9 +98,9 @@ export class AudioGameComponent implements OnInit {
     this.variantWords.push(this.words[this.currentIndexWord].wordTranslate);
 
     while (this.variantWords.length < 5) {
-      let index = this.getRandomInt(0, this.words.length);    
-      this.variantWords.push(this.words[index].wordTranslate);    
-      this.variantWords = this.variantWords.filter((v, i, arr) =>  arr.indexOf(v) == i);
+      let index = this.getRandomInt(0, this.words.length);
+      this.variantWords.push(this.words[index].wordTranslate);
+      this.variantWords = this.variantWords.filter((v, i, arr) => arr.indexOf(v) == i);
     }
 
     this.variantWords = this.variantWords.sort(() => Math.random() - 0.5);
@@ -95,7 +129,7 @@ export class AudioGameComponent implements OnInit {
     this.words = [];
     this.variantWords = [];
     this.goodWords = [];
-    this.badWords =[];
+    this.badWords = [];
     this.currentIndexWord = 0;
     this.changeScreen(1);
   }
