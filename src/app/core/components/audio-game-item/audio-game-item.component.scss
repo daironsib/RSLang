@@ -1,0 +1,28 @@
+.audio-game-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .mat-button-base {
+    margin-bottom: 15px;
+  }
+
+  .audio-game-variants {
+    display: flex;
+    margin-bottom: 15px;
+
+    .audio-game-variants__item {
+      transition: .3s;
+      cursor: pointer;
+      margin: 0 10px;
+      padding: 10px;
+      border-radius: 5px;
+      text-transform: capitalize;
+
+      &:hover {
+        background-color: rgba(0,0,0,.1);
+      }
+    }
+  }
+}
