@@ -4,6 +4,11 @@ export interface IUser {
   password: string
 }
 
+export interface IUserLS {
+  id: string,
+  name: string
+}
+
 export interface IRegister {
   email: string,
   id: string,
@@ -35,7 +40,14 @@ export interface IWord {
   wordTranslate: string
 }
 
+export interface IFilterResponse {
+  paginatedResults: IWord[],
+  totalCount: [];
+}
+
 export interface IUserWords {
+  id: string,
+  wordId: string,
   difficulty: string,
   optional: object
 }
