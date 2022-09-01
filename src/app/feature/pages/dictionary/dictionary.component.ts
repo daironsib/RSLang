@@ -4,6 +4,7 @@ import { IWord } from '@core/models/api';
 import { ApiService } from '@core/services/api.service';
 import { FooterService } from '@core/services/footer.service';
 import { WordService } from '@core/services/word.service';
+import { Paths } from '@core/models';
 
 @Component({
   selector: 'app-dictionary',
@@ -15,6 +16,7 @@ export class DictionaryComponent implements OnInit {
   public pageNo: number;
   public currentGroupIndex: number;
   public words: IWord[] = [];
+  public paths = Paths;
 
   constructor(public state: FooterService, public apiService: ApiService, public wordService: WordService) {
     this.footerState = true;
