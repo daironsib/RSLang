@@ -5,5 +5,6 @@ export enum Paths {
     Register = "register",
     Dictionary = "dictionary",
     Games = "games",
+    AudioGame = "audio-game",
     Statistic = "statistic"
 }

@@ -11,13 +11,15 @@ import { FooterComponent } from '@core/components/footer/footer.component';
 import { FooterService } from '@core/services/footer.service';
 import { HeaderComponent } from '@core/components/header/header.component';
 import { WordComponent } from '@core/components/word/word.component';
+import { AudioGameItemComponent } from '@core/components/audio-game-item/audio-game-item.component';
 
 @NgModule({
   declarations: [
     NavigationPanelComponent,
     FooterComponent,
     HeaderComponent,
-    WordComponent
+    WordComponent,
+    AudioGameItemComponent
   ],
   imports: [
     HttpClientModule,
@@ -30,7 +32,8 @@ import { WordComponent } from '@core/components/word/word.component';
     NavigationPanelComponent,
     FooterComponent,
     HeaderComponent,
-    WordComponent
+    WordComponent,
+    AudioGameItemComponent
   ],
   providers: [
   	ApiService,

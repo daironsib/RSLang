@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card'; 
-import { AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
+import { AudioGameComponent, AuthorizationComponent, DictionaryComponent, GamesComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
 import { CoreModule } from '@core/core.module';
 
 const PAGES = [
@@ -19,6 +19,7 @@ const PAGES = [
   StatisticComponent,
   LoginComponent,
   RegisterComponent,
+  AudioGameComponent
 ]
 
 @NgModule({
