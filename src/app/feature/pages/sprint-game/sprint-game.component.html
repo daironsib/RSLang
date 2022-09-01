@@ -1,0 +1,84 @@
+<div class="main-container">
+    <div class="start-wrapper active" *ngIf="words.length === 0">
+        <div class="start-screen">
+            <h1>Sprint</h1>
+            <p class="word">"Sprint" is a practice for repeating memorized words from your vocabulary.</p>
+            <p class="word">To play use mouse or "left" and "right" keys</p>
+            <h2 class="modal-subtitle">Select level</h2>
+            <ul class="section-list" id="section-list">
+                <li>
+                    <button (click)="getWords(0)" class="section-btn" data-section="1">
+                        Section 1
+                    </button>
+                </li>
+                <li>
+                    <button (click)="getWords(1)" class="section-btn" data-section="2">
+                        Section 2
+                    </button>
+                </li>
+                <li>
+                    <button (click)="getWords(2)" class="section-btn" data-section="3">
+                        Section 3
+                    </button>
+                </li>
+                <li>
+                    <button (click)="getWords(3)" class="section-btn" data-section="4">
+                        Section 4
+                    </button>
+                </li>
+                <li>
+                    <button (click)="getWords(4)" class="section-btn" data-section="5">
+                        Section 5
+                    </button>
+                </li>
+                <li>
+                    <button (click)="getWords(5)" class="section-btn" data-section="6">
+                        Section 6
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="game-window active" *ngIf="words.length > 0">
+        <div class="modal-content" *ngIf="!showStatistic">
+            <h1>Score: <span id="score-label">{{score}}</span></h1>
+            <h3 class="modal-subtitle">Remaining <span id="time">00:00</span></h3>   
+            <div class="board" id="board" *ngIf="(sprintWordObservable | async) as wordItem">
+                <div id="answers-tracker">
+                    <div class="streak-tracker" [ngClass]="{'correct': winStreak > 0}"></div>
+                    <div class="streak-tracker" [ngClass]="{'correct': winStreak > 1}"></div>
+                    <div class="streak-tracker" [ngClass]="{'correct': winStreak > 2}"></div>
+                </div>
+                <div class="words-block">
+                    <p class="word">{{wordItem.word}}</p>
+                    <p class="word">{{wordItem.translation}}</p>
+                </div>
+                <hr class="line">
+                <div class="board-btns">
+                    <button (click)="checkTrueAnswer(wordItem)" class="btn-try-again btn-true">True</button>
+                    <button (click)="checkFalseAnswer(wordItem)" class="btn-try-again btn-false">False</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-content" *ngIf="showStatistic">
+            <h1>Score: <span id="score-label">{{score}}</span></h1>
+            <h2 class="modal-subtitle" id="win-title">
+                Results
+            </h2>
+            <div class="table-page">
+                <table>
+                    <tbody>
+                        <tr *ngFor="let result of sprintGameWordStatistic">
+                            <td>icon</td>
+                            <td>{{result.word}}</td>
+                            <td>transcription</td>
+                            <td>translation</td>
+                            <td>{{result.isCorrectAnswer}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-try-again">Try again</button>
+        </div>
+    </div>
+</div>
