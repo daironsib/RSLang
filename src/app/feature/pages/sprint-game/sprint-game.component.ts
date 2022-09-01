@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FooterService } from '@core/services/footer.service';
 import { ApiService } from '@core/services/api.service';
 import { IWord } from '@core/models';
 import { SprintGameWord, SprintGameWordStatistic } from '@core/models/sprint-game';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { interval, Observable, ReplaySubject, Subject } from 'rxjs';
+import { takeUntil, map } from 'rxjs/operators';
+import { KEY_CODE } from '@core/models/keyEvents';
 
 @Component({
   selector: 'app-sprint-game',
   templateUrl: './sprint-game.component.html',
   styleUrls: ['./sprint-game.component.scss'],
 })
-export class SprintGameComponent implements OnInit {
+export class SprintGameComponent implements OnInit, OnDestroy {
   public words: IWord[] = [];
   public footerState: boolean;
   public sprintGameWords: SprintGameWord[] = [];
@@ -21,14 +23,33 @@ export class SprintGameComponent implements OnInit {
   public score: number = 0;
   public scoreRate: number = 1;
   public winStreak: number = 0;
+  public time: number = 5;
+  public destroyTimer$: Subject<void> = new Subject();
+  public wordItem!: SprintGameWord;
 
   constructor(private api: ApiService, public state: FooterService) {
     this.footerState = false;
     this.sprintWordObservable = this.sprintGameSource.asObservable();
+    this.sprintWordObservable.pipe(takeUntil(this.destroyTimer$)).subscribe(word => this.wordItem = word);
   }
 
   ngOnInit(): void {
     this.state.setFooterState(this.footerState);
+  }
+
+  ngOnDestroy(): void {
+    this.destroyTimer$.next();
+    this.destroyTimer$.complete();
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.keyCode === KEY_CODE.LEFT) {
+      this.checkTrueAnswer(this.wordItem);
+    }
+    if (event.keyCode === KEY_CODE.RIGHT) {
+      this.checkFalseAnswer(this.wordItem);
+    }
   }
 
   public getWords(group: number) {
@@ -37,6 +58,7 @@ export class SprintGameComponent implements OnInit {
       this.words = data;
       this.generateSprintGameWords();
       this.getSprintWord();
+      this.startTimer();
     });
   }
 
@@ -45,6 +67,7 @@ export class SprintGameComponent implements OnInit {
     this.sprintGameWords = this.words.map((wordItem, index) => ({
       word: wordItem.word,
       correctTranslation: wordItem.wordTranslate,
+      transcription: wordItem.transcription,
       translation:[wordItem.wordTranslate, randomTranslations[index]][Math.floor(Math.random() * 2)]
     }))
   }
@@ -81,6 +104,8 @@ export class SprintGameComponent implements OnInit {
   public checkTrueAnswer(wordItem: SprintGameWord) {
     const wordStatistic: SprintGameWordStatistic = {
       word: wordItem.word,
+      translation: wordItem.correctTranslation,
+      transcription:  wordItem.transcription,
       isCorrectAnswer: wordItem.translation === wordItem.correctTranslation
     }
     this.scorePoints(wordStatistic.isCorrectAnswer);
@@ -92,11 +117,41 @@ export class SprintGameComponent implements OnInit {
   public checkFalseAnswer(wordItem: SprintGameWord) {
     const wordStatistic: SprintGameWordStatistic = {
       word: wordItem.word,
+      translation: wordItem.correctTranslation,
+      transcription:  wordItem.transcription,
       isCorrectAnswer: wordItem.translation !== wordItem.correctTranslation
     }
     this.scorePoints(wordStatistic.isCorrectAnswer);
 
     this.sprintGameWordStatistic.push(wordStatistic);
     this.getSprintWord();
+  }
+
+  public startTimer() {
+    interval(1000).pipe(
+      takeUntil(this.destroyTimer$),
+      map(() => {
+        console.log('4to nibud');
+        if (this.time > 0) {
+           this.time--;
+        } else {
+          this.destroyTimer$.next();
+          this.destroyTimer$.complete();
+          this.showStatistic = true;
+        }
+      })
+    ).subscribe();
+  }
+
+  public restartGame() {
+    this.showStatistic = false;
+    this.sprintGameWords = [];
+    this.sprintGameWordStatistic = [];
+    this.score = 0;
+    this.scoreRate = 1;
+    this.winStreak = 0;
+    this.time = 5;
+    this.destroyTimer$ = new Subject();
+    this.words = [];
   }
 }

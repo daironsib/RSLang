@@ -42,7 +42,7 @@
     <div class="game-window active" *ngIf="words.length > 0">
         <div class="modal-content" *ngIf="!showStatistic">
             <h1>Score: <span id="score-label">{{score}}</span></h1>
-            <h3 class="modal-subtitle">Remaining <span id="time">00:00</span></h3>   
+            <h3 class="modal-subtitle">Remaining <span id="time">00:{{time}}</span></h3>   
             <div class="board" id="board" *ngIf="(sprintWordObservable | async) as wordItem">
                 <div id="answers-tracker">
                     <div class="streak-tracker" [ngClass]="{'correct': winStreak > 0}"></div>
@@ -71,14 +71,14 @@
                         <tr *ngFor="let result of sprintGameWordStatistic">
                             <td>icon</td>
                             <td>{{result.word}}</td>
-                            <td>transcription</td>
-                            <td>translation</td>
+                            <td>{{result.transcription}}</td>
+                            <td>{{result.translation}}</td>
                             <td>{{result.isCorrectAnswer}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <button class="btn-try-again">Try again</button>
+            <button (click)="restartGame()" class="btn-try-again">Try again</button>
         </div>
     </div>
 </div>

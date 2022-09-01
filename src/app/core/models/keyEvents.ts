@@ -5,5 +5,7 @@
     KEY2 = 50,
     KEY3 = 51,
     KEY4 = 52,
-    KEY5 = 53
+    KEY5 = 53,
+    LEFT = 37,
+    RIGHT = 39
   };
