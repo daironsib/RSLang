@@ -54,7 +54,27 @@ export interface IUserWords {
 
 export interface IStatistics {
   learnedWords: number,
-  optional: object
+  optional: {
+    gameStatistics: {
+      audio: {
+        correctAnswers: number,
+        wrongAnswers: number,
+        learnedWords: number,
+        longestSeries: number,
+        lastChanged: string
+      },
+      sprint: {
+        correctAnswers: number,
+        wrongAnswers: number,
+        learnedWords: number,
+        longestSeries: number,
+        lastChanged: string
+      }
+    },
+    wordStatistics: {
+      string: number
+    }
+  }
 }
 
 export interface ISettings {
