@@ -23,7 +23,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   public score: number = 0;
   public scoreRate: number = 1;
   public winStreak: number = 0;
-  public time: number = 5;
+  public time: number = 60;
   public destroyTimer$: Subject<void> = new Subject();
   public wordItem!: SprintGameWord;
 
