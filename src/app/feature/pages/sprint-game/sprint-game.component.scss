@@ -47,7 +47,8 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
 .main-container {
   margin: 0 auto;
   padding: 20px 200px;
-  min-height: 70vh;
+  min-height: 88.9vh;
+  background-color: #F7F6F0;
   background-image: url(/assets/images/Background.png);
   background-size: contain;
   background-repeat: no-repeat;
@@ -87,6 +88,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
     justify-content: center;
     list-style: none;
     padding: 0;
+    margin-bottom: 1rem;
     li {
       margin: 10px;
       button {
@@ -95,7 +97,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
         color: $white;
         cursor: pointer;
         padding: .5rem 1rem;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         transition: all .2s ease-in;
         &:hover {
           border: 2px solid $blue;
