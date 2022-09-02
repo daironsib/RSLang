@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from '@core/services/token-storage.service';
-import { ILogin, IRegister, ISettings, IStatistics, IUserWords, IWord } from '@core/models';
+import { ILogin, IOptionStatistics, IRegister, ISettings, IStatistics, IUserWords, IWord } from '@core/models';
 
 @Injectable()
 export class ApiService {
@@ -80,10 +80,10 @@ export class ApiService {
     return this.http.get<IStatistics>(`${this.USERS_URL}/${id}/statistics`, this.httpHeader);
   }
 
-  public updateStatistics(id: string, learnedWords: number): Observable<IStatistics> {
+  public updateStatistics(id: string, learnedWords: number, optional: IOptionStatistics): Observable<IStatistics> {
     return this.http.put<IStatistics>(`${this.USERS_URL}/${id}/statistics`, {
       learnedWords,
-      'optional': {}
+      optional
     }, this.httpHeader);
   }
 
