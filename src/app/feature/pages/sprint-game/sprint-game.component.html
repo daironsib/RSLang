@@ -1,7 +1,7 @@
 <div class="main-container">
     <div class="start-wrapper active" *ngIf="words.length === 0">
         <div class="start-screen">
-            <h1>Sprint</h1>
+            <h1 class="modal-title">Sprint</h1>
             <p class="word">"Sprint" is a practice for repeating memorized words from your vocabulary.</p>
             <p class="word">To play use mouse or "left" and "right" keys</p>
             <h2 class="modal-subtitle">Select level</h2>
@@ -41,7 +41,7 @@
     </div>
     <div class="game-window active" *ngIf="words.length > 0">
         <div class="modal-content" *ngIf="!showStatistic">
-            <h1>Score: <span id="score-label">{{score}}</span></h1>
+            <h1 class="modal-title">Score: <span id="score-label">{{score}}</span></h1>
             <h3 class="modal-subtitle">Remaining <span id="time">00:{{time}}</span></h3>   
             <div class="board" id="board" *ngIf="(sprintWordObservable | async) as wordItem">
                 <div id="answers-tracker">
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="modal-content" *ngIf="showStatistic">
-            <h1>Score: <span id="score-label">{{score}}</span></h1>
+            <h1 class="modal-title">Score: <span id="score-label">{{score}}</span></h1>
             <h2 class="modal-subtitle" id="win-title">
                 Results
             </h2>
