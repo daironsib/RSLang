@@ -44,10 +44,10 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.keyCode === KEY_CODE.LEFT) {
+    if (event.keyCode === KEY_CODE.LEFT && this.sprintGameWordStatistic.length < 20) {
       this.checkTrueAnswer(this.wordItem);
     }
-    if (event.keyCode === KEY_CODE.RIGHT) {
+    if (event.keyCode === KEY_CODE.RIGHT && this.sprintGameWordStatistic.length < 20) {
       this.checkFalseAnswer(this.wordItem);
     }
   }
@@ -156,7 +156,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     this.score = 0;
     this.scoreRate = 1;
     this.winStreak = 0;
-    this.time = 5;
+    this.time = 60;
     this.destroyTimer$ = new Subject();
     this.words = [];
   }
