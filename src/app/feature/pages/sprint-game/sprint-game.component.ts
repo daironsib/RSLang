@@ -85,6 +85,11 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   }
 
   public scorePoints(isCorrectAnswer: boolean) {
+    const trueSound = new Audio();
+    trueSound.src = '/assets/sounds/true.mp3';
+    const falseSound = new Audio();
+    falseSound.src = '/assets/sounds/false.mp3';
+
     if (isCorrectAnswer) {
       this.winStreak++;
 
@@ -92,11 +97,12 @@ export class SprintGameComponent implements OnInit, OnDestroy {
         this.winStreak = 0;
         this.scoreRate *= 2;
       }
-
+      trueSound.play();
       this.score += 10 * this.scoreRate;
     } else {
       this.winStreak = 0;
       this.scoreRate = 1;
+      falseSound.play();
     }
     
   }
