@@ -6,6 +6,8 @@ import { SprintGameWord, SprintGameWordStatistic } from '@core/models/sprint-gam
 import { interval, Observable, ReplaySubject, Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { KEY_CODE } from '@core/models/keyEvents';
+import { ActivatedRoute } from '@angular/router';
+import { TokenStorageService  } from '@core/services/token-storage.service'
 
 @Component({
   selector: 'app-sprint-game',
@@ -27,14 +29,26 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   public destroyTimer$: Subject<void> = new Subject();
   public wordItem!: SprintGameWord;
   public isGameActive: boolean = false;
+  public page!: number;
+  public group!: number;
+  public skipStartScreen: boolean = false;
 
-  constructor(private api: ApiService, public state: FooterService) {
+  constructor(private api: ApiService, public state: FooterService, private route: ActivatedRoute, private token: TokenStorageService) {
     this.footerState = false;
     this.sprintWordObservable = this.sprintGameSource.asObservable();
     this.sprintWordObservable.pipe(takeUntil(this.destroyTimer$)).subscribe(word => this.wordItem = word);
   }
 
   ngOnInit(): void {
+    this.route.queryParams
+      .subscribe(params => {
+        if (Object.keys(params).length > 0) {
+          this.page = params['page'];
+          this.group = params['group'];
+          this.skipStartScreen = true;
+          this.getWords(this.group, this.page);
+        }
+      });
     this.state.setFooterState(this.footerState);
   }
 
@@ -53,8 +67,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getWords(group: number) {
-    const page = Math.floor(Math.random() * 29);
+  public getWords(group: number, page: number = Math.floor(Math.random() * 29)) {
     this.api.getWords(group, page).subscribe(data => {
       this.words = data;
       this.isGameActive = true;
@@ -82,6 +95,8 @@ export class SprintGameComponent implements OnInit, OnDestroy {
       }
     } else {
       this.showStatistic = true;
+      this.getStatistics();
+      this.isGameActive = false;
       this.sprintGameSource.complete();
     }
   }
@@ -139,13 +154,13 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     interval(1000).pipe(
       takeUntil(this.destroyTimer$),
       map(() => {
-        console.log('4to nibud');
         if (this.time > 0) {
            this.time--;
         } else {
           this.destroyTimer$.next();
           this.destroyTimer$.complete();
           this.showStatistic = true;
+          this.getStatistics();
           this.isGameActive = false;
         }
       })
@@ -162,5 +177,28 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     this.time = 60;
     this.destroyTimer$ = new Subject();
     this.words = [];
+    if (this.skipStartScreen) {
+      this.getWords(this.group, this.page);
+    }
+  }
+
+  public getStatistics() {
+    const userId = this.token.getUser().id;
+    if (userId) {
+      this.api.getStatistics(userId).subscribe(data => {
+        console.log(data);
+        //   this.words = data;
+        //   this.isGameActive = true;
+        //   this.generateSprintGameWords();
+        //   this.getSprintWord();
+        //   this.startTimer();
+        // });
+        // public getStatistics(id: string): Observable<IStatistics> {
+        //   return this.http.get<IStatistics>(`${this.USERS_URL}/${id}/statistics`, this.httpHeader);
+        // }
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 }

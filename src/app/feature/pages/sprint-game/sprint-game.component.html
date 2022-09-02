@@ -1,5 +1,5 @@
 <div class="main-container">
-    <div class="start-wrapper active" *ngIf="words.length === 0">
+    <div class="start-wrapper active" *ngIf="words.length === 0 && !skipStartScreen">
         <div class="start-screen">
             <h1 class="modal-title">СПРИНТ</h1>
             <p class="word">«Спринт» - это тренировка для повторения заученных слов из вашего словаря</p>
