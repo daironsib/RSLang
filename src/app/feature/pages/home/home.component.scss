@@ -1,6 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@700&display=swap');
+
+$light: #F7F6F0;
+$dark: #24282C;
+$green: #D3F36B;
+%font80 {
+  font-family: 'Anonymous Pro', monospace;
+  font-style: bold;
+  font-size: 80px;
+  line-height: 80px;
+  color: $dark;
+}
+
+.main-container {
+  padding: 20px 200px;
+  background-color: $light;
+}
+
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+}
+
 .hero-text__image {
-  background: url(assets/images/goals);
+  background: url(/assets/images/goals.png);
   width: 440px;
-  height: 40px;
+  height: 80px;
   background-repeat: no-repeat;
+  background-size: contain;
+  
+}
+
+.hero-section__image {
+  background: url(/assets/images/hero.png);
+  width: 500px;
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.hero-text__content {
+  padding: 20px 0;
+  width: 500px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  h1 {
+    @extend %font80;
+  }
+  p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 29px;
+    color: $dark;
+  }
+  button {
+    background-color: $dark;
+    color: $light;
+    width: 151px;
+    border-radius: 10px;
+  }
+  mat-icon {
+    color: $green;
+  }
 }
