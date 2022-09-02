@@ -26,6 +26,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   public time: number = 60;
   public destroyTimer$: Subject<void> = new Subject();
   public wordItem!: SprintGameWord;
+  public isGameActive: boolean = false;
 
   constructor(private api: ApiService, public state: FooterService) {
     this.footerState = false;
@@ -44,10 +45,10 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.keyCode === KEY_CODE.LEFT && this.sprintGameWordStatistic.length < 20) {
+    if (event.keyCode === KEY_CODE.LEFT && this.isGameActive) {
       this.checkTrueAnswer(this.wordItem);
     }
-    if (event.keyCode === KEY_CODE.RIGHT && this.sprintGameWordStatistic.length < 20) {
+    if (event.keyCode === KEY_CODE.RIGHT && this.isGameActive) {
       this.checkFalseAnswer(this.wordItem);
     }
   }
@@ -56,6 +57,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     const page = Math.floor(Math.random() * 29);
     this.api.getWords(group, page).subscribe(data => {
       this.words = data;
+      this.isGameActive = true;
       this.generateSprintGameWords();
       this.getSprintWord();
       this.startTimer();
@@ -144,6 +146,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
           this.destroyTimer$.next();
           this.destroyTimer$.complete();
           this.showStatistic = true;
+          this.isGameActive = false;
         }
       })
     ).subscribe();
