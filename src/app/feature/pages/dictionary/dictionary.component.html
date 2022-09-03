@@ -1,43 +1,111 @@
 <div class="dictionary-container">
-    <div class="dictionary-header">
-        <div class="dictionary-container__btns">
-            <select  class="dictionary-select">
-                <option *ngFor="let index of [0,1,2,3,4,5]"
-                (click)="showGroup(index)"
-                class="dictionary-select__option">
-                <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[index])"></svg>
-                    Раздел №{{ index  + 1}}
-                </option>
-            </select>
-            <button class="dictionary__hard-btn"
-                (click)="showHardWords()">
+    <h2 class="dictionary-title">Учебник</h2>
+    <div class="dictionary-nav">
+        <div class="dictionary-btns">
+            <div class="dictionary-select-container">
+                <button class="btn dictionary__open-select" (click)="this.sectionMenu = !this.sectionMenu">
+                    <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[this.currentGroupIndex])"></svg>
+                    Раздел №{{ this.currentGroupIndex + 1}}
+                </button>
+                <div class="btn dictionary-select" [ngClass]="this.sectionMenu ? 'is-opened' : ''">
+                    <li *ngFor="let index of totalSections" (click)="showGroup(index); this.sectionMenu = false"
+                        class="btn dictionary-select__option">
+                        <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[index])"></svg>
+                        Раздел №{{ index + 1}}
+                    </li>
+                </div>
+            </div>
+            <button class="btn dictionary__hard-btn" (click)="showHardWords()">
                 <svg [innerHTML]="svgService.getHardWordIcon()"></svg> Сложное
             </button>
-            <select  class="dictionary-select">
-                <option *ngFor="let index of [0,1,2,3,4,5]"
-                (click)="showGroup(index)"
-                class="dictionary-select__option">
-                <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[index])"></svg>
-                    Раздел №{{ index  + 1}}
-                </option>
-            </select>
+            <div class="games-select-container">
+                <button class="btn games__open-select" (click)="this.gameMenu = !this.gameMenu">
+                    <img src="./assets/svg/puzzle.svg" alt="">
+                    Проверить знания
+                </button>
+                <ul class="games-select" [ngClass]="this.gameMenu ? 'is-opened' : ''">
+                    <li class="btn game__btn" [routerLink]="['/', paths.SprintGame]"
+                        [queryParams]="{group: currentGroupIndex, page: pageNo}">
+                        <img src="./assets/svg/puzzle.svg" alt=""> Спринт
+                    </li>
+                    <li class="btn game__btn">
+                        <img src="./assets/svg/puzzle.svg" alt=""> Аудиовызов
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="dictionary-container__btns">
-            <button class="dictionary__btn" mat-stroked-button color="primary" [routerLink]="['/', paths.SprintGame]" [queryParams]="{group: currentGroupIndex, page: pageNo}">
-                <mat-icon> directions_run</mat-icon> Sprint
-            </button>
-            <button class="dictionary__btn">
-                <mat-icon>record_voice_over</mat-icon> Audiocall
-            </button>
+        <div *ngIf="!this.isHardWordsPage" class="dictionary-pagination">
+            <button *ngIf="this.pageNo > 0" class="btn prev" (click)="this.prevPage()"></button>
+            <div class="btn current-page" (click)="this.pagesMenu = !this.pagesMenu">
+                <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                Страница {{ this.pageNo + 1}}
+            </div>
+            <ul class="pages-select" [ngClass]="this.pagesMenu ? 'is-opened' : ''">
+                <li *ngFor="let index of totalPages"
+                    (click)="showGroup(this.currentGroupIndex, index); this.pagesMenu = false"
+                    class="btn pages-select__option">
+                    <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                    Страница {{ index + 1}}
+                </li>
+            </ul>
+            <button *ngIf="this.pageNo < 19" class="btn next" (click)="this.nextPage()"></button>
         </div>
     </div>
-    <div class="dictionary-body">
-        <app-word *ngFor="let word of words; let i = index" [word]="word">
-        </app-word>
-    </div>
-    <div *ngIf="!this.isHardWordsPage" class="dictionary-pagination">
-        <button class="prev" (click)="this.prevPage()">prev</button>
-        <div class="current-page">Страница {{ this.pageNo + 1}}</div>
-        <button class="next" (click)="this.nextPage()">next</button>
+</div>
+<div class="dictionary-body">
+    <app-word *ngFor="let word of words; let i = index" [word]="word">
+    </app-word>
+</div>
+<div class="dictionary-container">
+    <div class="dictionary-nav">
+        <div class="dictionary-btns">
+            <div class="dictionary-select-container">
+                <button class="btn dictionary__open-select" (click)="this.sectionMenu = !this.sectionMenu">
+                    <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[this.currentGroupIndex])"></svg>
+                    Раздел №{{ this.currentGroupIndex + 1}}
+                </button>
+                <div class="btn dictionary-select" [ngClass]="this.sectionMenu ? 'is-opened' : ''">
+                    <li *ngFor="let index of totalSections" (click)="showGroup(index); this.sectionMenu = false"
+                        class="btn dictionary-select__option">
+                        <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[index])"></svg>
+                        Раздел №{{ index + 1}}
+                    </li>
+                </div>
+            </div>
+            <button class="btn dictionary__hard-btn" (click)="showHardWords()">
+                <svg [innerHTML]="svgService.getHardWordIcon()"></svg> Сложное
+            </button>
+            <div class="games-select-container">
+                <button class="btn games__open-select" (click)="this.gameMenu = !this.gameMenu">
+                    <img src="./assets/svg/puzzle.svg" alt="">
+                    Проверить знания
+                </button>
+                <ul class="games-select" [ngClass]="this.gameMenu ? 'is-opened' : ''">
+                    <li class="btn game__btn" [routerLink]="['/', paths.SprintGame]"
+                        [queryParams]="{group: currentGroupIndex, page: pageNo}">
+                        <img src="./assets/svg/puzzle.svg" alt=""> Спринт
+                    </li>
+                    <li class="btn game__btn">
+                        <img src="./assets/svg/puzzle.svg" alt=""> Аудиовызов
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="!this.isHardWordsPage" class="dictionary-pagination">
+            <button *ngIf="this.pageNo > 0" class="btn prev" (click)="this.prevPage()"></button>
+            <div class="btn current-page" (click)="this.pagesMenu = !this.pagesMenu">
+                <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                Страница {{ this.pageNo + 1}}
+            </div>
+            <ul class="pages-select" [ngClass]="this.pagesMenu ? 'is-opened' : ''">
+                <li *ngFor="let index of totalPages"
+                    (click)="showGroup(this.currentGroupIndex, index); this.pagesMenu = false"
+                    class="btn pages-select__option">
+                    <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                    Страница {{ index + 1}}
+                </li>
+            </ul>
+            <button *ngIf="this.pageNo < 19" class="btn next" (click)="this.nextPage()"></button>
+        </div>
     </div>
 </div>

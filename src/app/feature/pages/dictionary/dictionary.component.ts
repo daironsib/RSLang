@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IWord } from '@core/models/api';
+import { Paths } from '@core/models/consts';
 import { ApiService } from '@core/services/api.service';
 import { FooterService } from '@core/services/footer.service';
 import { SvgService } from '@core/services/svg.service';
@@ -19,14 +20,20 @@ export class DictionaryComponent implements OnInit {
   public pageNo: number;
   public currentGroupIndex: number;
   public words: IWord[] = [];
-  public folderColors: string[] = ['9B51E0', 'ff6781', '00bfff', 'ccff00', '00df37', 'ffa500']
+  public paths = Paths;
+  public folderColors = ['9B51E0','ff6781','00bfff','ccff00','51D9A8','FC8A4D'];
+  public totalSections = [...Array(6).keys()];
+  public totalPages = [...Array(20).keys()];
+  public sectionMenu: boolean = false;
+  public gameMenu: boolean = false;
+  public pagesMenu: boolean = false;
 
   constructor(
     public state: FooterService,
     public apiService: ApiService,
     public wordService: WordService,
     public tokenStorageService: TokenStorageService,
-    public svgService: SvgService
+    public svgService: SvgService,
   ) {
     this.footerState = true;
     this.pageNo = 0;
