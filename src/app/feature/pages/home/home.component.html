@@ -13,7 +13,7 @@
                             Здесь ты выучишь их быстро и весело!
                         </p>
                     </div>
-                    <button class="hero-content__btn" mat-stroked-button>
+                    <button class="hero-content__btn" mat-stroked-button [routerLink]="['/', paths.Dictionary]">
                         <mat-icon class="hero-btn__icon">play_arrow</mat-icon> Начать учить!
                     </button>
                 </div>
@@ -31,7 +31,7 @@
                 <p>
                     Зарегистрируйся, чтобы получить полный доступ к нашему сервису
                 </p>
-                <button mat-stroked-button class="user-btn">
+                <button mat-stroked-button class="user-btn" [routerLink]="['/', paths.Register]">
                     <mat-icon>person_add</mat-icon> Зарегистрироваться
                 </button>
             </div>
