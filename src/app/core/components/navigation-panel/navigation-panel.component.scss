@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .header-container {
     padding: 20px 200px;
     display: flex;
@@ -8,8 +12,19 @@
 .nav-container {
     display: flex;
     justify-content: space-between;
-    button:focus {
-        background: #E9E9E3;
+}
+
+.nav-container__btns {
+    display: flex;
+    gap: 0.7rem;
+    button {
+        transition: 0.3s ease;
+        &:hover {
+            border: 2px solid #24282C;
+        }
+        &:focus {
+            background: #E9E9E3;
+        }
     }
 }
 
@@ -41,12 +56,16 @@
     background-image: url(/assets/images/logoLang.png);
     background-size: contain;
     background-repeat: no-repeat;
-     background-position: center;
+    background-position: center;
 }
 
 .user-btn {
+    transition: 0.3s ease;
     background: #24282C;
     color: #E9E9E3;
+    &:hover {
+        background: #3F4850;
+    }
 }
 
 .user-icon {
