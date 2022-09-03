@@ -52,29 +52,27 @@ export interface IUserWords {
   optional: object
 }
 
+export interface IGameStatistics {
+  correctAnswers: number,
+  wrongAnswers: number,
+  learnedWords: number,
+  longestSeries: number,
+  lastChanged: string
+}
+
+export interface IWordStatistics {
+  string: number
+}
+
+export interface IOptionStatistics {
+    audio?: IGameStatistics,
+    sprint?: IGameStatistics,
+    wordsStatistics?: IWordStatistics
+}
+
 export interface IStatistics {
   learnedWords: number,
-  optional: {
-    gameStatistics: {
-      audio: {
-        correctAnswers: number,
-        wrongAnswers: number,
-        learnedWords: number,
-        longestSeries: number,
-        lastChanged: string
-      },
-      sprint: {
-        correctAnswers: number,
-        wrongAnswers: number,
-        learnedWords: number,
-        longestSeries: number,
-        lastChanged: string
-      }
-    },
-    wordStatistics: {
-      string: number
-    }
-  }
+  optional: IOptionStatistics
 }
 
 export interface ISettings {
