@@ -3,6 +3,7 @@ import { IWord } from '@core/models';
 import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
+import { TokenStorageService } from '@core/services/token-storage.service';
 
 @Component({
   selector: 'app-audio-game',
@@ -21,7 +22,7 @@ export class AudioGameComponent implements OnInit {
   public goodWords: IWord[] = [];
   public badWords: IWord[] = [];
 
-  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService) { }
+  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void { }
 
@@ -113,6 +114,30 @@ export class AudioGameComponent implements OnInit {
   public checkVariant(variant: string): void {
     if (variant === this.words[this.currentIndexWord].wordTranslate) {
       this.goodWords.push(this.words[this.currentIndexWord]);
+      const userID = this.tokenStorage.getUser().id;
+      const wordID = this.words[this.currentIndexWord].id;
+      const { difficulty } = this.form;
+      const payload = {
+        optional: {
+          game: true,
+          audio: {
+            right: 1,
+            wrong: 0
+          },
+          lastChanged: "03.09.2022"
+        }
+      }
+
+      if (userID) {
+        this.api.createUserWords(userID, wordID, payload).subscribe(
+          data => {
+            console.log(data);
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      }
     } else {
       this.badWords.push(this.words[this.currentIndexWord]);
     }
