@@ -1,80 +1,161 @@
 .wordCard {
-    height: 250px;
+    max-width: 1034px;
+    width: 100%;
+    min-height: 400px;
     display: flex;
-    gap: 0.6rem;
-    border: 2px solid #7b1fa2;
-    border-radius: 5px;
-    margin: 0 auto 1rem;
-    padding: 0.6rem;
+    margin: 0 auto 60px;
+}
+
+.wordCard-image {
+    max-width: 390px;
+    height: auto;
+    width: 100%;
+    margin-right: 24px;
 }
 
 .wordCard-image img {
     object-fit: cover;
     width: 100%;
-    height: 100%;
+    height: auto;
+    border-radius: 24px;
+}
+
+.wordCard-content {
+    width: 100%;
 }
 
 .wordCard-header__container {
-    width: calc(80vw - 400px);
     display: flex;
-    justify-content: space-between;
+}
+
+.wordCard-header__audio-btn {
+    width: 62px;
+    height: 62px;
+    background: #24282C;
+    border-radius: 50%;
+    border: none;
+    padding: 20px;
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.wordCard-header__panel {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
 }
 
 .wordCard-header__btns {
     display: flex;
-    gap: 0.6rem;
-}
-
-.wordCard-header {
-    background-size: cover;
-    background-repeat: no-repeat;
+    flex-direction: column;
 }
 
 .wordCard-header__block {
     display: flex;
     flex-direction: column;
+    background: #E9E9E3;
+    border-radius: 50px 24px 24px 24px;
+    padding: 20px;
+    min-height: 144px;
 }
 
 .wordCard-header__title {
-    font-family: 'Red Hat Text';
-    font-style: normal;
+    font-family: 'Anonymous Pro', monospace;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 40px;
+    line-height: 80%;
+    color: #24282C;
+    margin-bottom: 5px;
 }
 
-.wordCard-header__panel {
-    display: flex;
-    gap: 0.6rem;
-    align-items: center;
+.wordCard-header__transcription {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: #8D8F8E;
+    margin: 0;
 }
 
-.wordCard-header__text {
-    font-weight: 400;
-    font-size: 1.5rem;
+.wordCard-header__translate {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #24282C;
+    margin: 15px 0 0;
 }
 
 .wordCard-footer__text {
-    font-weight: 400;
-    font-size: 16px;
-    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #24282C;
+    margin: 0 0 10px 0;
 }
 
 .wordCard-footer__subtext {
-    font-weight: 400;
-    font-size: 14px;
-    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 120%;
+    color: #8D8F8E;
+    margin: 0 0 20px 0;
 }
 
 .wordCard-footer__block {
-    margin-top: 0.6rem;
+    margin-top: 30px;
+    padding: 0 20px;
 }
 
-.dictionary__btn {
-    border: 2px solid #7b1fa2;
-    transition: 0.3s ease-in-out;
+.wordCard__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    margin-bottom: 15px;
 }
 
-.dictionary__btn:hover {
-    background-color: #7b1fa2;
-    color: white;
+.wordCard__btn:hover svg {
+    opacity: .7;
+}
+
+.wordCard__btn.is-disabled {
+    cursor: default;
+}
+.wordCard__btn.is-disabled:hover svg {
+    opacity: 1;
+}
+
+.wordCard__btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.wordCard__btn.statistic__btn {
+    margin-bottom: 0;
+}
+
+.is-hard-word {
+    border: 2px dashed #EB5757;
+}
+
+.is-learned-word {
+    border: 2px solid #D3F36B;
+}
+
+.wordCard-folder-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0 15px 0 auto;
 }

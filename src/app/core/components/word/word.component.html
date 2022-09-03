@@ -4,76 +4,68 @@
     </div>
     <div class="wordCard-content">
         <div class="wordCard-header">
-            <div class="wordCard-header__block">
+            <div class="wordCard-header__block"
+            [ngClass]="{'is-hard-word': this.wordService.isHardWord(word), 'is-learned-word': this.wordService.isLearnedWord(word) }">
                 <div class="wordCard-header__container">
+                    <button
+                        class="wordCard-header__audio-btn"
+                        (click)="this.audioPlayerService.newAudio([word.audio, word.audioMeaning, word.audioExample])">
+                        <img [src]="AUDIO_ICON_URL" alt="">
+                    </button>
                     <div class="wordCard-header__panel">
-                        <p class="wordCard-header__text">
-                            {{ word.word }} - {{ word.transcription }}
+                        <h3 class="wordCard-header__title">
+                            {{word.word}}
+                        </h3>
+                        <p class="wordCard-header__transcription">
+                            {{ word.transcription }}
                         </p>
-                        <button 
-                            mat-mini-fab 
-                            color="primary"
-                            (click)="this.audioPlayerService.newAudio([word.audio, word.audioMeaning, word.audioExample])">
-                            <mat-icon>volume_up</mat-icon>
-                        </button>
+                        <p class="wordCard-header__translate">
+                            {{ word.wordTranslate }}
+                        </p>
+                    </div>
+                    <div class="wordCard-folder-icon">
+                        <svg [innerHTML]="this.svgService.getFolderIcon('9B51E0')"></svg>
                     </div>
                     <div *ngIf="tokenStorageService.getToken()" class="wordCard-header__btns">
-                       <button 
-                            class="dictionary__btn" 
-                            mat-stroked-button 
-                            color="primary"
-                            (click)="this.wordService.isHardWord(word)"
-                        >
-                            <mat-icon>done</mat-icon> is hard
+                        <div *ngIf="this.wordService.isLearnedWord(word); else add">
+                            <button class="wordCard__btn is-disabled">
+                            <svg [innerHTML]="svgService.getLernedIcon()"></svg>
                         </button>
-                        <button 
-                            class="dictionary__btn" 
-                            mat-stroked-button 
-                            color="primary"
-                            (click)="this.wordService.addLearnedWord(word)"
-                        >
-                            <mat-icon>done</mat-icon> Studied
-                        </button>
-                            <button 
-                                class="dictionary__btn" 
-                                mat-stroked-button 
-                                color="primary"
-                                (click)="this.wordService.addHardWord(word)"
-                            >
-                                <mat-icon>school</mat-icon> Mark as Hard
-                            </button>  
-                       <!--  <div *ngIf="this.wordService.isHardWord(word); else add">
-                            <button 
-                                class="dictionary__btn" 
-                                mat-stroked-button 
-                                color="primary"
-                                (click)="this.wordService.addHardWord(word)"
-                            >
-                                <mat-icon>school</mat-icon> Unmark as Hard
-                            </button>
                         </div>
                         <ng-template #add>
-                            <button 
-                                class="dictionary__btn" 
-                                mat-stroked-button 
-                                color="primary"
-                                (click)="this.wordService.addHardWord(word)"
-                            >
-                                <mat-icon>school</mat-icon> Mark as Hard
+                            <button class="wordCard__btn"
+                            (click)="this.wordService.addLearnedWord(word)">
+                            <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                        </button>
+                        </ng-template>
+                        <div *ngIf="this.wordService.isHardWord(word) && this.dictionaryComponent.isHardWordsPage">
+                            <button class="wordCard__btn"
+                                (click)="this.wordService.removeHardWord(word)">
+                                <svg [innerHTML]="svgService.getRemoveHardWordIcon()"></svg>
                             </button>
-                        </ng-template> -->
-                    </div>  
+                        </div>
+                        <div *ngIf="this.wordService.isHardWord(word) && !this.dictionaryComponent.isHardWordsPage">
+                            <button class="wordCard__btn is-disabled">
+                                <svg [innerHTML]="svgService.getHardWordIcon()"></svg>
+                            </button>
+                        </div>
+                        <div *ngIf="!this.wordService.isHardWord(word)">
+                            <button class="wordCard__btn"
+                                (click)="this.wordService.addHardWord(word)">
+                                <svg [innerHTML]="svgService.getNotHardWordIcon()"></svg>
+                            </button>
+                        </div>
+                        <button class="wordCard__btn statistic__btn is-disabled">
+                                <svg [innerHTML]="svgService.getNoStatisticIcon()"></svg>
+                        </button>
+                    </div>
                 </div>
-                <h3 class="wordCard-header__title">
-                    {{word.wordTranslate}}
-                </h3>
             </div>
         </div>
         <div class="wordCard-footer">
             <div class="wordCard-footer__block">
                 <p class="wordCard-footer__text" [innerHTML]="word.textMeaning"></p>
                 <p class="wordCard-footer__subtext">
-                    <mat-icon>subdirectory_arrow_right</mat-icon>
                     {{word.textMeaningTranslate}}
                 </p>
             </div>
@@ -81,7 +73,6 @@
                 <p class="wordCard-footer__text" [innerHTML]="word.textExample">
                 </p>
                 <p class="wordCard-footer__subtext">
-                    <mat-icon>subdirectory_arrow_right</mat-icon>
                     {{word.textExampleTranslate}}
                 </p>
             </div>

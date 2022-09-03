@@ -1,26 +1,32 @@
 <div class="dictionary-container">
     <div class="dictionary-header">
         <div class="dictionary-container__btns">
-            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="0"
-                (click)="showGroup(0)">Section 1</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="1"
-                (click)="showGroup(1)">Section 2</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="2"
-                (click)="showGroup(2)">Section 3</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="3"
-                (click)="showGroup(3)">Section 4</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="4"
-                (click)="showGroup(4)">Section 5</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="5"
-                (click)="showGroup(5)">Section 6</button>
-            <button class="dictionary__btn" mat-stroked-button color="primary" data-group="6"
-                (click)="showHardWords()">Section "Hard"</button>
+            <select  class="dictionary-select">
+                <option *ngFor="let index of [0,1,2,3,4,5]"
+                (click)="showGroup(index)"
+                class="dictionary-select__option">
+                <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[index])"></svg>
+                    Раздел №{{ index  + 1}}
+                </option>
+            </select>
+            <button class="dictionary__hard-btn"
+                (click)="showHardWords()">
+                <svg [innerHTML]="svgService.getHardWordIcon()"></svg> Сложное
+            </button>
+            <select  class="dictionary-select">
+                <option *ngFor="let index of [0,1,2,3,4,5]"
+                (click)="showGroup(index)"
+                class="dictionary-select__option">
+                <svg [innerHTML]="this.svgService.getFolderIcon(folderColors[index])"></svg>
+                    Раздел №{{ index  + 1}}
+                </option>
+            </select>
         </div>
         <div class="dictionary-container__btns">
             <button class="dictionary__btn" mat-stroked-button color="primary" [routerLink]="['/', paths.SprintGame]" [queryParams]="{group: currentGroupIndex, page: pageNo}">
                 <mat-icon> directions_run</mat-icon> Sprint
             </button>
-            <button class="dictionary__btn" mat-stroked-button color="primary">
+            <button class="dictionary__btn">
                 <mat-icon>record_voice_over</mat-icon> Audiocall
             </button>
         </div>
@@ -29,13 +35,9 @@
         <app-word *ngFor="let word of words; let i = index" [word]="word">
         </app-word>
     </div>
-    <div class="dictionary-paginator">
-        <mat-paginator 
-            [length]="this.length" 
-            [pageSize]="this.pageSize" 
-            [pageIndex]="this.pageNo"
-            (page)="getPage($event)" 
-            aria-label="Select page">
-        </mat-paginator>
+    <div *ngIf="!this.isHardWordsPage" class="dictionary-pagination">
+        <button class="prev" (click)="this.prevPage()">prev</button>
+        <div class="current-page">Страница {{ this.pageNo + 1}}</div>
+        <button class="next" (click)="this.nextPage()">next</button>
     </div>
 </div>

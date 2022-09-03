@@ -24,7 +24,7 @@ const PAGES = [
 
 @NgModule({
   declarations: [
-    ...PAGES
+    ...PAGES  
   ],
   imports: [
     CommonModule,

@@ -1,75 +1,76 @@
 import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { IUserWords, IWord } from '@core/models/api';
+import { IWord } from '@core/models/api';
 import { ApiService } from '@core/services/api.service';
 import { FooterService } from '@core/services/footer.service';
+import { SvgService } from '@core/services/svg.service';
 import { TokenStorageService } from '@core/services/token-storage.service';
 import { WordService } from '@core/services/word.service';
+
+const LAST_PAGE = 'last-page';
 
 @Component({
   selector: 'app-dictionary',
   templateUrl: './dictionary.component.html',
-  styleUrls: ['./dictionary.component.scss']
+  styleUrls: ['./dictionary.component.scss'],
 })
 export class DictionaryComponent implements OnInit {
   public footerState: boolean;
+  public isHardWordsPage: boolean = false;
   public pageNo: number;
-  public pageSize: number;
-  public length: number;
   public currentGroupIndex: number;
   public words: IWord[] = [];
-  public hardWords: IUserWords[] = [];
-  
-  constructor(public state: FooterService, public apiService: ApiService, public wordService: WordService, public tokenStorageService: TokenStorageService) {
+  public folderColors: string[] = ['9B51E0', 'ff6781', '00bfff', 'ccff00', '00df37', 'ffa500']
+
+  constructor(
+    public state: FooterService,
+    public apiService: ApiService,
+    public wordService: WordService,
+    public tokenStorageService: TokenStorageService,
+    public svgService: SvgService
+  ) {
     this.footerState = true;
     this.pageNo = 0;
-    this.pageSize = 20;
-    this.length = 600;
     this.currentGroupIndex = 0;
   }
- 
-  showGroup(group: number, page: number = 0) {
+
+  public showGroup(group: number, page: number = 0) {
+    this.isHardWordsPage = false;
+    window.localStorage.setItem(LAST_PAGE, JSON.stringify({ group, page }));
     this.pageNo = page;
-    this.pageSize = 20;
-    this.length = 600;
     this.currentGroupIndex = group;
-    this.wordService.getAll(group, page).subscribe((value: IWord[]) => this.words = value);
-  }
-  
-  showHardWords() {
-    /* this.words = []; */
+    this.wordService.getLearnedWords();
     this.wordService.getHardWords();
-    this.words = this.wordService.hardWords;
-    this.pageSize = this.words.length;
-    this.length = this.words.length;
-    /* .subscribe(
-      data => {
-        this.hardWords = data.filter(word => word.difficulty === 'hard');        
-        this.hardWords.map(word => 
-          this.apiService.getWordsID(word.wordId)
-          .subscribe(data => {
-            this.words.push(data)
-            this.pageSize = this.words.length;
-            this.length = this.words.length;
-            })
-          );
-        }
-    ); */
+    this.wordService.getAll(group, page).subscribe((value: IWord[]) => {
+      this.words = value;
+    });
   }
-  
-  getPage(event: PageEvent) {
-    if(event.pageIndex > this.pageNo) {
-      this.pageNo += 1;
-    } else {
-      this.pageNo > 2 
-      ? this.pageNo -= 1 
-      : this.pageNo = 1
-    }
+
+  public showHardWords() {
+    this.isHardWordsPage = true;
+    window.localStorage.setItem(LAST_PAGE, JSON.stringify('hard'));
+    this.words = this.wordService.getHardWords();
+  }
+
+  public nextPage() {
+    this.pageNo < 19 ? (this.pageNo += 1) : this.pageNo;
     this.showGroup(this.currentGroupIndex, this.pageNo);
- }
+  }
+
+  public prevPage() {
+    this.pageNo > 0 ? (this.pageNo -= 1) : this.pageNo;
+    this.showGroup(this.currentGroupIndex, this.pageNo);
+  }
 
   ngOnInit(): void {
     this.state.setFooterState(this.footerState);
-    this.showGroup(0,0);
+    const page = window.localStorage.getItem(LAST_PAGE);
+    if (page) {
+      const value = JSON.parse(page);
+      value === 'hard'
+        ? this.showHardWords()
+        : this.showGroup(value.group, value.page);
+    } else {
+      this.showGroup(0, 0);
+    }
   }
 }

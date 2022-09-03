@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IFilterResponse, IUserWords, IWord } from '@core/models';
+import { IWord } from '@core/models';
 import { Observable } from 'rxjs/internal/Observable';
 import { ApiService } from '@core/services/api.service';
 import { TokenStorageService } from './token-storage.service';
@@ -10,62 +10,73 @@ import { TokenStorageService } from './token-storage.service';
 export class WordService {
   public userId = this.tokenStorageService.getUser().id;
   public hardWords: IWord[] = [];
+  public learnedWords: IWord[] = [];
 
   constructor(
     public apiService: ApiService,
     public tokenStorageService: TokenStorageService
   ) {}
 
-  getAll(group: number, page: number): Observable<IWord[]> {
+  public getAll(group: number, page: number): Observable<IWord[]> {
     return this.apiService.getWords(group, page);
   }
 
- isHardWord(word: IWord) {
-  
-  return this.apiService.getUserWordById(this.userId, word.id)
-  .subscribe(word => {
-    word.difficulty === 'hard';
-  });
-    /* this.getHardWords().subscribe((value: IFilterResponse[]) => this.hardWords = value[0].paginatedResults);
-   this.hardWords.forEach((word: IWordResponse) => {
-    if(word._id === wordId){
-      
-      console.log( true);
-    }
-    return word._id == wordId;
-   }); */
+  public isHardWord(word: IWord): boolean {
+    return this.hardWords.find((hard) => hard.id === word.id) ? true : false;
   }
 
-  addHardWord(word: IWord) {
-    return this.apiService
-      .createUserWords(this.userId, word.id, 'hard')
-      .subscribe((data) => console.log(data.difficulty));
+  public addHardWord(word: IWord) {
+    this.apiService.createUserWords(this.userId, word.id, 'hard').subscribe();
+    return this.getHardWords();
   }
 
-  /* removeHardWord(wordId: string) {
-    return this.apiService
-      .deleteUserWordById(this.userId, wordId)
-      .subscribe(        
-        err => console.log('HTTP Error', err), 
-      );
-  } */
-
-  addLearnedWord(word: IWord) {
-    return this.apiService
-      .createUserWords(this.userId, word.id, 'learned')
-      .subscribe((data) => console.log(data.difficulty));
+  public removeHardWord(word: IWord) {
+    this.apiService.deleteUserWordById(this.userId, word.id).subscribe();
+    return this.getHardWords();
   }
 
-  getHardWords() {
-    this.apiService.getUserWords(this.userId).subscribe(
-      data => { 
-        data.filter(word => word.difficulty === 'hard').map(word => 
-          this.apiService.getWordsID(word.wordId)
-          .subscribe(data => {
+  public getHardWords() { 
+    32
+    this.hardWords = [];
+    this.apiService.getUserWords(this.userId).subscribe((data) => {
+      data
+        .filter((word) => word.difficulty === 'hard')
+        .map((word) =>
+          this.apiService.getWordsID(word.wordId).subscribe((data) => {
             this.hardWords.push(data);
-            return this.hardWords;
           })
-        )
-  })
+        );
+    });
+    this.hardWords = [...new Set(this.hardWords)];
+    return this.hardWords;
+  }
+
+  public isLearnedWord(word: IWord): boolean {
+    return this.learnedWords.find((learned) => learned.id === word.id)
+      ? true
+      : false;
+  }
+
+  public addLearnedWord(word: IWord) {
+    this.apiService
+      .createUserWords(this.userId, word.id, 'learned')
+      .subscribe();
+    return this.getLearnedWords();
+  }
+
+  public getLearnedWords() {
+    this.learnedWords = [];
+    this.apiService.getUserWords(this.userId).subscribe((data) => {
+      data
+        .filter((word) => word.difficulty === 'learned')
+        .map((word) =>
+          this.apiService.getWordsID(word.wordId).subscribe((data) => {
+            this.learnedWords.push(data);
+          })
+        );
+    });
+    this.learnedWords = [...new Set(this.learnedWords)];
+    console.log(this.learnedWords);
+    return this.learnedWords;
   }
 }
