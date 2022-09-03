@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FooterService } from '@core/services/footer.service';
+import { Paths } from '@core/models';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,7 @@ import { FooterService } from '@core/services/footer.service';
 })
 export class HomeComponent implements OnInit {
   public footerState: boolean;
+  public paths = Paths;
 
   constructor(public state: FooterService) {
     this.footerState = true;
