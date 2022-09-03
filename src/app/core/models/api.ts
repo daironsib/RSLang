@@ -55,13 +55,19 @@ export interface IUserWords {
 export interface IGameStatistics {
   correctAnswers: number,
   wrongAnswers: number,
+  newWords: number,
   learnedWords: number,
   longestSeries: number,
   lastChanged: string
 }
 
 export interface IWordStatistics {
-  string: number
+  string: {
+    newWords: number,
+    learnedWords: number,
+    correctAnswers: number,
+    wrongAnswers: number
+  }
 }
 
 export interface IOptionStatistics {
