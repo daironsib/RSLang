@@ -204,6 +204,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     return {
       correctAnswers: this.sprintGameWordStatistic.filter((item) => item.isCorrectAnswer).length,
       wrongAnswers: this.sprintGameWordStatistic.filter((item) => !item.isCorrectAnswer).length,
+      newWords: 0,
       learnedWords: 0,
       longestSeries: this.storedLongestSeries,
       lastChanged: `${new Date().getDate()}.${new Date().getMonth() + 1}`
