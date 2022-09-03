@@ -3,6 +3,7 @@
 $light: #F7F6F0;
 $dark: #24282C;
 $green: #D3F36B;
+$modal: #E9E9E3;
 %font80 {
   font-family: 'Anonymous Pro', monospace;
   font-style: bold;
@@ -10,13 +11,22 @@ $green: #D3F36B;
   line-height: 80px;
   color: $dark;
 }
+%font20 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+  color: $dark;
+}
 
 .main-container {
-  padding: 20px 200px;
   background-color: $light;
 }
 
-.hero-section {
+.hero-section__block {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 20px 200px;
   display: flex;
   justify-content: space-between;
 }
@@ -27,7 +37,6 @@ $green: #D3F36B;
   height: 80px;
   background-repeat: no-repeat;
   background-size: contain;
-  
 }
 
 .hero-section__image {
@@ -45,16 +54,11 @@ $green: #D3F36B;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   h1 {
     @extend %font80;
   }
   p {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 29px;
-    color: $dark;
+    @extend %font20;
   }
   button {
     background-color: $dark;
@@ -64,5 +68,58 @@ $green: #D3F36B;
   }
   mat-icon {
     color: $green;
+  }
+}
+
+.about-section {
+  height: 840px;
+  background-color: $dark;
+}
+
+.about-section__triangle {
+  padding: 60px 220px 40px 220px;
+//   background: $light;
+//   border-radius: 10px;
+//   position: relative;
+//   z-index: 1;
+//   color: $light;
+}
+
+// .about-section__triangle::after {
+//   content: ''; 
+//   position: absolute;
+//   z-index: 2;
+//   left: 10px; bottom: -1170px;
+//   border: 750px solid transparent;
+//   border-top: 420px solid $light;
+// }
+
+.about-section__content {
+  z-index: 3;
+  margin: 0 auto;
+  width: 1000px;
+  height: 700px;
+  background-color: $modal;
+  border-radius: 70px;
+  text-align: center;
+  padding: 68px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  h2 {
+    @extend %font80;
+  }
+  p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 54px;
+    color: $dark;
+  }
+  p:last-of-type  {
+    @extend %font20;
+}
+  span {
+    text-decoration: underline;
   }
 }
