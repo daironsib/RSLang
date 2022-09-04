@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { IGameStatistics, IOptionStatistics, IStatistics, IUserWordProgress, IUserWord, IWord, WordDifficulty } from '@core/models';
+import { IGameStatistics, IOptionStatistics, IStatistics, IUserWordProgress, IUserWord, IWord, WordDifficulty, IWordStatistics } from '@core/models';
 import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
@@ -12,6 +12,15 @@ import { FooterService } from '@core/services/footer.service';
   styleUrls: ['./audio-game.component.scss']
 })
 export class AudioGameComponent implements OnInit {
+  public currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+  public wordStatistic: IWordStatistics = {
+    [this.currentDate]: {
+      newWords: 0,
+      learnedWords: 0,
+      correctAnswers: 0,
+      wrongAnswers: 0
+    }
+  };
   public footerState: boolean;
   private MAX_PAGE: number = 29;
   public currentSlide: number = 1;
@@ -36,7 +45,7 @@ export class AudioGameComponent implements OnInit {
     learnedWords: 0,
     longestSeries: 0,
     newWords: 0,
-    lastChanged: ''
+    lastChanged: this.currentDate
   };
   private userID = this.tokenStorage.getUser().id;
   private answerIsRight: boolean = false;
@@ -141,12 +150,14 @@ export class AudioGameComponent implements OnInit {
     if (this.isCorrect(variant)) {
       this.goodWords.push(this.words[this.currentIndexWord]);
       this.optionalStats.correctAnswers++;
+      this.wordStatistic[this.currentDate].correctAnswers++;
       this.rightAnswerCounter++;
       this.wordProgress.correctAnswers++;
       this.answerIsRight = true;
       this.applyWordDifficulty();
     } else {
       this.badWords.push(this.words[this.currentIndexWord]);
+      this.wordStatistic[this.currentDate].wrongAnswers++;
       this.optionalStats.wrongAnswers++;
       this.rightAnswerCounter = 0;
       this.wordProgress.correctAnswers--;
@@ -168,6 +179,7 @@ export class AudioGameComponent implements OnInit {
       const wordID = this.words[this.currentIndexWord].id;
       this.api.createUserWordById(this.userID, wordID, this.getWordPayload()).subscribe(() => {
         this.optionalStats.newWords++;
+        this.wordStatistic[this.currentDate].newWords++;
         this.sendStatistics();
       },
         err => {
@@ -221,6 +233,9 @@ export class AudioGameComponent implements OnInit {
         if (data.optional.audio) {
           this.optionalStats = data.optional.audio;
         }
+        if (data.optional.wordsStatistics) {
+          this.wordStatistic = data.optional.wordsStatistics
+        }
       })
     }
   }
@@ -231,7 +246,7 @@ export class AudioGameComponent implements OnInit {
         const optional: IOptionStatistics = {
           audio: this.optionalStats,
           sprint: data.optional?.sprint,
-          wordsStatistics: data.optional?.wordsStatistics
+          wordsStatistics: this.wordStatistic
         }
 
         this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
@@ -239,7 +254,8 @@ export class AudioGameComponent implements OnInit {
         });
       }, err => {
         const optional: IOptionStatistics = {
-          audio: this.optionalStats
+          audio: this.optionalStats,
+          wordsStatistics: this.wordStatistic
         }
         this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
           this.nextWord();
@@ -252,6 +268,7 @@ export class AudioGameComponent implements OnInit {
     if (this.wordProgress.correctAnswers >= 3) {
       this.wordDifficulty = WordDifficulty.Learned;
       this.optionalStats.learnedWords++;
+      this.wordStatistic[this.currentDate].learnedWords++;
     } else {
       this.wordDifficulty = WordDifficulty.InProgress;
     }
