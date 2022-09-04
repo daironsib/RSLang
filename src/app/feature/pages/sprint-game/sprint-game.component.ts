@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FooterService } from '@core/services/footer.service';
 import { ApiService } from '@core/services/api.service';
-import { IGameStatistics, IOptionStatistics, IStatistics, IWord } from '@core/models';
+import { IGameStatistics, IOptionStatistics, IStatistics, IUserWord, IUserWordProgress, IWord, IWordStatistics, WordDifficulty } from '@core/models';
 import { SprintGameWord, SprintGameWordStatistic } from '@core/models/sprint-game';
 import { interval, Observable, ReplaySubject, Subject, Subscription } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
@@ -69,14 +69,14 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     }
   }
 
-  public setupWordSubject() {
+  public setupWordSubject(): void {
     this.sprintGameSource = new ReplaySubject(1);
     this.sprintWordObservable = this.sprintGameSource.asObservable();
-    this.sprintWordObservable.pipe(takeUntil(this.destroyTimer$)).subscribe(word => this.wordItem = word);
+    this.sprintWordObservable.pipe(takeUntil(this.destroyTimer$)).subscribe((word: SprintGameWord)=> this.wordItem = word);
   }
 
-  public getWords(group: number, page: number = Math.floor(Math.random() * 29)) {
-    this.api.getWords(group, page).subscribe(data => {
+  public getWords(group: number, page: number = Math.floor(Math.random() * 29)): void {
+    this.api.getWords(group, page).subscribe((data: IWord[]) => {
       this.words = data;
       this.isGameActive = true;
       this.generateSprintGameWords();
@@ -85,10 +85,11 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     });
   }
 
-  public generateSprintGameWords() {
-    const randomTranslations = this.words.map((wordItem) => wordItem.wordTranslate).sort(() => Math.random() - 0.5);
+  public generateSprintGameWords(): void {
+    const randomTranslations = this.words.map((wordItem: IWord) => wordItem.wordTranslate).sort(() => Math.random() - 0.5);
 
-    this.sprintGameWords = this.words.map((wordItem, index) => ({
+    this.sprintGameWords = this.words.map((wordItem: IWord, index: number) => ({
+      wordId: wordItem.id,
       word: wordItem.word,
       correctTranslation: wordItem.wordTranslate,
       transcription: wordItem.transcription,
@@ -96,7 +97,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     }))
   }
 
-  public getSprintWord() {
+  public getSprintWord(): void {
     if (this.sprintGameWords.length > 0) {
       const word = this.sprintGameWords.pop();
 
@@ -106,13 +107,12 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     } else {
       this.intervalSubscription.unsubscribe();
       this.showStatistic = true;
-      this.getStatistics();
       this.isGameActive = false;
       this.sprintGameSource.complete();
     }
   }
 
-  public scorePoints(isCorrectAnswer: boolean) {
+  public scorePoints(isCorrectAnswer: boolean): void {
     const trueSound = new Audio();
     trueSound.src = '/assets/sounds/true.mp3';
     const falseSound = new Audio();
@@ -128,20 +128,21 @@ export class SprintGameComponent implements OnInit, OnDestroy {
       }
       trueSound.play();
       this.score += 10 * this.scoreRate;
+      if (this.storedLongestSeries < this.longestSeries) {
+        this.storedLongestSeries = this.longestSeries;
+      }
     } else {
       this.winStreak = 0;
       this.scoreRate = 1;
-
-      if (this.longestSeries > this.storedLongestSeries) {
-        this.storedLongestSeries = this.longestSeries;
-      }
       this.longestSeries = 0;
+ 
       falseSound.play();
     }
   }
 
-  public checkTrueAnswer(wordItem: SprintGameWord) {
+  public checkTrueAnswer(wordItem: SprintGameWord): void {
     const wordStatistic: SprintGameWordStatistic = {
+      wordId: wordItem.wordId,
       word: wordItem.word,
       translation: wordItem.correctTranslation,
       transcription:  wordItem.transcription,
@@ -150,11 +151,13 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
     this.scorePoints(wordStatistic.isCorrectAnswer); 
     this.sprintGameWordStatistic.push(wordStatistic);
+    this.sendWordStatistics(wordStatistic);
     this.getSprintWord();
   }
   
-  public checkFalseAnswer(wordItem: SprintGameWord) {
+  public checkFalseAnswer(wordItem: SprintGameWord): void {
     const wordStatistic: SprintGameWordStatistic = {
+      wordId: wordItem.wordId,
       word: wordItem.word,
       translation: wordItem.correctTranslation,
       transcription:  wordItem.transcription,
@@ -163,10 +166,11 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
     this.scorePoints(wordStatistic.isCorrectAnswer);
     this.sprintGameWordStatistic.push(wordStatistic);
+    this.sendWordStatistics(wordStatistic);
     this.getSprintWord();
   }
 
-  public startTimer() {
+  public startTimer(): void {
     this.intervalSubscription = interval(1000).pipe(
       map(() => {
         if (this.time > 0) {
@@ -175,7 +179,6 @@ export class SprintGameComponent implements OnInit, OnDestroy {
           this.destroyTimer$.next();
           this.destroyTimer$.complete();
           this.showStatistic = true;
-          this.getStatistics();
           this.isGameActive = false;
           this.intervalSubscription.unsubscribe();
         }
@@ -183,7 +186,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  public restartGame() {
+  public restartGame(): void {
     this.showStatistic = false;
     this.sprintGameWords = [];
     this.sprintGameWordStatistic = [];
@@ -191,6 +194,8 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     this.scoreRate = 1;
     this.winStreak = 0;
     this.time = 60;
+    this.longestSeries = 0;
+    this.storedLongestSeries = 0;
     this.destroyTimer$ = new Subject();
     this.words = [];
     this.setupWordSubject();
@@ -200,34 +205,149 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     }
   }
 
-  public generateSprintStatistic(): IGameStatistics {
+  public generateSprintStatistic(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IGameStatistics {
     return {
-      correctAnswers: this.sprintGameWordStatistic.filter((item) => item.isCorrectAnswer).length,
-      wrongAnswers: this.sprintGameWordStatistic.filter((item) => !item.isCorrectAnswer).length,
-      newWords: 0,
-      learnedWords: 0,
+      correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0,
+      wrongAnswers: wordStatistic.isCorrectAnswer ? 0 : 1,
+      newWords: isNewWord ? 1 : 0,
+      learnedWords: (payload.difficulty === WordDifficulty.Learned) ? 1 : 0,
       longestSeries: this.storedLongestSeries,
-      lastChanged: `${new Date().getDate()}.${new Date().getMonth() + 1}`
+      lastChanged: `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`
     }
   }
 
-  public getStatistics() {
+  public updateSprintStatistic(data: IGameStatistics, wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IGameStatistics {
+    const currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+    if (currentDate !== data.lastChanged) {
+      return this.generateSprintStatistic(wordStatistic, payload, isNewWord);
+    }
+    return {
+      correctAnswers: wordStatistic.isCorrectAnswer ? data.correctAnswers + 1 : data.correctAnswers,
+      wrongAnswers: wordStatistic.isCorrectAnswer ? data.wrongAnswers : data.wrongAnswers + 1,
+      newWords: isNewWord ? data.newWords + 1 : data.newWords,
+      learnedWords: (payload.difficulty === WordDifficulty.Learned) ? data.learnedWords + 1 : data.learnedWords,
+      longestSeries: (data.longestSeries < this.storedLongestSeries) ? this.storedLongestSeries : data.longestSeries,
+      lastChanged: currentDate
+    }
+  }
+
+  public sendWordStatistics(wordStatistic: SprintGameWordStatistic): void {
+    const userId = this.token.getUser().id;
+
+    if (userId) {
+      const optional: IUserWordProgress = {
+        correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0
+      }
+      const payload: IUserWord = {difficulty: WordDifficulty.InProgress, optional};
+
+      this.api.createUserWordById(userId, wordStatistic.wordId, payload).subscribe(
+        () => {
+          this.sendStatistics(wordStatistic, payload, true);
+        },
+        (error) => {
+          this.api.getUserWordById(userId, wordStatistic.wordId).subscribe((userWord: IUserWord) => {
+            const payload = this.updateOptionalAndDifficult(userWord, wordStatistic);
+
+            this.api.updateUserWordById(userId, wordStatistic.wordId, payload).subscribe(
+              () => {
+                this.sendStatistics(wordStatistic, payload, false);
+              }
+            )
+          })
+        }
+      )
+    }
+  }
+  
+  public updateOptionalAndDifficult(userWord: IUserWord, wordStatistic: SprintGameWordStatistic): IUserWord {
+    let difficulty: WordDifficulty = WordDifficulty.InProgress;
+    let optional: IUserWordProgress;
+
+    if (userWord.optional) {
+      optional = {
+        correctAnswers: wordStatistic.isCorrectAnswer 
+          ? userWord.optional?.correctAnswers + 1 
+          : this.decreaseCorrectAnswers(userWord.optional?.correctAnswers)
+      }
+      if (optional.correctAnswers >= 3) {
+        difficulty = WordDifficulty.Learned
+      }
+    } else {
+      optional = { correctAnswers: 0 }
+    }
+
+    if (difficulty !== WordDifficulty.Learned) {
+      difficulty = userWord.difficulty === WordDifficulty.Hard 
+        ? WordDifficulty.HardAndInProgress 
+        : WordDifficulty.InProgress;
+    }
+    return {optional, difficulty}
+  }
+
+  public decreaseCorrectAnswers(correctAnswers: number): number {
+    if (correctAnswers >= 1) {
+      return correctAnswers - 1;
+    } else return 0;
+  }
+
+  public sendStatistics(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): void {
     const userId = this.token.getUser().id;
 
     if (userId) {
       this.api.getStatistics(userId).subscribe((data: IStatistics) => {
         const optional: IOptionStatistics = {
           audio: data.optional?.audio,
-          wordsStatistics: data.optional?.wordsStatistics,
-          sprint: this.generateSprintStatistic()
+          wordsStatistics: data.optional?.wordsStatistics
+            ? this.updateWordStatistics(data.optional?.wordsStatistics, wordStatistic, payload, isNewWord) 
+            : this.generateWordStatistics(wordStatistic, payload, isNewWord),
+          sprint: data.optional.sprint 
+            ? this.updateSprintStatistic(data.optional?.sprint, wordStatistic, payload, isNewWord) 
+            : this.generateSprintStatistic(wordStatistic, payload, isNewWord),
         }
         this.api.updateStatistics(userId, 0, optional).subscribe();
       }, error => {
         const optional: IOptionStatistics = {
-          sprint: this.generateSprintStatistic()
+          sprint: this.generateSprintStatistic(wordStatistic, payload, isNewWord),
+          wordsStatistics: this.generateWordStatistics(wordStatistic, payload, isNewWord)
         }
         this.api.updateStatistics(userId, 0, optional).subscribe();
       });
+    }
+  }
+
+  public generateWordStatistics(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IWordStatistics {
+    const currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+    
+    return {
+      [currentDate]: {
+        newWords: isNewWord ? 1 : 0,
+        learnedWords: (payload.difficulty === WordDifficulty.Learned) ? 1 : 0,
+        correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0,
+        wrongAnswers: wordStatistic.isCorrectAnswer ? 0 : 1,
+      }
+    }
+  }
+
+  public updateWordStatistics(data: IWordStatistics, wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IWordStatistics {
+    const currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+
+    if (!data[currentDate]) {
+      return this.generateWordStatistics(wordStatistic, payload, isNewWord);
+    }
+    
+    return {
+      [currentDate]: {
+        newWords: isNewWord ? data[currentDate].newWords + 1 : data[currentDate].newWords,
+        learnedWords: (payload.difficulty === WordDifficulty.Learned) 
+          ? data[currentDate].learnedWords + 1 
+          : data[currentDate].learnedWords,
+        correctAnswers: wordStatistic.isCorrectAnswer 
+          ? data[currentDate].correctAnswers + 1 
+          : data[currentDate].correctAnswers,
+        wrongAnswers: wordStatistic.isCorrectAnswer 
+          ? data[currentDate].wrongAnswers 
+          : data[currentDate].wrongAnswers + 1,
+      }
     }
   }
 }

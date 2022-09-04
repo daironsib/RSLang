@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from '@core/services/token-storage.service';
-import { ILogin, IOptionStatistics, IRegister, ISettings, IStatistics, IUserWords, IWord } from '@core/models';
+import { ILogin, IOptionStatistics, IRegister, ISettings, IStatistics, IUserWord, IWord, IUserWordProgress } from '@core/models';
 
 @Injectable()
 export class ApiService {
@@ -48,20 +48,20 @@ export class ApiService {
 
   // User Words
 
-  public getUserWords(id: string): Observable<IUserWords[]> {
-    return this.http.get<IUserWords[]>(`${this.USERS_URL}/${id}/words`, this.httpHeader);
+  public getUserWords(id: string): Observable<IUserWord[]> {
+    return this.http.get<IUserWord[]>(`${this.USERS_URL}/${id}/words`, this.httpHeader);
   }
 
-  public createUserWords(id: string, wordId: string, payload: IUserWords): Observable<IUserWords> {
-    return this.http.post<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, payload, this.httpHeader);
+  public createUserWordById(id: string, wordId: string, payload: IUserWord): Observable<IUserWord> {
+    return this.http.post<IUserWord>(`${this.USERS_URL}/${id}/words/${wordId}`, payload, this.httpHeader);
   }
 
-  public getUserWordById(id: string, wordId: string): Observable<IUserWords> {
-    return this.http.get<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, this.httpHeader);
+  public getUserWordById(id: string, wordId: string): Observable<IUserWord> {
+    return this.http.get<IUserWord>(`${this.USERS_URL}/${id}/words/${wordId}`, this.httpHeader);
   }
 
-  public updateUserWordById(id: string, wordId: string, payload: IUserWords): Observable<IUserWords> {
-    return this.http.put<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, payload, this.httpHeader);
+  public updateUserWordById(id: string, wordId: string, payload: IUserWord): Observable<IUserWord> {
+    return this.http.put<IUserWord>(`${this.USERS_URL}/${id}/words/${wordId}`, payload, this.httpHeader);
   }
 
   public deleteUserWordById(id: string, wordId: string): Observable<any> {

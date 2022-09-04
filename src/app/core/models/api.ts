@@ -45,7 +45,8 @@ export interface IFilterResponse {
   totalCount: [];
 }
 
-export interface IUserWords {
+
+export interface IUserWord {
   id?: string,
   wordId?: string,
   difficulty: WordDifficulty,
@@ -62,7 +63,7 @@ export interface IGameStatistics {
 }
 
 export interface IWordStatistics {
-  string: {
+  [key: string]: {
     newWords: number,
     learnedWords: number,
     correctAnswers: number,
