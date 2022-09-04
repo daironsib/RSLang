@@ -25,8 +25,11 @@ export class DictionaryComponent implements OnInit {
   public totalSections = [...Array(6).keys()];
   public totalPages = [...Array(20).keys()];
   public sectionMenu: boolean = false;
+  public sectionMenuFooter: boolean = false;
   public gameMenu: boolean = false;
+  public gameMenuFooter: boolean = false;
   public pagesMenu: boolean = false;
+  public pagesMenuFooter: boolean = false;
 
   constructor(
     public state: FooterService,

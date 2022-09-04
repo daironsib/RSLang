@@ -71,6 +71,9 @@ $sec_green: #e6ff96;
   justify-content: space-between;
   margin-bottom: 60px;
 }
+.dictionary-nav-footer {
+  margin-bottom: 200px;
+}
 
 .dictionary-select-container,
 .games-select-container {
@@ -84,20 +87,25 @@ $sec_green: #e6ff96;
 .dictionary__hard-btn {
   width: 155px;
   margin: 0 20px;
+  
+  &.is-active {
+    border: 2px solid $prim_dark;
+  }
 }
 
-.dictionary-select {
+.dictionary-select,
+.dictionary-select-footer  {
   display: none;
   position: absolute;
   top: 44px;
   width: 100%;
   height: auto;
   background: $prim_light;
-  border: 2px solid $prim_dark;
   justify-content: start;
   padding: 0;
   z-index: 1;
-
+  border: 2px solid $prim_dark;
+  
   &.is-opened {
     display: block;
   }
@@ -105,12 +113,19 @@ $sec_green: #e6ff96;
 
 .dictionary__open-select {
   width: 100%;
-  border: 2px solid $prim_dark;
+  
+  &.is-active {
+    border: 2px solid $prim_dark;
+  }
 }
 
 .dictionary-select-container:hover .dictionary-select,
+.dictionary-select-container:hover .dictionary-select-footer ,
 .games-select-container:hover .games-select,
-.games-select.is-opened {
+.games-select-container:hover .games-select-footer,
+.games-select.is-opened,
+.games-select-footer.is-opened
+ {
   display: block;
 }
 
@@ -122,7 +137,8 @@ $sec_green: #e6ff96;
   width: 100%;
 }
 
-.games-select {
+.games-select,
+.games-select-footer {
   width: 100%;
   display: none;
   position: absolute;
@@ -159,7 +175,8 @@ $sec_green: #e6ff96;
   }
 }
 
-.pages-select {
+.pages-select,
+.pages-select-footer {
   display: none;
   position: absolute;
   top: 44px;
@@ -196,6 +213,10 @@ $sec_green: #e6ff96;
     font-size: 16px;
     line-height: 120%;
     margin-bottom: 30px;
+  }
+  svg {
+    width: 24px;
+    height: 24px;
   }
 
   .dictionary__authorization-btns {
@@ -240,7 +261,8 @@ $sec_green: #e6ff96;
   .dictionary-select-container {
     width: 150px;
   }
-  .dictionary-select {
+  .dictionary-select,
+  .dictionary-select-footer {
     height: 150px;
     overflow-y: scroll;
     padding: 0;
@@ -255,7 +277,9 @@ $sec_green: #e6ff96;
     width: 190px;
   }
 
-  .games-select {
+  .games-select,
+  .games-select-footer 
+   {
     top: 39px;
   }
 
@@ -270,7 +294,8 @@ $sec_green: #e6ff96;
     }
   }
 
-  .pages-select {
+  .pages-select,
+  .pages-select-footer {
     height: 150px;
     width: 170px;
     top: 39px;
@@ -293,6 +318,10 @@ $sec_green: #e6ff96;
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 20px;
+  }
+  
+  .dictionary-nav-footer {
+    margin-bottom: 100px;
   }
 
   .dictionary-title {
@@ -340,7 +369,8 @@ $sec_green: #e6ff96;
       }
     }
 
-    .pages-select {
+    .pages-select,
+    .pages-select-footer {
       left: 105px;
     }
   }
