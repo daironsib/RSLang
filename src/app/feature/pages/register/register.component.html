@@ -1,86 +1,62 @@
 <div class="register-container">
-    <h3 class="register-container__title">Create a new account</h3>
-    <hr class="register-container__line">
-    <form
-      *ngIf="!isSuccessful"
-      name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate
-    >
-      <div class="form-group">
-        <label for="name" class="form-label">Name</label>
-        <input
-          type="text"
-          class="form-input"
-          name="name"
-          [(ngModel)]="form.name"
-          required
-          minlength="3"
-          maxlength="20"
-          #name="ngModel"
-          placeholder="your name"
-        />
-        <div class="alert alert-danger" *ngIf="name.errors && f.submitted">
-          <div *ngIf="name.errors?.['required']">Name is required</div>
-          <div *ngIf="name.errors?.['minlength']">
-            Name must be at least 3 characters
-          </div>
-          <div *ngIf="name.errors?.['maxlength']">
-            Name must be at most 20 characters
+  <h3 class="register-container__title">Регистрация</h3>
+  <div class="register-content">
+    <div class="register-image"></div>
+    <div class="register-form">
+      <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <input type="text" class="form-input" name="name" [(ngModel)]="form.name" required minlength="3"
+            maxlength="20" #name="ngModel" placeholder="Имя" />
+          <div class="alert alert-danger" *ngIf="name.errors && f.submitted">
+            <div *ngIf="name.errors?.['required']">Введите Имя</div>
+            <div *ngIf="name.errors?.['minlength']">
+              Имя должно содержать не менее 3-х символов
+            </div>
+            <div *ngIf="name.errors?.['maxlength']">
+              Имя должно содержать не более 20 символов
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="email" class="form-label">Email</label>
-        <input
-          type="email"
-          class="form-input"
-          name="email"
-          [(ngModel)]="form.email"
-          required
-          email
-          #email="ngModel"
-          placeholder="your email"
-        />
-        <div class="alert alert-danger" *ngIf="email.errors && f.submitted">
-          <div *ngIf="email.errors?.['required']">Email is required</div>
-          <div *ngIf="email.errors?.['email']">
-            Email must be a valid email address
+        <div class="form-group">
+          <input type="email" class="form-input" name="email" [(ngModel)]="form.email" required email #email="ngModel"
+            placeholder="E-mail" />
+          <div class="alert alert-danger" *ngIf="email.errors && f.submitted">
+            <div *ngIf="email.errors?.['required']">Введите Email</div>
+            <div *ngIf="email.errors?.['email']">
+              Некорректный Email
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-input"
-          name="password"
-          [(ngModel)]="form.password"
-          required
-          minlength="8"
-          #password="ngModel"
-          placeholder="your password"
-        />
-        <div class="alert alert-danger" *ngIf="password.errors && f.submitted">
-          <div *ngIf="password.errors?.['required']">Password is required</div>
-          <div *ngIf="password.errors?.['minlength']">
-            Password must be at least 8 characters
+        <div class="form-group">
+          <input type="password" class="form-input" name="password" [(ngModel)]="form.password" required minlength="8"
+            #password="ngModel" placeholder="Пароль" />
+          <div class="alert alert-danger" *ngIf="password.errors && f.submitted">
+            <div *ngIf="password.errors?.['required']">Введите пароль</div>
+            <div *ngIf="password.errors?.['minlength']">
+              Пароль должен содержать не менее 8 символов
+            </div>
           </div>
         </div>
+        <div class="form-group">
+          <button class="register-container__button">Создать аккаунт</button>
+        </div>
+        <div class="alert alert-danger" *ngIf="f.submitted && isWrongEmailOrPassword">
+          Неверный E-mail или пароль
+        </div>
+        <div class="alert alert-danger" *ngIf="f.submitted && isEmailExists">
+          Пользователь с таким E-mail уже зарегистрирован
+        </div> 
+        <a class="register-login" [routerLink]="['/', paths.Login]">
+          У меня уже есть аккаунт
+        </a>
+      </form>
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        <img src="./assets/svg/success.svg" alt="">
+        Аккаунт успешно создан!
       </div>
-      <div class="form-group">
-        <button class="register-container__button" mat-stroked-button color="primary">Register</button>
-      </div>
-      <div class="alert alert-danger" *ngIf="f.submitted && isWrongEmailOrPassword">
-        Incorrect e-mail or password
-      </div>
-      <div class="alert alert-danger" *ngIf="f.submitted && isEmailExists">
-        User with this e-mail exists
-      </div>
-    </form>
-    <div class="alert alert-success" *ngIf="isSuccessful">
-      Your registration is successful!
     </div>
+  </div>
+  <p class="register-text">
+    Зарегистрируйся и ты получишь полный доступ к нашему сервису: сможешь полноценно пользоваться учебником, отмечая слова как изученные или отмечая сложные, так же тебе будет доступна статистика по обучению!
+  </p>
 </div>
-
