@@ -1,9 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { IGameStatistics, IOptionStatistics, IStatistics, IUserWordProgress, IUserWord, IWord, WordDifficulty } from '@core/models';
+import { IGameStatistics, IOptionStatistics, IStatistics, IUserWordProgress, IUserWord, IWord, WordDifficulty, IWordStatistics } from '@core/models';
 import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
 import { TokenStorageService } from '@core/services/token-storage.service';
+import { FooterService } from '@core/services/footer.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-audio-game',
@@ -11,6 +13,16 @@ import { TokenStorageService } from '@core/services/token-storage.service';
   styleUrls: ['./audio-game.component.scss']
 })
 export class AudioGameComponent implements OnInit {
+  public currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+  public wordStatistic: IWordStatistics = {
+    [this.currentDate]: {
+      newWords: 0,
+      learnedWords: 0,
+      correctAnswers: 0,
+      wrongAnswers: 0
+    }
+  };
+  public footerState: boolean;
   private MAX_PAGE: number = 29;
   public currentSlide: number = 1;
   public currentIndexWord: number = 0;
@@ -34,14 +46,26 @@ export class AudioGameComponent implements OnInit {
     learnedWords: 0,
     longestSeries: 0,
     newWords: 0,
-    lastChanged: ''
+    lastChanged: this.currentDate
   };
   private userID = this.tokenStorage.getUser().id;
   private answerIsRight: boolean = false;
 
-  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService) { }
+  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService, public state: FooterService, private route: ActivatedRoute) { 
+    this.footerState = false;
+   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.route.queryParams
+      .subscribe(params => {
+        if (Object.keys(params).length > 0) {
+          const page = params['page'];
+          const group = params['group'];
+          this.getWordsFromDictionary(group, page);
+        }
+      });
+    this.state.setFooterState(this.footerState);
+   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -86,15 +110,19 @@ export class AudioGameComponent implements OnInit {
     const { difficulty } = this.form;
 
     if (difficulty) {
-      this.api.getWords(difficulty, this.getRandomInt(0, this.MAX_PAGE)).subscribe(
-        data => {
-          this.words = data;
-          this.generateVariants();
-          this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
-          this.changeScreen(2);
-          this.getStatistics();
-        });
+      this.getWordsFromDictionary(difficulty, this.getRandomInt(0, this.MAX_PAGE));
     }
+  }
+
+  public getWordsFromDictionary(group: number, page: number): void {
+    this.api.getWords(group, page).subscribe(
+      data => {
+        this.words = data;
+        this.generateVariants();
+        this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
+        this.changeScreen(2);
+        this.getStatistics();
+      });
   }
 
   private changeScreen(number: number): void {
@@ -135,12 +163,14 @@ export class AudioGameComponent implements OnInit {
     if (this.isCorrect(variant)) {
       this.goodWords.push(this.words[this.currentIndexWord]);
       this.optionalStats.correctAnswers++;
+      this.wordStatistic[this.currentDate].correctAnswers++;
       this.rightAnswerCounter++;
       this.wordProgress.correctAnswers++;
       this.answerIsRight = true;
       this.applyWordDifficulty();
     } else {
       this.badWords.push(this.words[this.currentIndexWord]);
+      this.wordStatistic[this.currentDate].wrongAnswers++;
       this.optionalStats.wrongAnswers++;
       this.rightAnswerCounter = 0;
       this.wordProgress.correctAnswers--;
@@ -162,6 +192,7 @@ export class AudioGameComponent implements OnInit {
       const wordID = this.words[this.currentIndexWord].id;
       this.api.createUserWordById(this.userID, wordID, this.getWordPayload()).subscribe(() => {
         this.optionalStats.newWords++;
+        this.wordStatistic[this.currentDate].newWords++;
         this.sendStatistics();
       },
         err => {
@@ -215,6 +246,9 @@ export class AudioGameComponent implements OnInit {
         if (data.optional.audio) {
           this.optionalStats = data.optional.audio;
         }
+        if (data.optional.wordsStatistics) {
+          this.wordStatistic = data.optional.wordsStatistics
+        }
       })
     }
   }
@@ -225,7 +259,7 @@ export class AudioGameComponent implements OnInit {
         const optional: IOptionStatistics = {
           audio: this.optionalStats,
           sprint: data.optional?.sprint,
-          wordsStatistics: data.optional?.wordsStatistics
+          wordsStatistics: this.wordStatistic
         }
 
         this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
@@ -233,7 +267,8 @@ export class AudioGameComponent implements OnInit {
         });
       }, err => {
         const optional: IOptionStatistics = {
-          audio: this.optionalStats
+          audio: this.optionalStats,
+          wordsStatistics: this.wordStatistic
         }
         this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
           this.nextWord();
@@ -246,6 +281,7 @@ export class AudioGameComponent implements OnInit {
     if (this.wordProgress.correctAnswers >= 3) {
       this.wordDifficulty = WordDifficulty.Learned;
       this.optionalStats.learnedWords++;
+      this.wordStatistic[this.currentDate].learnedWords++;
     } else {
       this.wordDifficulty = WordDifficulty.InProgress;
     }
