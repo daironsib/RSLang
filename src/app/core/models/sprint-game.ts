@@ -1,4 +1,5 @@
 export interface SprintGameWord {
+    wordId: string,
     word: string,
     translation: string,
     correctTranslation: string,
@@ -6,6 +7,7 @@ export interface SprintGameWord {
 }
 
 export interface SprintGameWordStatistic {
+    wordId: string,
     word: string,
     isCorrectAnswer: boolean,
     translation: string,

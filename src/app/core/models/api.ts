@@ -45,7 +45,8 @@ export interface IFilterResponse {
   totalCount: [];
 }
 
-export interface IUserWords {
+
+export interface IUserWord {
   id?: string,
   wordId?: string,
   difficulty: WordDifficulty,

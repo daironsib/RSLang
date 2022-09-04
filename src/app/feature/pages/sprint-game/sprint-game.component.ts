@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FooterService } from '@core/services/footer.service';
 import { ApiService } from '@core/services/api.service';
-import { IGameStatistics, IOptionStatistics, IStatistics, IWord } from '@core/models';
+import { IGameStatistics, IOptionStatistics, IStatistics, IUserWord, IUserWordProgress, IWord, IWordStatistics, WordDifficulty } from '@core/models';
 import { SprintGameWord, SprintGameWordStatistic } from '@core/models/sprint-game';
 import { interval, Observable, ReplaySubject, Subject, Subscription } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
@@ -86,9 +86,10 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   }
 
   public generateSprintGameWords() {
-    const randomTranslations = this.words.map((wordItem) => wordItem.wordTranslate).sort(() => Math.random() - 0.5);
+    const randomTranslations = this.words.map((wordItem: IWord) => wordItem.wordTranslate).sort(() => Math.random() - 0.5);
 
-    this.sprintGameWords = this.words.map((wordItem, index) => ({
+    this.sprintGameWords = this.words.map((wordItem: IWord, index: number) => ({
+      wordId: wordItem.id,
       word: wordItem.word,
       correctTranslation: wordItem.wordTranslate,
       transcription: wordItem.transcription,
@@ -106,7 +107,6 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     } else {
       this.intervalSubscription.unsubscribe();
       this.showStatistic = true;
-      this.getStatistics();
       this.isGameActive = false;
       this.sprintGameSource.complete();
     }
@@ -128,20 +128,21 @@ export class SprintGameComponent implements OnInit, OnDestroy {
       }
       trueSound.play();
       this.score += 10 * this.scoreRate;
+      if (this.storedLongestSeries < this.longestSeries) {
+        this.storedLongestSeries = this.longestSeries;
+      }
     } else {
       this.winStreak = 0;
       this.scoreRate = 1;
-
-      if (this.longestSeries > this.storedLongestSeries) {
-        this.storedLongestSeries = this.longestSeries;
-      }
       this.longestSeries = 0;
+ 
       falseSound.play();
     }
   }
 
   public checkTrueAnswer(wordItem: SprintGameWord) {
     const wordStatistic: SprintGameWordStatistic = {
+      wordId: wordItem.wordId,
       word: wordItem.word,
       translation: wordItem.correctTranslation,
       transcription:  wordItem.transcription,
@@ -150,11 +151,14 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
     this.scorePoints(wordStatistic.isCorrectAnswer); 
     this.sprintGameWordStatistic.push(wordStatistic);
+    this.sendWordStatistics(wordStatistic);
     this.getSprintWord();
+    console.log(this.storedLongestSeries);
   }
   
   public checkFalseAnswer(wordItem: SprintGameWord) {
     const wordStatistic: SprintGameWordStatistic = {
+      wordId: wordItem.wordId,
       word: wordItem.word,
       translation: wordItem.correctTranslation,
       transcription:  wordItem.transcription,
@@ -163,7 +167,9 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
     this.scorePoints(wordStatistic.isCorrectAnswer);
     this.sprintGameWordStatistic.push(wordStatistic);
+    this.sendWordStatistics(wordStatistic);
     this.getSprintWord();
+    console.log(this.storedLongestSeries);
   }
 
   public startTimer() {
@@ -175,7 +181,6 @@ export class SprintGameComponent implements OnInit, OnDestroy {
           this.destroyTimer$.next();
           this.destroyTimer$.complete();
           this.showStatistic = true;
-          this.getStatistics();
           this.isGameActive = false;
           this.intervalSubscription.unsubscribe();
         }
@@ -191,6 +196,8 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     this.scoreRate = 1;
     this.winStreak = 0;
     this.time = 60;
+    this.longestSeries = 0;
+    this.storedLongestSeries = 0;
     this.destroyTimer$ = new Subject();
     this.words = [];
     this.setupWordSubject();
@@ -200,18 +207,92 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     }
   }
 
-  public generateSprintStatistic(): IGameStatistics {
+  public generateSprintStatistic(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IGameStatistics {
     return {
-      correctAnswers: this.sprintGameWordStatistic.filter((item) => item.isCorrectAnswer).length,
-      wrongAnswers: this.sprintGameWordStatistic.filter((item) => !item.isCorrectAnswer).length,
-      newWords: 0,
-      learnedWords: 0,
+      correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0,
+      wrongAnswers: wordStatistic.isCorrectAnswer ? 0 : 1,
+      newWords: isNewWord ? 1 : 0,
+      learnedWords: (payload.difficulty === WordDifficulty.Learned) ? 1 : 0,
       longestSeries: this.storedLongestSeries,
-      lastChanged: `${new Date().getDate()}.${new Date().getMonth() + 1}`
+      lastChanged: `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`
     }
   }
 
-  public getStatistics() {
+  public updateSprintStatistic(data: IGameStatistics, wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IGameStatistics {
+    const currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+    if (currentDate !== data.lastChanged) {
+      return this.generateSprintStatistic(wordStatistic, payload, isNewWord);
+    }
+    return {
+      correctAnswers: wordStatistic.isCorrectAnswer ? data.correctAnswers + 1 : data.correctAnswers,
+      wrongAnswers: wordStatistic.isCorrectAnswer ? data.wrongAnswers : data.wrongAnswers + 1,
+      newWords: isNewWord ? data.newWords + 1 : data.newWords,
+      learnedWords: (payload.difficulty === WordDifficulty.Learned) ? data.learnedWords + 1 : data.learnedWords,
+      longestSeries: (data.longestSeries < this.storedLongestSeries) ? this.storedLongestSeries : data.longestSeries,
+      lastChanged: currentDate
+    }
+  }
+
+  public sendWordStatistics(wordStatistic: SprintGameWordStatistic): void {
+    const userId = this.token.getUser().id;
+
+    if (userId) {
+      const optional: IUserWordProgress = {
+        correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0
+      }
+      const payload: IUserWord = {difficulty: WordDifficulty.InProgress, optional};
+
+      this.api.createUserWordById(userId, wordStatistic.wordId, payload).subscribe(
+        () => {
+          this.sendStatistics(wordStatistic, payload, true);
+        },
+        (error) => {
+          this.api.getUserWordById(userId, wordStatistic.wordId).subscribe((userWord: IUserWord) => {
+            const payload = this.updateOptionalAndDifficult(userWord, wordStatistic);
+
+            this.api.updateUserWordById(userId, wordStatistic.wordId, payload).subscribe(
+              () => {
+                this.sendStatistics(wordStatistic, payload, false);
+              }
+            )
+          })
+        }
+      )
+    }
+  }
+  
+  public updateOptionalAndDifficult(userWord: IUserWord, wordStatistic: SprintGameWordStatistic): {optional: IUserWordProgress, difficulty: WordDifficulty} {
+    let difficulty: WordDifficulty = WordDifficulty.InProgress;
+    let optional: IUserWordProgress;
+
+    if (userWord.optional) {
+      optional = {
+        correctAnswers: wordStatistic.isCorrectAnswer 
+          ? userWord.optional?.correctAnswers + 1 
+          : this.decreaseCorrectAnswers(userWord.optional?.correctAnswers)
+      }
+      if (optional.correctAnswers >= 3) {
+        difficulty = WordDifficulty.Learned
+      }
+    } else {
+      optional = { correctAnswers: 0 }
+    }
+
+    if (difficulty !== WordDifficulty.Learned) {
+      difficulty = userWord.difficulty === WordDifficulty.Hard 
+        ? WordDifficulty.HardAndInProgress 
+        : WordDifficulty.InProgress;
+    }
+    return {optional, difficulty}
+  }
+
+  public decreaseCorrectAnswers(correctAnswers: number): number {
+    if (correctAnswers >= 1) {
+      return correctAnswers - 1;
+    } else return 0;
+  }
+
+  public sendStatistics(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean) {
     const userId = this.token.getUser().id;
 
     if (userId) {
@@ -219,12 +300,14 @@ export class SprintGameComponent implements OnInit, OnDestroy {
         const optional: IOptionStatistics = {
           audio: data.optional?.audio,
           wordsStatistics: data.optional?.wordsStatistics,
-          sprint: this.generateSprintStatistic()
+          sprint: data.optional.sprint 
+            ? this.updateSprintStatistic(data.optional?.sprint, wordStatistic, payload, isNewWord) 
+            : this.generateSprintStatistic(wordStatistic, payload, isNewWord)
         }
         this.api.updateStatistics(userId, 0, optional).subscribe();
       }, error => {
         const optional: IOptionStatistics = {
-          sprint: this.generateSprintStatistic()
+          sprint: this.generateSprintStatistic(wordStatistic, payload, isNewWord)
         }
         this.api.updateStatistics(userId, 0, optional).subscribe();
       });
