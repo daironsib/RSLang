@@ -4,6 +4,7 @@ import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
 import { TokenStorageService } from '@core/services/token-storage.service';
+import { FooterService } from '@core/services/footer.service';
 
 @Component({
   selector: 'app-audio-game',
@@ -11,6 +12,7 @@ import { TokenStorageService } from '@core/services/token-storage.service';
   styleUrls: ['./audio-game.component.scss']
 })
 export class AudioGameComponent implements OnInit {
+  public footerState: boolean;
   private MAX_PAGE: number = 29;
   public currentSlide: number = 1;
   public currentIndexWord: number = 0;
@@ -39,9 +41,13 @@ export class AudioGameComponent implements OnInit {
   private userID = this.tokenStorage.getUser().id;
   private answerIsRight: boolean = false;
 
-  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService) { }
+  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService, public state: FooterService) { 
+    this.footerState = false;
+   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.state.setFooterState(this.footerState);
+   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {

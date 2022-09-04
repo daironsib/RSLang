@@ -22,9 +22,8 @@
 
 .nav-container__btns {
     display: flex;
-    gap: 0.7rem;
-    
     button {
+        border: 2px solid transparent;
         transition: 0.3s ease;
         border: 2px solid transparent;
         font-size: 20px;
