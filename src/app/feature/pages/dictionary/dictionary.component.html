@@ -53,8 +53,21 @@
     </div>
 </div>
 <div class="dictionary-body">
-    <app-word *ngFor="let word of words; let i = index" [word]="word">
-    </app-word>
+    <div *ngIf="this.isHardWordsPage && !tokenStorageService.getToken(); else show">
+        <div class="dictionary__not-allowed">
+            <h4 class="oops">Упс!</h4>
+            <p>Этот раздел доступен только авторизованным пользователям</p>
+            <div class="dictionary__authorization-btns">
+                <button class="btn dictionary__login-btn" [routerLink]="['/', paths.Login]">Войти</button>
+                <button class="btn dictionary__register-btn"
+                    [routerLink]="['/', paths.Register]">Зарегистрироваться</button>
+            </div>
+        </div>
+    </div>
+    <ng-template #show>
+        <app-word *ngFor="let word of words; let i = index" [word]="word">
+        </app-word>
+    </ng-template>
 </div>
 <div class="dictionary-container">
     <div class="dictionary-nav">
