@@ -150,19 +150,19 @@ export class AudioGameComponent implements OnInit {
       this.optionalStats.longestSeries = this.rightAnswerCounter;
     }
 
-    this.saveUserWord();
+    this.sendUserWord();
   }
 
   private isCorrect(variant: string): boolean {
     return variant === this.words[this.currentIndexWord].wordTranslate;
   }
 
-  private saveUserWord(): void {
+  private sendUserWord(): void {
     if (this.userID) {
       const wordID = this.words[this.currentIndexWord].id;
       this.api.createUserWords(this.userID, wordID, this.getWordPayload()).subscribe(() => {
         this.optionalStats.newWords++;
-        this.saveStatistics();
+        this.sendStatistics();
       },
         err => {
           this.api.getUserWordById(this.userID, wordID).subscribe((data: IUserWords) => {
@@ -170,7 +170,7 @@ export class AudioGameComponent implements OnInit {
             this.applyAnswerToUserWordsData();
             this.applyWordDifficulty();
             this.api.updateUserWordById(this.userID, wordID, this.getWordPayload()).subscribe(() => {
-              this.saveStatistics();
+              this.sendStatistics();
             })
           });
         });
@@ -219,7 +219,7 @@ export class AudioGameComponent implements OnInit {
     }
   }
 
-  private saveStatistics(): void {
+  private sendStatistics(): void {
     if (this.userID) {
       this.api.getStatistics(this.userID).subscribe((data: IStatistics) => {
         const optional: IOptionStatistics = {
