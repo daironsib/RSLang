@@ -3,8 +3,14 @@ $light: #F7F6F0;
 $green: #D3F36B;
 
 .footer {
-  padding: 10px 200px;
+  width: 100%;
   background-color: $dark;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 10px 200px;
 }
 
 .footer-wrapper {
