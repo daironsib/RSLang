@@ -26,17 +26,15 @@ export class WordService {
   }
 
   public addHardWord(word: IWord) {
-    this.apiService.createUserWords(this.userId, word.id, 'hard').subscribe();
-    return this.getHardWords();
+    return this.apiService.createUserWords(this.userId, word.id, 'hard').subscribe(
+      () =>  this.getHardWords());
   }
 
   public removeHardWord(word: IWord) {
-    this.apiService.deleteUserWordById(this.userId, word.id).subscribe();
-    return this.getHardWords();
+    this.apiService.deleteUserWordById(this.userId, word.id).subscribe(() => this.getHardWords());
   }
 
   public getHardWords() { 
-    32
     this.hardWords = [];
     this.apiService.getUserWords(this.userId).subscribe((data) => {
       data
@@ -58,10 +56,9 @@ export class WordService {
   }
 
   public addLearnedWord(word: IWord) {
-    this.apiService
+    return this.apiService
       .createUserWords(this.userId, word.id, 'learned')
-      .subscribe();
-    return this.getLearnedWords();
+      .subscribe(() => this.getLearnedWords());
   }
 
   public getLearnedWords() {
@@ -76,7 +73,6 @@ export class WordService {
         );
     });
     this.learnedWords = [...new Set(this.learnedWords)];
-    console.log(this.learnedWords);
     return this.learnedWords;
   }
 }
