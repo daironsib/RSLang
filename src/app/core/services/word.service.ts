@@ -27,7 +27,7 @@ export class WordService {
 
   public addHardWord(word: IWord) {
     return this.apiService
-      .createUserWords(this.userId, word.id, {
+      .createUserWordById(this.userId, word.id, {
         difficulty: WordDifficulty.Hard,
       })
       .subscribe(() => this.getHardWords());
@@ -64,7 +64,7 @@ export class WordService {
 
   public addLearnedWord(word: IWord) {
     return this.apiService
-      .createUserWords(this.userId, word.id, {
+      .createUserWordById(this.userId, word.id, {
         difficulty: WordDifficulty.Learned,
       })
       .subscribe(() => this.getLearnedWords());
