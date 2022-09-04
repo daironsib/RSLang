@@ -1,170 +1,134 @@
-body {
-  color: #222;
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@700&display=swap');
+
+$light: #F7F6F0;
+$dark: #24282C;
+$green: #D3F36B;
+$modal: #E9E9E3;
+$hoverBtn: #3F4850;
+%font80 {
+  font-family: 'Anonymous Pro', monospace;
+  font-style: bold;
+  font-size: 80px;
+  line-height: 80px;
+  color: $dark;
+}
+%font20 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+  color: $dark;
+}
+%button {
+  background-color: $dark;
+  color: $light;
+  width: 151px;
+  height: 50px;
+  border-radius: 10px;
+  transition: 0.3s ease-in;
 }
 
-.main {
-  max-width: 1200px;
+.main-container {
+  background-color: $light;
+}
+
+.hero-section__block {
   margin: 0 auto;
-  width: 100%;
-  font-size: 14px;
-}
-
-.main-screen {
-  padding: 5% 0;
-}
-
-.app-title {
-  font-size: 8em;
-  line-height: 150%;
-  text-align: center;
-}
-
-.app-slogan {
-  text-align: center;
-  font-size: 4em;
-  font-weight: 100;
-}
-
-.advantages {
+  max-width: 1440px;
+  padding: 20px 200px;
   display: flex;
   justify-content: space-between;
 }
 
-.advantage {
-  width: 25vw;
-  height: 25vw;
-  max-width: 200px;
-  max-height: 200px;
-  border-radius: 50%;
-  border: 6px solid #7b1fa2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+.hero-text__image {
+  background: url(/assets/images/goals.png);
+  width: 440px;
+  height: 80px;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-.advantage span {
-  font-weight: 900;
-  font-size: 3em;
-  text-transform: uppercase;
-  line-height: 120%;
+.hero-section__image {
+  background: url(/assets/images/hero.png);
+  width: 500px;
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.advantage p {
-  font-size: 2em;
-}
-
-.about_text {
-  text-align: center;
-  margin: 10% auto;
-  max-width: 70%;
-  font-size: 1.5em;
-  line-height: 150%;
-}
-
-.about_games h2 {
-  font-size: 4em;
-  line-height: 120%;
-  text-align: center;
-  margin-bottom: 1em;
-}
-
-.about_game-card {
-  display: flex;
+.hero-text__content {
+  padding: 20px 0;
+  width: 500px;
   height: 400px;
-  width: 100%;
-  margin-bottom: 10%;
-  justify-content: space-between;
-  box-sizing: border-box;
-  padding: 30px;
-  background: #f5f5f5;
-}
-
-.about_game-image {
-  max-width: 50%;
-  display: flex;
-
-  img {
-    height: 100%;
-    width: auto;
-  }
-}
-
-.about_game-card:nth-child(2n) {
-  margin-left: auto;
-  text-align: right;
-
-  .about_game-image {
-    justify-content: end;
-  }
-
-  .about_play-btn {
-    margin-left: auto;
-  }
-}
-
-.about_game-info {
-  width: 50%;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  max-width: 500px;
-
+  justify-content: space-between;
+  h1 {
+    @extend %font80;
+  }
   p {
-    font-size: 2em;
-    line-height: 120%;
-    color: #222;
+    @extend %font20;
+  }
+  button {
+    @extend %button;
+    &:hover {
+      background: $hoverBtn;
+    }
+  }
+  mat-icon {
+    color: $green;
   }
 }
 
-.about_game-title {
-  font-size: 3em;
-  margin-bottom: 1em;
-  color: #222;
+.about-section {
+  height: 840px;
+  background-color: $dark;
 }
 
-.about_play-btn {
-  margin-top: auto;
-  width: 120px;
-  text-transform: uppercase;
+.about-section__triangle {
+  padding: 60px 220px 40px 220px;
 }
 
-.about_team {
-  margin: 10% auto;
 
-  h2 {
-    font-size: 4em;
-    line-height: 120%;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-}
 
-.about_team-members {
-  display: flex;
-}
-
-.about_team-member {
-  margin-right: 2em;
-  background: #f5f5f5;
-
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
-.about_member-name {
+.about-section__content {
+  z-index: 3;
+  margin: 0 auto;
+  width: 1000px;
+  height: 700px;
+  background-color: $modal;
+  border-radius: 70px;
   text-align: center;
-  color: #222;
-}
-
-.about_member-gh {
-  color: #222;
+  padding: 68px 50px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-}
-
-.about_member-task{
-  color: #222;
+  gap: 50px;
+  h2 {
+    @extend %font80;
+  }
+  button {
+    @extend %button;
+    width: 200px;
+    &:hover {
+      background: $hoverBtn;
+    }
+  }
+  p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 54px;
+    color: $dark;
+    span {
+      text-decoration: underline;
+    }
+  }
+  p:last-of-type  {
+    @extend %font20;
+  }
+  
+  mat-icon {
+    color: $green;
+  }
 }

@@ -1,35 +1,37 @@
-<div class="header-container">
-    <div class="header-container__logo"></div>
-    <nav class="nav-container">
-        <div class="nav-container__btns">
-            <button mat-stroked-button [routerLink]="[paths.Home]">
-                <mat-icon>home</mat-icon> Главная
-            </button>
-            <button mat-stroked-button [routerLink]="['/', paths.Dictionary]">
-                <mat-icon> import_contacts</mat-icon> Учебник
-            </button>
-            <button mat-stroked-button [routerLink]="['/', paths.SprintGame]">
-                <mat-icon>extension</mat-icon> Спринт
-            </button>
-            <button mat-stroked-button [routerLink]="['/', paths.Statistic]">
-                <mat-icon>assessment</mat-icon> Статистика
-            </button>
-        </div>
-    </nav>
-    <div *ngIf="tokenStorageService.getToken(); else login">
-        <div class="logout-menu">
-            <div class="user-info">
-                <span class="user-name">NAME</span>
-                <span class="user-email">email@mail.com</span>
+<div class="header-wrapper">
+    <div class="header-container">
+        <div class="header-container__logo"></div>
+        <nav class="nav-container">
+            <div class="nav-container__btns">
+                <button mat-stroked-button [routerLink]="[paths.Home]">
+                    <mat-icon>home</mat-icon> Главная
+                </button>
+                <button mat-stroked-button [routerLink]="['/', paths.Dictionary]">
+                    <mat-icon> import_contacts</mat-icon> Учебник
+                </button>
+                <button mat-stroked-button [routerLink]="['/', paths.SprintGame]">
+                    <mat-icon>extension</mat-icon> Спринт
+                </button>
+                <button mat-stroked-button [routerLink]="['/', paths.Statistic]">
+                    <mat-icon>assessment</mat-icon> Статистика
+                </button>
             </div>
-            <button class="user-btn" mat-stroked-button (click)="tokenStorageService.signOut()">
-                <mat-icon class="user-icon">exit_to_app</mat-icon> Выйти
-            </button>
+        </nav>
+        <div *ngIf="tokenStorageService.getToken(); else login">
+            <div class="logout-menu">
+                <div class="user-info">
+                    <span class="user-name">NAME</span>
+                    <span class="user-email">email@mail.com</span>
+                </div>
+                <button class="user-btn" mat-stroked-button (click)="tokenStorageService.signOut()">
+                    <mat-icon class="user-icon">exit_to_app</mat-icon> Выйти
+                </button>
+            </div>
         </div>
-    </div>
-    <ng-template #login>
-        <button class="user-btn" mat-stroked-button [routerLink]="['/', paths.Login]">
-            <mat-icon class="user-icon">person icon</mat-icon> Войти
-        </button>
-    </ng-template>
+        <ng-template #login>
+            <button class="user-btn" mat-stroked-button [routerLink]="['/', paths.Login]">
+                <mat-icon class="user-icon">person icon</mat-icon> Войти
+            </button>
+        </ng-template>
+    </div>    
 </div>

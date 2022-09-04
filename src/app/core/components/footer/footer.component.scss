@@ -1,5 +1,17 @@
+$dark: #24282C;
+$light: #F7F6F0;
+$green: #D3F36B;
+
 .footer {
-  padding: 15px;
+  width: 100%;
+  background-color: $dark;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 10px 200px;
+  background-color: $dark;
 }
 
 .footer-wrapper {
@@ -8,10 +20,25 @@
   justify-content: space-between;
   font-size: 20px;
   line-height: 150%;
-  color: #111;
+  button {
+    background: $light;
+    transition: 0.3s ease-in;
+    &:hover {
+      background: $green;
+    }
+  }
+}
+
+.copyright {
+  color: $light;
 }
 
 .rs-logo {
   width: 120px;
   height: auto;
+  filter: invert(99%) sepia(97%) saturate(244%) hue-rotate(357deg) brightness(115%) contrast(93%);
+  transition: 0.2s;
+  &:hover {
+    filter: invert(100%) sepia(31%) saturate(3872%) hue-rotate(24deg) brightness(115%) contrast(84%);
+  }
 }

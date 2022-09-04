@@ -1,122 +1,40 @@
-<div class="main-screen">
-    <h1 class="app-title">RSLang</h1>
-    <h3 class="app-slogan">Play&Learn</h3>
-</div>
-<main class="main">
-    <div class="advantages">
-        <div class="advantage">
-            <span>3600</span>
-            <p>words</p>
-        </div>
-        <div class="advantage">
-            <span>free</span>
-            <p>access</p>
-        </div>
-        <div class="advantage">
-            <span>learn</span>
-            <p>while playing</p>
-        </div>
-    </div>
-    <p class="about_text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit excepturi fugit mollitia.
-        Vitae inventore
-        dolorem odio neque voluptatum exercitationem provident dolor veritatis ducimus beatae voluptates quo eum at
-        repudiandae sunt, deserunt assumenda alias hic vel eligendi cupiditate. Molestias architecto excepturi unde
-        dolorem. Accusantium reiciendis ipsum dolorum tenetur necessitatibus voluptatibus, rerum, officia saepe, alias
-        asperiores eos?</p>
-    <div class="about_games">
-        <h2>Try our games</h2>
-        <mat-card class="about_game-card">
-            <div class="about_game-info">
-                <mat-card-title class="about_game-title">Audiocall</mat-card-title>
-                <mat-card-content>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis atque eaque eveniet laboriosam
-                        a
-                        suscipit.
-                    </p>
-                </mat-card-content>
-                <button class="about_play-btn" mat-raised-button color="primary">Play</button>
+<main class="main-container">
+    <section class="hero-section">
+        <div class="hero-section__block">
+            <div class="hero-section__text">
+                <div class="hero-text__image"></div>
+                <div class="hero-text__content">
+                    <h1 class="hero-content__title">Скорее учи английский!</h1>
+                    <div class="hero-content__text">
+                        <p>
+                            Британские учёные подсчитали, что для свободного общения достаточно 4000 слов!
+                        </p>
+                        <p>
+                            Здесь ты выучишь их быстро и весело!
+                        </p>
+                    </div>
+                    <button class="hero-content__btn" mat-stroked-button [routerLink]="['/', paths.Dictionary]">
+                        <mat-icon class="hero-btn__icon">play_arrow</mat-icon> Начать учить!
+                    </button>
+                </div>
             </div>
-            <div class="about_game-image">
-                <img src="./assets/kid.jpg" alt="">
-            </div>
-        </mat-card>
-        <mat-card class="about_game-card">
-            <div class="about_game-image">
-                <img src="./assets/audio.jpg" alt="">
-            </div>
-            <div class="about_game-info">
-                <mat-card-title class="about_game-title">Let's Sprint!</mat-card-title>
-                <mat-card-content>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis atque eaque eveniet laboriosam
-                        a
-                        suscipit.
-                    </p>
-                </mat-card-content>
-                <button class="about_play-btn" mat-raised-button color="primary">Play</button>
-            </div>
-        </mat-card>
-    </div>
-    <div class="about_team">
-        <h2>Our team</h2>
-        <div class="about_team-members">
-            <mat-card class="about_team-member">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                    alt="Photo of a Shiba Inu">
-                <mat-card-content>
-                    <mat-card-title class="about_member-name">Shiba Inu</mat-card-title>
-                    <a href="" class="about_member-gh">github</a>
-                    <ol class="about_member-task">
-                        <li>Страница регистрации и логина</li>
-                        <li>Страница "Статистика"</li>
-                        <li>Игра "Спринт"</li>
-                        <li>Создание API</li>
-                    </ol>
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="about_team-member">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                    alt="Photo of a Shiba Inu">
-                <mat-card-content>
-                    <mat-card-title class="about_member-name">Shiba Inu</mat-card-title>
-                    <a href="" class="about_member-gh">github</a>
-                    <ol class="about_member-task">
-                        <li>Страница регистрации и логина</li>
-                        <li>Страница "Статистика"</li>
-                        <li>Игра "Спринт"</li>
-                        <li>Создание API</li>
-                    </ol>
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="about_team-member">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                    alt="Photo of a Shiba Inu">
-                <mat-card-content>
-                    <mat-card-title class="about_member-name">Shiba Inu</mat-card-title>
-                    <a href="" class="about_member-gh">github</a>
-                    <ol class="about_member-task">
-                        <li>Страница регистрации и логина</li>
-                        <li>Страница "Статистика"</li>
-                        <li>Игра "Спринт"</li>
-                        <li>Создание API</li>
-                    </ol>
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="about_team-member">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                    alt="Photo of a Shiba Inu">
-                <mat-card-content>
-                    <mat-card-title class="about_member-name">Shiba Inu</mat-card-title>
-                    <a href="" class="about_member-gh">github</a>
-                    <ol class="about_member-task">
-                        <li>Страница регистрации и логина</li>
-                        <li>Страница "Статистика"</li>
-                        <li>Игра "Спринт"</li>
-                        <li>Создание API</li>
-                    </ol>
-                </mat-card-content>
-            </mat-card>
+            <div class="hero-section__image"></div>
         </div>
-    </div>
+    </section>
+    <section class="about-section">
+        <div class="about-section__triangle">
+            <div class="about-section__content">
+                <h2 class="hero-content__title">Всего несколько шагов до мечты:</h2>
+                <p>
+                    Учишь слова в <span>учебнике</span>, отмечаешь сложные, <span>в играх</span> проверяешь заученное, следишь за успехами <span>в статистике</span>.
+                </p>
+                <p>
+                    Зарегистрируйся, чтобы получить полный доступ к нашему сервису
+                </p>
+                <button mat-stroked-button class="user-btn" [routerLink]="['/', paths.Register]">
+                    <mat-icon>person_add</mat-icon> Зарегистрироваться
+                </button>
+            </div>
+        </div>
+    </section>
 </main>
