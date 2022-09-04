@@ -70,8 +70,8 @@ export class ApiService {
 
   // AggregatedWords
 
-  public getAggregatedWords(id: string): Observable<IWord> {
-    return this.http.get<IWord>(`${this.USERS_URL}/${id}/aggregatedWords`, this.httpHeader);
+  public getAggregatedWords(id: string, options?: string): Observable<IFilterResponse[]> {
+    return this.http.get<IFilterResponse[]>(`${this.USERS_URL}/${id}/aggregatedWords${options}`, this.httpHeader);
   }
 
   // Statistics

@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { IWord } from '@core/models';
+import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
+import { TokenStorageService } from '@core/services/token-storage.service';
+import { WordService } from '@core/services/word.service';
 
 @Component({
   selector: 'app-word',
@@ -9,6 +12,7 @@ import { AudioPlayerService } from '@core/services/audio-player.service';
 })
 export class WordComponent {
   public API_URL = 'https://rslangbe.herokuapp.com/';
+  public userId = this.tokenStorageService.getUser().id;
 
   @Input()
   word: IWord = {
@@ -28,7 +32,7 @@ export class WordComponent {
     wordTranslate: ''
   }
   
-  constructor(public audioPlayerService: AudioPlayerService) {
+  constructor(public audioPlayerService: AudioPlayerService, public tokenStorageService: TokenStorageService, public apiService: ApiService, public wordService: WordService) {
     this.word.id = '',
     this.word.group = 0,
     this.word.page = 0,

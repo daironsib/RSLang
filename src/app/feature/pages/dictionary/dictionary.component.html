@@ -14,7 +14,7 @@
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="5"
                 (click)="showGroup(5)">Section 6</button>
             <button class="dictionary__btn" mat-stroked-button color="primary" data-group="6"
-                (click)="showGroup(6)">Section "Hard"</button>
+                (click)="showHardWords()">Section "Hard"</button>
         </div>
         <div class="dictionary-container__btns">
             <button class="dictionary__btn" mat-stroked-button color="primary" [routerLink]="['/', paths.SprintGame]" [queryParams]="{group: currentGroupIndex, page: pageNo}">
@@ -31,8 +31,8 @@
     </div>
     <div class="dictionary-paginator">
         <mat-paginator 
-            [length]="600" 
-            [pageSize]="20" 
+            [length]="this.length" 
+            [pageSize]="this.pageSize" 
             [pageIndex]="this.pageNo"
             (page)="getPage($event)" 
             aria-label="Select page">
