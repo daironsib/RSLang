@@ -214,6 +214,7 @@ $sec_green: #e6ff96;
     line-height: 120%;
     margin-bottom: 30px;
   }
+  
   svg {
     width: 24px;
     height: 24px;
@@ -241,11 +242,13 @@ $sec_green: #e6ff96;
 }
 
 @media (max-width: 1100px) {
+  
   .dictionary-container,
   .dictionary-body {
     max-width: 100%;
     padding: 0 30px;
   }
+  
   .dictionary-body {
     display: flex;
     flex-wrap: wrap;
@@ -261,6 +264,7 @@ $sec_green: #e6ff96;
   .dictionary-select-container {
     width: 150px;
   }
+  
   .dictionary-select,
   .dictionary-select-footer {
     height: 150px;
@@ -284,6 +288,7 @@ $sec_green: #e6ff96;
   }
 
   .dictionary-pagination {
+    
     .prev,
     .next {
       width: 39px;
@@ -309,6 +314,7 @@ $sec_green: #e6ff96;
 }
 
 @media (max-width: 900px) {
+  
   .dictionary-container,
   .dictionary-body {
     padding: 0 10px;
@@ -361,9 +367,11 @@ $sec_green: #e6ff96;
 
 @media (max-width: 500px) {
   .dictionary-pagination {
+    
     .prev,
     .next {
       width: 100px;
+      
       &:hover {
         border-radius: 5px;
       }

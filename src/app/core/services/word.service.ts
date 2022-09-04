@@ -5,17 +5,14 @@ import { ApiService } from '@core/services/api.service';
 import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class WordService {
   public userId = this.tokenStorageService.getUser().id;
   public hardWords: IWord[] = [];
   public learnedWords: IWord[] = [];
 
-  constructor(
-    public apiService: ApiService,
-    public tokenStorageService: TokenStorageService
-  ) {}
+  constructor(public apiService: ApiService, public tokenStorageService: TokenStorageService) {}
 
   public getAll(group: number, page: number): Observable<IWord[]> {
     return this.apiService.getWords(group, page);
