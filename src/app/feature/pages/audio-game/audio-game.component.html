@@ -11,13 +11,13 @@
       </ul>
       <div class="audio-game__2-cols">
         <form class="audio-game__form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-          <select name="difficulty">
-            <option value="1">Сложность 0</option>
-            <option value="2" selected>Сложность 1</option>
-            <option value="3">Сложность 2</option>
-            <option value="4">Сложность 3</option>
-            <option value="5">Сложность 4</option>
-            <option value="6">Сложность 5</option>
+          <select name="difficulty" [(ngModel)]="form.difficulty" #difficulty="ngModel">
+            <option value="0">Сложность 1</option>
+            <option value="1" selected>Сложность 2</option>
+            <option value="2">Сложность 3</option>
+            <option value="3">Сложность 4</option>
+            <option value="4">Сложность 5</option>
+            <option value="5">Сложность 6</option>
           </select>
           <button>СТАРТ</button>
         </form>

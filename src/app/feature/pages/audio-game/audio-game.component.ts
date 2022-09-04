@@ -1,8 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { IWord } from '@core/models';
+import { IGameStatistics, IOptionStatistics, IStatistics, IUserWordProgress, IUserWords, IWord, WordDifficulty } from '@core/models';
 import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
+import { TokenStorageService } from '@core/services/token-storage.service';
 
 @Component({
   selector: 'app-audio-game',
@@ -20,8 +21,25 @@ export class AudioGameComponent implements OnInit {
   public variantWords: string[] = [];
   public goodWords: IWord[] = [];
   public badWords: IWord[] = [];
+  private wordDifficulty = WordDifficulty.InProgress;
+  private wordProgress: IUserWordProgress = {
+    correctAnswers: 0
+  };
 
-  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService) { }
+  private rightAnswerCounter: number = 0;
+  private learnedWords: number = 0;
+  private optionalStats: IGameStatistics = {
+    correctAnswers: 0,
+    wrongAnswers: 0,
+    learnedWords: 0,
+    longestSeries: 0,
+    newWords: 0,
+    lastChanged: ''
+  };
+  private userID = this.tokenStorage.getUser().id;
+  private answerIsRight: boolean = false;
+
+  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void { }
 
@@ -74,6 +92,7 @@ export class AudioGameComponent implements OnInit {
           this.generateVariants();
           this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
           this.changeScreen(2);
+          this.getStatistics();
         });
     }
   }
@@ -83,6 +102,7 @@ export class AudioGameComponent implements OnInit {
   }
 
   public nextWord(): void {
+    this.resetUserWordsData();
     if (this.words.length !== 0 && this.currentIndexWord < this.words.length - 1) {
       this.currentIndexWord++;
       this.generateVariants();
@@ -111,13 +131,124 @@ export class AudioGameComponent implements OnInit {
   }
 
   public checkVariant(variant: string): void {
-    if (variant === this.words[this.currentIndexWord].wordTranslate) {
+
+    if (this.isCorrect(variant)) {
       this.goodWords.push(this.words[this.currentIndexWord]);
+      this.optionalStats.correctAnswers++;
+      this.rightAnswerCounter++;
+      this.wordProgress.correctAnswers++;
+      this.answerIsRight = true;
+      this.applyWordDifficulty();
     } else {
       this.badWords.push(this.words[this.currentIndexWord]);
+      this.optionalStats.wrongAnswers++;
+      this.rightAnswerCounter = 0;
+      this.wordProgress.correctAnswers--;
     }
 
-    this.nextWord();
+    if (this.rightAnswerCounter > this.optionalStats.longestSeries) {
+      this.optionalStats.longestSeries = this.rightAnswerCounter;
+    }
+
+    this.sendUserWord();
+  }
+
+  private isCorrect(variant: string): boolean {
+    return variant === this.words[this.currentIndexWord].wordTranslate;
+  }
+
+  private sendUserWord(): void {
+    if (this.userID) {
+      const wordID = this.words[this.currentIndexWord].id;
+      this.api.createUserWords(this.userID, wordID, this.getWordPayload()).subscribe(() => {
+        this.optionalStats.newWords++;
+        this.sendStatistics();
+      },
+        err => {
+          this.api.getUserWordById(this.userID, wordID).subscribe((data: IUserWords) => {
+            this.updateUserWordsData(data);
+            this.applyAnswerToUserWordsData();
+            this.applyWordDifficulty();
+            this.api.updateUserWordById(this.userID, wordID, this.getWordPayload()).subscribe(() => {
+              this.sendStatistics();
+            })
+          });
+        });
+    }
+  }
+
+  private getWordPayload(): IUserWords {
+    return {
+      difficulty: this.wordDifficulty,
+      optional: this.wordProgress
+    };
+  }
+
+  private resetUserWordsData(): void {
+    this.answerIsRight = false;
+    this.wordDifficulty = WordDifficulty.InProgress;;
+    this.wordProgress.correctAnswers = 0;
+  }
+
+  private updateUserWordsData(data: IUserWords): void {
+    if (data.difficulty && data.optional) {
+      this.wordDifficulty = data.difficulty;
+      this.wordProgress = data.optional;
+    }
+  }
+
+  private applyAnswerToUserWordsData(): void {
+    if (this.answerIsRight) {
+      this.wordProgress.correctAnswers++
+    } else {
+      this.wordProgress.correctAnswers--
+    }
+  }
+
+  private getStatistics(): void {
+    if (this.userID) {
+      this.api.getStatistics(this.userID).subscribe((data: IStatistics) => {
+        if (data.learnedWords) {
+          this.learnedWords = data.learnedWords;
+        }
+
+        if (data.optional.audio) {
+          this.optionalStats = data.optional.audio;
+        }
+      })
+    }
+  }
+
+  private sendStatistics(): void {
+    if (this.userID) {
+      this.api.getStatistics(this.userID).subscribe((data: IStatistics) => {
+        const optional: IOptionStatistics = {
+          audio: this.optionalStats,
+          sprint: data.optional?.sprint,
+          wordsStatistics: data.optional?.wordsStatistics
+        }
+
+        this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
+          this.nextWord();
+        });
+      }, err => {
+        const optional: IOptionStatistics = {
+          audio: this.optionalStats
+        }
+        this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
+          this.nextWord();
+        });
+      });
+    }
+  }
+
+  private applyWordDifficulty(): void {
+    if (this.wordProgress.correctAnswers >= 3) {
+      this.wordDifficulty = WordDifficulty.Learned;
+      this.optionalStats.learnedWords++;
+    } else {
+      this.wordDifficulty = WordDifficulty.InProgress;
+    }
   }
 
   public dontKnow(): void {
