@@ -20,8 +20,7 @@
         <div *ngIf="tokenStorageService.getToken(); else login">
             <div class="logout-menu">
                 <div class="user-info">
-                    <span class="user-name">NAME</span>
-                    <span class="user-email">email@mail.com</span>
+                    <span class="user-name">{{ user.name }}</span>
                 </div>
                 <button class="user-btn" mat-stroked-button (click)="tokenStorageService.signOut()">
                     <mat-icon class="user-icon">exit_to_app</mat-icon> Выйти

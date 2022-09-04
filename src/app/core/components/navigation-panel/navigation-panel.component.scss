@@ -23,11 +23,16 @@
 .nav-container__btns {
     display: flex;
     gap: 0.7rem;
+    
     button {
         transition: 0.3s ease;
+        border: 2px solid transparent;
+        font-size: 20px;
+        
         &:hover {
             border: 2px solid #24282C;
         }
+        
         &:focus {
             background: #E9E9E3;
         }
@@ -52,10 +57,6 @@
     font-weight: 500;
 }
 
-.user-email{
-    font-size: 14px;
-}
-
 .header-container__logo {
     width: 144px;
     height: 44px;
@@ -69,6 +70,7 @@
     transition: 0.3s ease;
     background: #24282C;
     color: #E9E9E3;
+    
     &:hover {
         background: #3F4850;
     }

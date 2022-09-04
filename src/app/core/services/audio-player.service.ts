@@ -26,7 +26,6 @@ export class AudioPlayerService {
   }
 
   public play(path: string): void {
-    console.log(this.playlist);
     this.audio.src = this.API_URL + path;
     this.audio.load();
     this.audio.play();
@@ -34,7 +33,6 @@ export class AudioPlayerService {
 
   public setPlayList(src: string[]) {
     this.playlist = src;
-    console.log(this.currentAudio);
     const subscription = this.playbackEnded$.subscribe(() => {
       if (this.currentAudio === this.playlist.length) {
         subscription.unsubscribe();
