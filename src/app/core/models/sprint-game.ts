@@ -3,7 +3,8 @@ export interface SprintGameWord {
     word: string,
     translation: string,
     correctTranslation: string,
-    transcription: string
+    transcription: string,
+    audio: string
 }
 
 export interface SprintGameWordStatistic {
@@ -11,5 +12,6 @@ export interface SprintGameWordStatistic {
     word: string,
     isCorrectAnswer: boolean,
     translation: string,
-    transcription: string
+    transcription: string,
+    audio: string
 }

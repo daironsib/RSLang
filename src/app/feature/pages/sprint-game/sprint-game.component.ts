@@ -8,6 +8,7 @@ import { takeUntil, map } from 'rxjs/operators';
 import { KEY_CODE } from '@core/models/keyEvents';
 import { ActivatedRoute } from '@angular/router';
 import { TokenStorageService  } from '@core/services/token-storage.service'
+import { AudioPlayerService } from '@core/services/audio-player.service';
 
 @Component({
   selector: 'app-sprint-game',
@@ -36,7 +37,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   public storedLongestSeries: number = 0;
   public intervalSubscription!: Subscription;
 
-  constructor(private api: ApiService, public state: FooterService, private route: ActivatedRoute, private token: TokenStorageService) {
+  constructor(private api: ApiService, public state: FooterService, private route: ActivatedRoute, private token: TokenStorageService, public audioPlayerService: AudioPlayerService) {
     this.footerState = false;
     this.setupWordSubject();
   }
@@ -89,6 +90,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     const randomTranslations = this.words.map((wordItem: IWord) => wordItem.wordTranslate).sort(() => Math.random() - 0.5);
 
     this.sprintGameWords = this.words.map((wordItem: IWord, index: number) => ({
+      audio: wordItem.audio,
       wordId: wordItem.id,
       word: wordItem.word,
       correctTranslation: wordItem.wordTranslate,
@@ -142,6 +144,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
   public checkTrueAnswer(wordItem: SprintGameWord): void {
     const wordStatistic: SprintGameWordStatistic = {
+      audio: wordItem.audio,
       wordId: wordItem.wordId,
       word: wordItem.word,
       translation: wordItem.correctTranslation,
@@ -158,6 +161,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   public checkFalseAnswer(wordItem: SprintGameWord): void {
     const wordStatistic: SprintGameWordStatistic = {
       wordId: wordItem.wordId,
+      audio: wordItem.audio,
       word: wordItem.word,
       translation: wordItem.correctTranslation,
       transcription:  wordItem.transcription,

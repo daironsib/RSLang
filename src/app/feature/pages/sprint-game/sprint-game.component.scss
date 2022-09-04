@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
+.material-icons{
+  font-family: 'Material Icons' !important;
+}
+
 $white: antiquewhite;
 $gray: #cccccc;
 $correct: greenyellow;
 $negative:crimson;
 $blue: #8efff9;
+$greenScroll: #49a174;
 $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
 
 %font40 {
@@ -121,7 +126,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
 .modal-content {
   background: $green;
   @extend %flexColumn;
-  width: 500px;
+  width: 550px;
   height: 470px;
   border-radius: 10px;
   margin: 0 auto; 
@@ -181,7 +186,21 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   margin-top: 1rem;
   height: 200px;
   overflow-y: scroll;
-  padding: 0 0.5rem;
+  scrollbar-width: thin;
+  padding: 0 0.7rem;
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 80px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 80px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    background-color: $greenScroll;
+  }
   table, th, td {
     border: 2px solid $white;
     color: white;
@@ -190,6 +209,17 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
       td {
         text-align: center;
         padding: 0.5rem;
+        button {
+          background-color: $greenScroll;
+          color: $white;
+          cursor: pointer;
+          transition: all .2s ease-in;
+
+          &:hover {
+            background-color: $white;
+            color: $greenScroll;
+          }
+        }
       }
     }
   }
@@ -208,4 +238,12 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
       background-color: $correct;
     }
   }
+}
+
+.correct-icon {
+  color: $correct;
+}
+
+.wrong-icon {
+  color: $negative;
 }

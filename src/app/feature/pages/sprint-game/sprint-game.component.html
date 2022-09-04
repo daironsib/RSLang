@@ -55,11 +55,11 @@
                 </div>
                 <hr class="line">
                 <div class="board-btns">
-                    <button (click)="checkTrueAnswer(wordItem)" class="btn-try-again btn-true">
-                        True
+                    <button mat-stroked-button (click)="checkTrueAnswer(wordItem)" class="btn-try-again btn-true">
+                        <mat-icon>arrow_back</mat-icon> True
                     </button>
-                    <button (click)="checkFalseAnswer(wordItem)" class="btn-try-again btn-false">
-                        False
+                    <button mat-stroked-button (click)="checkFalseAnswer(wordItem)" class="btn-try-again btn-false">
+                        False <mat-icon>arrow_forward</mat-icon>
                     </button>
                 </div>
             </div>
@@ -73,11 +73,18 @@
                 <table>
                     <tbody>
                         <tr *ngFor="let result of sprintGameWordStatistic">
-                            <td>icon</td>
+                            <td>
+                                <button mat-mini-fab (click)="this.audioPlayerService.newAudio([result.audio])">
+                                    <mat-icon>volume_up</mat-icon>
+                                </button>
+                            </td>
                             <td>{{result.word}}</td>
                             <td>{{result.transcription}}</td>
                             <td>{{result.translation}}</td>
-                            <td>{{result.isCorrectAnswer}}</td>
+                            <td>
+                                <mat-icon *ngIf="result.isCorrectAnswer" class="correct-icon">check_circle</mat-icon>
+                                <mat-icon *ngIf="!result.isCorrectAnswer" class="wrong-icon">cancel</mat-icon>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
