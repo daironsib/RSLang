@@ -1,4 +1,5 @@
 <div class="dictionary-container">
+<<<<<<< HEAD
     <h3 class="dictionary-title">Учебник</h3>
     <div class="dictionary-nav">
         <div class="dictionary-btns">
@@ -30,7 +31,8 @@
                         [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Спринт
                     </li>
-                    <li class="btn game__btn">
+                    <li class="btn game__btn" [routerLink]="['/', paths.AudioGame]" 
+                        [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Аудиовызов
                     </li>
                 </ul>
@@ -112,7 +114,8 @@
                         [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Спринт
                     </li>
-                    <li class="btn game__btn">
+                    <li class="btn game__btn" [routerLink]="['/', paths.AudioGame]" 
+                        [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Аудиовызов
                     </li>
                 </ul>

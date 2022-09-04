@@ -5,6 +5,7 @@ import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
 import { TokenStorageService } from '@core/services/token-storage.service';
 import { FooterService } from '@core/services/footer.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-audio-game',
@@ -50,11 +51,19 @@ export class AudioGameComponent implements OnInit {
   private userID = this.tokenStorage.getUser().id;
   private answerIsRight: boolean = false;
 
-  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService, public state: FooterService) { 
+  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService, public state: FooterService, private route: ActivatedRoute) { 
     this.footerState = false;
    }
 
   ngOnInit(): void {
+    this.route.queryParams
+      .subscribe(params => {
+        if (Object.keys(params).length > 0) {
+          const page = params['page'];
+          const group = params['group'];
+          this.getWordsFromDictionary(group, page);
+        }
+      });
     this.state.setFooterState(this.footerState);
    }
 
@@ -101,15 +110,19 @@ export class AudioGameComponent implements OnInit {
     const { difficulty } = this.form;
 
     if (difficulty) {
-      this.api.getWords(difficulty, this.getRandomInt(0, this.MAX_PAGE)).subscribe(
-        data => {
-          this.words = data;
-          this.generateVariants();
-          this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
-          this.changeScreen(2);
-          this.getStatistics();
-        });
+      this.getWordsFromDictionary(difficulty, this.getRandomInt(0, this.MAX_PAGE));
     }
+  }
+
+  public getWordsFromDictionary(group: number, page: number): void {
+    this.api.getWords(group, page).subscribe(
+      data => {
+        this.words = data;
+        this.generateVariants();
+        this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
+        this.changeScreen(2);
+        this.getStatistics();
+      });
   }
 
   private changeScreen(number: number): void {
