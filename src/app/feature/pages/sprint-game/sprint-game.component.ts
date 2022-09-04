@@ -299,18 +299,57 @@ export class SprintGameComponent implements OnInit, OnDestroy {
       this.api.getStatistics(userId).subscribe((data: IStatistics) => {
         const optional: IOptionStatistics = {
           audio: data.optional?.audio,
-          wordsStatistics: data.optional?.wordsStatistics,
+          wordsStatistics: data.optional?.wordsStatistics
+            ? this.updateWordStatistics(data.optional?.wordsStatistics, wordStatistic, payload, isNewWord) 
+            : this.generateWordStatistics(wordStatistic, payload, isNewWord),
           sprint: data.optional.sprint 
             ? this.updateSprintStatistic(data.optional?.sprint, wordStatistic, payload, isNewWord) 
-            : this.generateSprintStatistic(wordStatistic, payload, isNewWord)
+            : this.generateSprintStatistic(wordStatistic, payload, isNewWord),
         }
         this.api.updateStatistics(userId, 0, optional).subscribe();
       }, error => {
         const optional: IOptionStatistics = {
-          sprint: this.generateSprintStatistic(wordStatistic, payload, isNewWord)
+          sprint: this.generateSprintStatistic(wordStatistic, payload, isNewWord),
+          wordsStatistics: this.generateWordStatistics(wordStatistic, payload, isNewWord)
         }
         this.api.updateStatistics(userId, 0, optional).subscribe();
       });
+    }
+  }
+
+  public generateWordStatistics(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IWordStatistics {
+    const currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+    
+    return {
+      [currentDate]: {
+        newWords: isNewWord ? 1 : 0,
+        learnedWords: (payload.difficulty === WordDifficulty.Learned) ? 1 : 0,
+        correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0,
+        wrongAnswers: wordStatistic.isCorrectAnswer ? 0 : 1,
+      }
+    }
+  }
+
+  public updateWordStatistics(data: IWordStatistics, wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): IWordStatistics {
+    const currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
+
+    if (!data[currentDate]) {
+      return this.generateWordStatistics(wordStatistic, payload, isNewWord);
+    }
+    
+    return {
+      [currentDate]: {
+        newWords: isNewWord ? data[currentDate].newWords + 1 : data[currentDate].newWords,
+        learnedWords: (payload.difficulty === WordDifficulty.Learned) 
+          ? data[currentDate].learnedWords + 1 
+          : data[currentDate].learnedWords,
+        correctAnswers: wordStatistic.isCorrectAnswer 
+          ? data[currentDate].correctAnswers + 1 
+          : data[currentDate].correctAnswers,
+        wrongAnswers: wordStatistic.isCorrectAnswer 
+          ? data[currentDate].wrongAnswers 
+          : data[currentDate].wrongAnswers + 1,
+      }
     }
   }
 }

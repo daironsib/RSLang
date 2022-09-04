@@ -63,7 +63,7 @@ export interface IGameStatistics {
 }
 
 export interface IWordStatistics {
-  string: {
+  [key: string]: {
     newWords: number,
     learnedWords: number,
     correctAnswers: number,
