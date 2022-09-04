@@ -1,39 +1,191 @@
 .register-container {
+    font-family: 'Inter';
+    font-weight: normal;
     display: flex;
     flex-direction: column;
-    gap: 6px;
     align-items: center;
+    padding: 48px 0 84px;
+    background: #F7F6F0;
 }
 
 .register-container__title {
-    font-family: 'Aleo';
+    font-family: 'Anonymous Pro';
     font-style: normal;
     font-weight: 700;
-    font-size: 28px;
-    line-height: 28px;
+    font-size: 100px;
+    line-height: 80%;
 }
 
-.register-container__line {
-    width: 261px;
-    border: none;
-    background-color: rgba(13, 96, 111, 0.5);
-    height:1px;
+.register-content {
+    display: flex;
+    justify-content: center;
+}
+
+.register-image {
+    background-image: url(/assets/images/auth.png);
+    width: 475px;
+    height: 530px;
+    margin-right: 30px;
+    margin-top: 15px;
+}
+
+.register-form {
+    width: 480px;
+    height: min-content;
+    min-height: 400px;
+    background: #E9E9E3;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin-top: 35px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-input {
+    width: 100%;
+    height: 59px;
+    background: #F7F6F0;
+    border: 2px solid #E9E9E3;
+    border-radius: 10px;
+    margin-bottom: 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 120%;
+    color: #8D8F8E;
+    outline: none;
 }
 
 .register-container__button {
-    box-shadow: 0px 0px 3px rgba(13, 96, 111, 0.08), 0px 2px 3px rgba(13, 96, 111, 0.16);
+    border: none;
+    height: 59px;
+    width: 100%;
+    background: #24282C;
     border-radius: 10px;
-    font-family: 'Red Hat Text';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 26px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 120%;
+    color: #F7F6F0;
+    margin: 20px 0 0;
+    cursor: pointer;
 }
 
-.login-container__account {
-    font-family: 'Aleo';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 20px;
+.register-login {
+    font-size: 24px;
+    line-height: 120%;
+    color: #24282C;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin-top: 20px;
+}
+
+.form-input.ng-dirty.ng-invalid {
+    border: 2px dashed #EB5757;
+    color: #EB5757;
+}
+
+.alert-danger {
+    color: #EB5757;
+    font-size: 14px;
+    line-height: 120%;
+    text-align: center;
+    margin: 5px 0;
+}
+
+.alert-success {
+    font-size: 24px;
+    line-height: 120%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+    img {
+        width: 100px;
+        height: 100px;
+        margin: 50px auto;
+    }
+}
+
+.register-text {
+    max-width: 640px;
+    margin: 0 auto 0;
+    text-align: center;
+    font-size: 20px;
+    line-height: 24px;
+    color: #8D8F8E;
+}
+
+@media (max-width: 1100px) {
+    
+    .register-container {
+        padding: 40px 15px 50px;
+    }
+    
+    .register-container__title {
+        font-size: 55px;
+    }
+    
+    .register-content {
+        flex-direction: column;
+        max-width: 360px;
+        width: 100%;
+    }
+    
+    .register-image {
+        width: 100%;
+        margin-right: 0;
+        height: 160px;
+        background-size: cover;
+    }
+    
+    .register-form {
+        width: 100%;
+        min-height: 330px;
+        margin: 0;
+        padding: 15px;
+        border-radius: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 5px;
+    }
+    
+    .form-input {
+        font-size: 20px;
+        height: 54px;
+    }
+    
+    .register-container__button {
+        margin: 10px 0 0;
+        height: 54px;
+        font-size: 20px;
+    }
+    
+    .register-login {
+        font-size: 20px;
+    }
+    
+    .alert-success {
+        font-size: 20px;
+        
+        img {
+            width: 60px;
+            height: 60px;
+            margin: 30px auto;
+        }
+    }
+    
+    .register-text {
+        max-width: 360px;
+        margin: 30px auto 0;
+        font-size: 14px;
+    }
+    
 }

@@ -1,55 +1,40 @@
 <div class="login-container">
-    <h3 class="login-container__title">Log in to your account</h3>
-    <hr class="login-container__line">
-    <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-        <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input 
-                type="email" 
-                class="form-input" 
-                name="email" 
-                [(ngModel)]="form.email" 
-                required 
-                #email="ngModel" 
-                placeholder="your email" 
-            />
-            <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
-                Email is required!
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input 
-                type="password" 
-                class="form-input" 
-                name="password" 
-                [(ngModel)]="form.password" 
-                required minlength="8"
-                #password="ngModel" 
-                placeholder="your password" 
-            />
-            <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
-                <div *ngIf="password.errors?.['required']">Password is required</div>
-                <div *ngIf="password.errors?.['minlength']">
-                    Password must be at least 6 characters
+    <h3 class="login-container__title">Вход</h3>
+    <div class="login-content">
+        <div class="login-image"></div>
+        <div class="login-form">
+            <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="form-group">
+                    <input type="email" class="form-input" name="email" [(ngModel)]="form.email" required
+                        #email="ngModel" placeholder="E-mail" />
+                    <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
+                        Введите Email
+                    </div>
                 </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" name="password" [(ngModel)]="form.password" required
+                        minlength="8" #password="ngModel" placeholder="Пароль" />
+                    <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
+                        <div *ngIf="password.errors?.['required']">Введите пароль</div>
+                        <div *ngIf="password.errors?.['minlength']">
+                            Пароль должен содержать не менее 8 символов
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="login-container__button">Войти</button>
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
+                    Неверный E-mail или пароль
+                </div>
+                <a class="login-register-new" [routerLink]="['/', paths.Register]">
+                    Зарегистрироваться
+                </a>
+            </form>
+            <div class="alert alert-success" *ngIf="isLoggedIn">
+                <img src="./assets/svg/success.svg" alt="">
+                Вход в аккаунт произведен
             </div>
         </div>
-        <div class="form-group">
-            <button class="login-container__button" mat-stroked-button color="primary">Sign In</button>
-        </div>
-        <div class="form-group">
-            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
-                Incorrect e-mail or password
-            </div>
-        </div>
-    </form>
-    <div class="alert alert-success" *ngIf="isLoggedIn">
-        You have successfully logged in
     </div>
-    <hr class="login-container__line">
-    <div class="login-container__account"> Don`t have an account? Create new!</div>
-    <button mat-mini-fab [routerLink]="['/', paths.Register]" color="primary">
-        <mat-icon>person_add</mat-icon>
-    </button>
 </div>
