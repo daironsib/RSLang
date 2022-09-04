@@ -52,7 +52,7 @@ export class ApiService {
     return this.http.get<IUserWords[]>(`${this.USERS_URL}/${id}/words`, this.httpHeader);
   }
 
-  public createUserWords(id: string, wordId: string, payload: {}): Observable<IUserWords> {
+  public createUserWords(id: string, wordId: string, payload: IUserWords): Observable<IUserWords> {
     return this.http.post<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, payload, this.httpHeader);
   }
 
@@ -60,8 +60,8 @@ export class ApiService {
     return this.http.get<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, this.httpHeader);
   }
 
-  public updateUserWordById(id: string, wordId: string, difficulty: string): Observable<IUserWords> {
-    return this.http.put<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, { difficulty, 'optional': {} }, this.httpHeader);
+  public updateUserWordById(id: string, wordId: string, payload: IUserWords): Observable<IUserWords> {
+    return this.http.put<IUserWords>(`${this.USERS_URL}/${id}/words/${wordId}`, payload, this.httpHeader);
   }
 
   public deleteUserWordById(id: string, wordId: string): Observable<any> {

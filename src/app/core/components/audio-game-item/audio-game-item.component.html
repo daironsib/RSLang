@@ -3,6 +3,6 @@
     <mat-icon>volume_up</mat-icon>
   </button>
   <ul class="audio-game-variants">
-    <li *ngFor="let variant of variants; let i = index" class="audio-game-variants__item" (click)="add(variant)">{{ i + 1 }} {{ variant }}</li>
+    <li *ngFor="let variant of variants; let i = index" class="audio-game-variants__item" (click)="add(variant)">{{ i + 1 }} {{ variant | titlecase }}</li>
   </ul>
 </div>

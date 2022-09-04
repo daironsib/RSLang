@@ -46,10 +46,10 @@ export interface IFilterResponse {
 }
 
 export interface IUserWords {
-  id: string,
-  wordId: string,
-  difficulty: string,
-  optional: object
+  id?: string,
+  wordId?: string,
+  difficulty: WordDifficulty,
+  optional?: IUserWordProgress
 }
 
 export interface IGameStatistics {
@@ -84,4 +84,15 @@ export interface IStatistics {
 export interface ISettings {
   wordsPerDay: number,
   optional: object
+}
+
+export interface IUserWordProgress {
+  correctAnswers: number
+}
+
+export enum WordDifficulty {
+  Hard = 'hard',
+  Learned = 'learned',
+  InProgress = 'InProgress',
+  HardAndInProgress = 'HardAndInProgress'
 }
