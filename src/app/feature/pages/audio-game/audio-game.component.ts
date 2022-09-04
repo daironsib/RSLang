@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { IWord } from '@core/models';
+import { IGameStatistics, IOptionStatistics, IStatistics, IWord } from '@core/models';
 import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
@@ -11,6 +11,7 @@ import { TokenStorageService } from '@core/services/token-storage.service';
   styleUrls: ['./audio-game.component.scss']
 })
 export class AudioGameComponent implements OnInit {
+  private userID = this.tokenStorage.getUser().id;
   private MAX_PAGE: number = 29;
   public currentSlide: number = 1;
   public currentIndexWord: number = 0;
@@ -21,6 +22,16 @@ export class AudioGameComponent implements OnInit {
   public variantWords: string[] = [];
   public goodWords: IWord[] = [];
   public badWords: IWord[] = [];
+  private rightAnswerCounter: number = 0;
+  private learnedWords: number = 0;
+  private optionalStats: IGameStatistics = {
+    correctAnswers: 0,
+    wrongAnswers: 0,
+    learnedWords: 0,
+    longestSeries: 0,
+    newWords: 0,
+    lastChanged: ''
+  };
 
   constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService) { }
 
@@ -75,6 +86,7 @@ export class AudioGameComponent implements OnInit {
           this.generateVariants();
           this.audioPlayerService.newAudio([this.words[this.currentIndexWord].audio]);
           this.changeScreen(2);
+          this.getStatistics();
         });
     }
   }
@@ -112,37 +124,58 @@ export class AudioGameComponent implements OnInit {
   }
 
   public checkVariant(variant: string): void {
-    if (variant === this.words[this.currentIndexWord].wordTranslate) {
-      this.goodWords.push(this.words[this.currentIndexWord]);
-      const userID = this.tokenStorage.getUser().id;
-      const wordID = this.words[this.currentIndexWord].id;
-      const { difficulty } = this.form;
-      const payload = {
-        optional: {
-          game: true,
-          audio: {
-            right: 1,
-            wrong: 0
-          },
-          lastChanged: "03.09.2022"
-        }
-      }
 
-      if (userID) {
-        this.api.createUserWords(userID, wordID, payload).subscribe(
-          data => {
-            console.log(data);
-          },
-          err => {
-            console.log(err);
-          }
-        );
-      }
+    if (this.isCorrect(variant)) {
+      this.goodWords.push(this.words[this.currentIndexWord]);
+      this.optionalStats.correctAnswers++;
+      this.rightAnswerCounter++;
     } else {
       this.badWords.push(this.words[this.currentIndexWord]);
+      this.optionalStats.wrongAnswers++;
+      this.rightAnswerCounter = 0;
     }
 
+    if (this.rightAnswerCounter > this.optionalStats.longestSeries) {
+      this.optionalStats.longestSeries = this.rightAnswerCounter;
+    }
+
+    this.saveStatistics();
     this.nextWord();
+  }
+
+  private isCorrect(variant: string): boolean {
+    return variant === this.words[this.currentIndexWord].wordTranslate;
+  }
+
+  private getStatistics(): void {
+    this.api.getStatistics(this.userID).subscribe((data: IStatistics) => {
+      if (data.learnedWords) {
+        this.learnedWords = data.learnedWords;
+      }
+
+      if (data.optional.audio) {
+        this.optionalStats = data.optional.audio;
+      }
+    })
+  }
+
+  private saveStatistics(): void {
+    if (this.userID) {
+      this.api.getStatistics(this.userID).subscribe((data: IStatistics) => {
+        const optional: IOptionStatistics = {
+          audio: this.optionalStats,
+          sprint: data.optional?.sprint,
+          wordsStatistics: data.optional?.wordsStatistics
+        }
+
+        this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe();
+      }, err => {
+        const optional: IOptionStatistics = {
+          audio: this.optionalStats
+        }
+        this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe();
+      });
+    }
   }
 
   public dontKnow(): void {
