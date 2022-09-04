@@ -10,6 +10,7 @@ import { TokenStorageService } from '@core/services/token-storage.service';
 export class NavigationPanelComponent implements OnInit {
   public paths = Paths;
   public user: IUserLS;
+  public gameMenu: boolean = false;
 
   constructor(public tokenStorageService: TokenStorageService) {
     this.user = this.tokenStorageService.getUser();
