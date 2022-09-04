@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { IGameStatistics, IOptionStatistics, IStatistics, IUserWordProgress, IUserWords, IWord, WordDifficulty } from '@core/models';
+import { IGameStatistics, IOptionStatistics, IStatistics, IUserWordProgress, IUserWord, IWord, WordDifficulty } from '@core/models';
 import { KEY_CODE } from '@core/models/keyEvents';
 import { ApiService } from '@core/services/api.service';
 import { AudioPlayerService } from '@core/services/audio-player.service';
@@ -160,12 +160,12 @@ export class AudioGameComponent implements OnInit {
   private sendUserWord(): void {
     if (this.userID) {
       const wordID = this.words[this.currentIndexWord].id;
-      this.api.createUserWords(this.userID, wordID, this.getWordPayload()).subscribe(() => {
+      this.api.createUserWordById(this.userID, wordID, this.getWordPayload()).subscribe(() => {
         this.optionalStats.newWords++;
         this.sendStatistics();
       },
         err => {
-          this.api.getUserWordById(this.userID, wordID).subscribe((data: IUserWords) => {
+          this.api.getUserWordById(this.userID, wordID).subscribe((data: IUserWord) => {
             this.updateUserWordsData(data);
             this.applyAnswerToUserWordsData();
             this.applyWordDifficulty();
@@ -177,7 +177,7 @@ export class AudioGameComponent implements OnInit {
     }
   }
 
-  private getWordPayload(): IUserWords {
+  private getWordPayload(): IUserWord {
     return {
       difficulty: this.wordDifficulty,
       optional: this.wordProgress
@@ -190,7 +190,7 @@ export class AudioGameComponent implements OnInit {
     this.wordProgress.correctAnswers = 0;
   }
 
-  private updateUserWordsData(data: IUserWords): void {
+  private updateUserWordsData(data: IUserWord): void {
     if (data.difficulty && data.optional) {
       this.wordDifficulty = data.difficulty;
       this.wordProgress = data.optional;
