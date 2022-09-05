@@ -20,7 +20,7 @@
                 (click)="showHardWords()">
                 <svg [innerHTML]="svgService.getHardWordIcon()"></svg> Сложное
             </button>
-            <div class="games-select-container">
+            <div *ngIf="!this.isHardWordsPage" class="games-select-container">
                 <button class="btn games__open-select" (click)="this.gameMenu = !this.gameMenu">
                     <img src="./assets/svg/puzzle.svg" alt="">
                     Проверить знания
@@ -103,7 +103,7 @@
                 (click)="showHardWords()">
                 <svg [innerHTML]="svgService.getHardWordIcon()"></svg> Сложное
             </button>
-            <div class="games-select-container">
+            <div *ngIf="!this.isHardWordsPage" class="games-select-container">
                 <button class="btn games__open-select" (click)="this.gameMenuFooter = !this.gameMenuFooter">
                     <img src="./assets/svg/puzzle.svg" alt="">
                     Проверить знания
