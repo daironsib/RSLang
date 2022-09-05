@@ -78,3 +78,25 @@
 .user-icon {
     color: #D3F36B;
 }
+
+.games-select {
+  display: none;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  height: auto;
+  justify-content: start;
+  padding: 0;
+  z-index: 1;
+  &.is-opened {
+    display: block;
+  }
+}
+
+.games-select-container {
+  position: relative;
+}
+
+.games-select__btn {
+    height: 50px;
+}

@@ -9,12 +9,24 @@
                 <button mat-stroked-button [routerLink]="['/', paths.Dictionary]">
                     <mat-icon> import_contacts</mat-icon> Учебник
                 </button>
-                <button mat-stroked-button [routerLink]="['/', paths.SprintGame]">
-                    <mat-icon>av_timer</mat-icon> Спринт
-                </button>
-                <button mat-stroked-button [routerLink]="['/', paths.AudioGame]">
-                    <mat-icon>audiotrack</mat-icon> Аудиовызов
-                </button>
+                <div class="games-select-container">
+                    <button mat-stroked-button class="games-select__btn games__open-select" (click)="this.gameMenu = !this.gameMenu">
+                        <mat-icon>extension</mat-icon>
+                        Игры
+                    </button>
+                    <ul class="games-select" [ngClass]="this.gameMenu ? 'is-opened' : ''">
+                        <li>
+                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.SprintGame]">
+                                <mat-icon>audiotrack</mat-icon> Аудиовызов
+                            </button>
+                        </li>
+                        <li>
+                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.SprintGame]">
+                                <mat-icon>av_timer</mat-icon> Спринт
+                            </button>
+                        </li>
+                    </ul>
+                </div>
                 <button mat-stroked-button [routerLink]="['/', paths.Statistic]">
                     <mat-icon>assessment</mat-icon> Статистика
                 </button>
