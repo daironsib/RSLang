@@ -87,7 +87,8 @@
       <div class="audio-game__results-header">
         <h1>Результаты</h1>
         <button (click)="resetGame()" class="audio-game__play-again">
-          <mat-icon class="play__icon">play_arrow</mat-icon>Играть ещё</button>
+          <mat-icon class="play__icon">play_arrow</mat-icon>Играть ещё
+        </button>
       </div>
       <div class="audio-game__results">
         <div class="audio-game__results-table">
@@ -97,18 +98,21 @@
               <button class="answer-audio" (click)="this.audioPlayerService.newAudio([goodWord.audio])">
                 <img src="/assets/svg/sound.svg" alt="">
               </button>
-              {{ goodWord.word }} - {{ goodWord.wordTranslate }}
+              {{ goodWord.word }}
+              <span>
+                — {{ goodWord.wordTranslate }}
+              </span>
             </li>
           </ul>
         </div>
         <div class="audio-game__results-table">
           <h3 class="wrong-answers">Надо повторить - ({{ badWords.length }})</h3>
-          <ul  class="audio-game__answers-list">
+          <ul class="audio-game__answers-list">
             <li *ngFor="let badWord of badWords; let i = index">
               <button class="answer-audio" (click)="this.audioPlayerService.newAudio([badWord.audio])">
                 <img src="/assets/svg/sound.svg" alt="">
               </button>
-              {{ badWord.word }} 
+              {{ badWord.word }}
               <span>
                 — {{ badWord.wordTranslate }}
               </span>
