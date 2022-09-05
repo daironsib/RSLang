@@ -51,9 +51,9 @@ export class AudioGameComponent implements OnInit {
   private userID = this.tokenStorage.getUser().id;
   private answerIsRight: boolean = false;
 
-  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService, public state: FooterService, private route: ActivatedRoute) { 
+  constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService, public state: FooterService, private route: ActivatedRoute) {
     this.footerState = false;
-   }
+  }
 
   ngOnInit(): void {
     this.route.queryParams
@@ -65,7 +65,7 @@ export class AudioGameComponent implements OnInit {
         }
       });
     this.state.setFooterState(this.footerState);
-   }
+  }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -159,7 +159,6 @@ export class AudioGameComponent implements OnInit {
   }
 
   public checkVariant(variant: string): void {
-
     if (this.isCorrect(variant)) {
       this.goodWords.push(this.words[this.currentIndexWord]);
       this.optionalStats.correctAnswers++;
@@ -289,7 +288,16 @@ export class AudioGameComponent implements OnInit {
 
   public dontKnow(): void {
     this.badWords.push(this.words[this.currentIndexWord]);
-    this.nextWord();
+    this.wordStatistic[this.currentDate].wrongAnswers++;
+    this.optionalStats.wrongAnswers++;
+    this.rightAnswerCounter = 0;
+    this.wordProgress.correctAnswers--;
+
+    if (this.rightAnswerCounter > this.optionalStats.longestSeries) {
+      this.optionalStats.longestSeries = this.rightAnswerCounter;
+    }
+
+    this.sendUserWord();
   }
 
   public resetGame(): void {
