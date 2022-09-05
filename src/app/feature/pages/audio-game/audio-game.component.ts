@@ -159,6 +159,11 @@ export class AudioGameComponent implements OnInit {
   }
 
   public checkVariant(variant: string): void {
+    const trueSound = new Audio();
+    trueSound.src = '/assets/sounds/true.mp3';
+    const falseSound = new Audio();
+    falseSound.src = '/assets/sounds/false.mp3';
+
     if (this.isCorrect(variant)) {
       this.goodWords.push(this.words[this.currentIndexWord]);
       this.optionalStats.correctAnswers++;
@@ -167,12 +172,14 @@ export class AudioGameComponent implements OnInit {
       this.wordProgress.correctAnswers++;
       this.answerIsRight = true;
       this.applyWordDifficulty();
+      trueSound.play();
     } else {
       this.badWords.push(this.words[this.currentIndexWord]);
       this.wordStatistic[this.currentDate].wrongAnswers++;
       this.optionalStats.wrongAnswers++;
       this.rightAnswerCounter = 0;
       this.wordProgress.correctAnswers--;
+      falseSound.play();
     }
 
     if (this.rightAnswerCounter > this.optionalStats.longestSeries) {
