@@ -204,6 +204,7 @@
   margin-top: 60px;
   display: flex;
   flex-direction: column;
+  margin-right: 60px;
 
   h3 {
     border-radius: 5px;
@@ -227,8 +228,6 @@
 }
 
 .audio-game__answers-list {
-  margin-right: 100px;
-
   li {
     margin-bottom: 10px;
     font-size: 24px;
