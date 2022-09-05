@@ -1,54 +1,125 @@
 <div class="audio-game">
   <div *ngIf="currentSlide === 1" class="screen1">
-    <h1>Аудиовызов</h1>
-    <div class="audio-game__text">
-      <h2>«Аудиовызов» - это тренировка, которая улучшает восприятие речи на слух.</h2>
-      <ul>
-        <li>Используйте мышь, чтобы выбрать.</li>
-        <li>Используйте цифровые клавиши от 1 до 5 для выбора ответа</li>
-        <li>Используйте пробел для повтроного звучания слова</li>
-        <li>Используйте клавишу Enter для перехода к следующему слову</li>
-      </ul>
-      <div class="audio-game__2-cols">
-        <form class="audio-game__form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-          <select name="difficulty" [(ngModel)]="form.difficulty" #difficulty="ngModel">
-            <option value="0">Сложность 1</option>
-            <option value="1" selected>Сложность 2</option>
-            <option value="2">Сложность 3</option>
-            <option value="3">Сложность 4</option>
-            <option value="4">Сложность 5</option>
-            <option value="5">Сложность 6</option>
-          </select>
-          <button>СТАРТ</button>
-        </form>
+    <div class="audio-game__girl">
+      <img src="/assets/images/girl.png" alt="">
+    </div>
+    <div class="audio-game__content">
+      <h1>Аудиовызов</h1>
+      <p>Послушай слово на английском и выбери перевод этого слова из пяти вариантов</p>
+      <h6>выбери сложность</h6>
+      <form class="audio-game__form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="difficulty-wrapper">
+          <label>
+            <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
+              #difficulty="ngModel" value="0">
+            1
+          </label>
+          <label>
+            <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
+              #difficulty="ngModel" value="1">
+            2
+          </label>
+          <label>
+            <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
+              #difficulty="ngModel" value="2">
+            3
+          </label>
+          <label>
+            <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
+              #difficulty="ngModel" value="3">
+            4
+          </label>
+          <label>
+            <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
+              #difficulty="ngModel" value="4">
+            5
+          </label>
+          <label>
+            <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
+              #difficulty="ngModel" value="5">
+            6
+          </label>
+        </div>
+        <button class="audio-game__start">
+          <mat-icon class="play__icon">play_arrow</mat-icon> Играть
+        </button>
+      </form>
+      <div class="audio-game__rules">
+        <div class="audio-game__rule">
+          <img src="/assets/svg/correct.svg" alt="">
+          <p class="small-text">
+            Используй мышь или клавиши от 1 до 5 для выбора ответа
+          </p>
+        </div>
+        <div class="audio-game__rule">
+          <img src="/assets/svg/sound.svg" alt="">
+          <p class="small-text">
+            Используй пробел для повторного воспроизведения слова
+          </p>
+        </div>
+        <div class="audio-game__rule">
+          <img src="/assets/svg/next.svg" alt="">
+          <p class="small-text">
+            Используй клавишу Enter для перехода к следующему слову
+          </p>
+        </div>
       </div>
+    </div>
+    <div class="audio-game__man">
+      <img src="/assets/images/man.png" alt="">
     </div>
   </div>
   <div *ngIf="currentSlide === 2" class="screen2">
-    <app-audio-game-item *ngIf="words.length !== 0" [word]="words[currentIndexWord]" [variants]="variantWords" (buttonClick)="checkVariant($event)"></app-audio-game-item>
-    <button (click)="dontKnow()">Не знаю</button>
+    <div class="audio-game__girl">
+      <img src="/assets/images/girl.png" alt="">
+    </div>
+    <div class="audio-game__content">
+      <app-audio-game-item *ngIf="words.length !== 0" [word]="words[currentIndexWord]" [variants]="variantWords"
+        (buttonClick)="checkVariant($event)"></app-audio-game-item>
+      <button class="audio-game__next-word" (click)="dontKnow()">Не знаю :(</button>
+    </div>
+    <div class="audio-game__man">
+      <img src="/assets/images/man.png" alt="">
+    </div>
   </div>
   <div *ngIf="currentSlide === 3" class="screen3">
-    <h2>Результаты</h2>
-    <h3 class="alert alert-success">Верные ответы ({{ goodWords.length }})</h3>
-    <ul>
-      <li *ngFor="let goodWord of goodWords; let i = index">
-        <button mat-mini-fab color="primary" (click)="this.audioPlayerService.newAudio([goodWord.audio])">
-          <mat-icon>volume_up</mat-icon>
+    <div class="audio-game__content">
+      <div class="audio-game__results-header">
+        <h1>Результаты</h1>
+        <button (click)="resetGame()" class="audio-game__play-again">
+          <mat-icon class="play__icon">play_arrow</mat-icon>Играть ещё
         </button>
-        {{ goodWord.word }} - {{ goodWord.wordTranslate }}
-      </li>
-    </ul>
-    <h3 class="alert alert-danger">Ошибки ({{ badWords.length }})</h3>
-    <ul>
-      <li *ngFor="let badWord of badWords; let i = index">
-        <button mat-mini-fab color="primary" (click)="this.audioPlayerService.newAudio([badWord.audio])">
-          <mat-icon>volume_up</mat-icon>
-        </button>
-        {{ badWord.word }} - {{ badWord.wordTranslate }}
-      </li>
-    </ul>
-
-    <button (click)="resetGame()" class="mt20">Играть еще раз</button>
+      </div>
+      <div class="audio-game__results">
+        <div class="audio-game__results-table">
+          <h3 class="correct-answers">Выучено - ({{ goodWords.length }})</h3>
+          <ul class="audio-game__answers-list">
+            <li *ngFor="let goodWord of goodWords; let i = index">
+              <button class="answer-audio" (click)="this.audioPlayerService.newAudio([goodWord.audio])">
+                <img src="/assets/svg/sound.svg" alt="">
+              </button>
+              {{ goodWord.word }}
+              <span>
+                — {{ goodWord.wordTranslate }}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="audio-game__results-table">
+          <h3 class="wrong-answers">Надо повторить - ({{ badWords.length }})</h3>
+          <ul class="audio-game__answers-list">
+            <li *ngFor="let badWord of badWords; let i = index">
+              <button class="answer-audio" (click)="this.audioPlayerService.newAudio([badWord.audio])">
+                <img src="/assets/svg/sound.svg" alt="">
+              </button>
+              {{ badWord.word }}
+              <span>
+                — {{ badWord.wordTranslate }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
