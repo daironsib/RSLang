@@ -11,17 +11,16 @@
                 </button>
                 <div class="games-select-container">
                     <button mat-stroked-button class="games-select__btn games__open-select" (click)="this.gameMenu = !this.gameMenu">
-                        <mat-icon>extension</mat-icon>
-                        Игры
+                        <mat-icon>extension</mat-icon> Игры
                     </button>
                     <ul class="games-select" [ngClass]="this.gameMenu ? 'is-opened' : ''">
                         <li>
-                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.SprintGame]">
+                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.AudioGame]" (click)="this.gameMenu = !this.gameMenu">
                                 <mat-icon>audiotrack</mat-icon> Аудиовызов
                             </button>
                         </li>
                         <li>
-                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.SprintGame]">
+                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.SprintGame]" (click)="this.gameMenu = !this.gameMenu">
                                 <mat-icon>av_timer</mat-icon> Спринт
                             </button>
                         </li>
