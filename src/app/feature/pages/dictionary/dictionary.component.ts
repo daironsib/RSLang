@@ -6,6 +6,8 @@ import { FooterService } from '@core/services/footer.service';
 import { SvgService } from '@core/services/svg.service';
 import { TokenStorageService } from '@core/services/token-storage.service';
 import { WordService } from '@core/services/word.service';
+import { combineLatest, switchMap } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const LAST_PAGE = 'last-page';
 
@@ -21,7 +23,7 @@ export class DictionaryComponent implements OnInit {
   public currentGroupIndex: number;
   public words: IWord[] = [];
   public paths = Paths;
-  public folderColors = ['9B51E0','ff6781','00bfff','ccff00','51D9A8','FC8A4D'];
+  public folderColors = ['9B51E0', 'ff6781', '00bfff', 'ccff00', '51D9A8', 'FC8A4D'];
   public totalSections = [...Array(6).keys()];
   public totalPages = [...Array(20).keys()];
   public sectionMenu: boolean = false;
@@ -48,17 +50,21 @@ export class DictionaryComponent implements OnInit {
     window.localStorage.setItem(LAST_PAGE, JSON.stringify({ group, page }));
     this.pageNo = page;
     this.currentGroupIndex = group;
-    this.wordService.getLearnedWords();
-    this.wordService.getHardWords();
-    this.wordService.getAll(group, page).subscribe((value: IWord[]) => {
-      this.words = value;
+    this.wordService.getAll(group, page).pipe(
+      switchMap((data) => combineLatest([this.wordService.getHardWords(), this.wordService.getLearnedWords()]).pipe(
+        map(() => data)
+      ))
+    ).subscribe((value: IWord[]) => {
+      this.words = [...value];
     });
   }
 
   public showHardWords() {
     this.isHardWordsPage = true;
     window.localStorage.setItem(LAST_PAGE, JSON.stringify('hard'));
-    this.words = this.wordService.getHardWords();
+    this.wordService.getHardWords().subscribe(words => {
+      this.words = [...words];
+    });
   }
 
   public nextPage() {
@@ -74,6 +80,13 @@ export class DictionaryComponent implements OnInit {
   ngOnInit(): void {
     this.state.setFooterState(this.footerState);
     const page = window.localStorage.getItem(LAST_PAGE);
+
+    this.wordService.getHardWordObservable().subscribe((words: IWord[]) => {
+      if (this.isHardWordsPage) {
+        this.words = words;
+      }
+    });
+
     if (page) {
       const value = JSON.parse(page);
       value === 'hard'

@@ -38,7 +38,7 @@
                             </button>
                         </ng-template>
                         <div *ngIf="this.wordService.isHardWord(word) && this.dictionaryComponent.isHardWordsPage">
-                            <button class="wordCard__btn" (click)="this.wordService.removeHardWord(word)">
+                            <button class="wordCard__btn" (click)="this.wordService.addInProgressWord(word)">
                                 <svg [innerHTML]="svgService.getRemoveHardWordIcon()"></svg>
                             </button>
                         </div>
@@ -53,7 +53,10 @@
                             </button>
                         </div>
                         <button class="wordCard__btn statistic__btn is-disabled">
-                            <svg [innerHTML]="svgService.getNoStatisticIcon()"></svg>
+                            <svg *ngIf="this.wordService.isProgressWord(word.id); else notProgressWord" [innerHTML]="svgService.getStatisticIcon()"></svg>
+                            <ng-template #notProgressWord>
+                                <svg [innerHTML]="svgService.getNoStatisticIcon()"></svg>
+                            </ng-template>
                         </button>
                     </div>
                 </div>
