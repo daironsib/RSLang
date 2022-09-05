@@ -11,6 +11,7 @@
     padding: 20px 200px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     max-width: 1440px;
     margin: 0 auto;
 }
@@ -83,7 +84,6 @@
   display: none;
   position: absolute;
   top: 50px;
-  width: 100%;
   height: auto;
   justify-content: start;
   padding: 0;
@@ -98,5 +98,7 @@
 }
 
 .games-select__btn {
+    background: #F7F6F0;
     height: 50px;
+    width: 170px;
 }
