@@ -267,7 +267,10 @@ export class SprintGameComponent implements OnInit, OnDestroy {
     let difficulty: WordDifficulty = WordDifficulty.InProgress;
     let optional: IUserWordProgress;
 
-    if (userWord.optional) {
+    if (userWord.optional && userWord.difficulty === WordDifficulty.Learned && !wordStatistic.isCorrectAnswer) {
+      difficulty = WordDifficulty.InProgress;
+      optional = { correctAnswers: 0 }
+    } else if (userWord.optional) {
       optional = {
         correctAnswers: wordStatistic.isCorrectAnswer 
           ? userWord.optional?.correctAnswers + 1 
