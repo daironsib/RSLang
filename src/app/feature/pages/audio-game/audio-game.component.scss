@@ -1,36 +1,259 @@
 .audio-game {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 0;
+  width: 100%;
+  max-width: 1300px;
+  margin: 48px auto 95px;
+  background: #e9e9e3;
+  border-radius: 30px;
+  padding: 70px 95px;
+
+  .audio-game__girl {
+    margin-right: -30px;
+  }
+
+  .audio-game__man {
+    margin-left: -30px;
+  }
 
   .screen1,
   .screen2,
   .screen3 {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
   }
 
-  .audio-game__2-cols {
-    .audio-game__form {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      margin-top: 50px;
-      gap: 10px;
+  .audio-game__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+      font-family: "Anonymous Pro";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 100px;
+      line-height: 80%;
+      margin-bottom: 30px;
+    }
+
+    p {
+      font-size: 24px;
+      line-height: 120%;
+      text-align: center;
+    }
+
+    h6 {
+      font-size: 16px;
+      line-height: 120%;
+      text-align: center;
+      color: #8d8f8e;
+      text-transform: uppercase;
+      margin: 40px 0 15px;
     }
   }
 
-  .screen3 {
-    ul li {
+  .difficulty-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+
+    .difficulty-btn {
+      display: none;
+    }
+
+    label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      background: #f7f6f0;
+      margin-right: 15px;
+      font-size: 36px;
+      line-height: 150%;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover,
+      &:focus,
+      &.is-active {
+        background: #d3f36b;
+      }
+    }
+  }
+
+  .difficulty-btn:focus + label,
+  .difficulty-btn:active + label {
+    background: #d3f36b;
+  }
+
+  .audio-game__start {
+    min-width: 176px;
+    height: 62px;
+    padding: 15px 25px;
+    background: #24282c;
+    border-radius: 10px;
+    color: #f7f6f0;
+    font-size: 24px;
+    line-height: 120%;
+    margin: 0 auto;
+    text-align: center;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background: #3f4850;
+    }
+
+    .play__icon {
+      color: #d3f36b;
+      margin-right: 20px;
+    }
+  }
+
+  .audio-game__rules {
+    display: flex;
+    margin-top: 60px;
+  }
+
+  .audio-game__rule {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 30px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
       margin-bottom: 10px;
     }
-    .mat-button-base {
-      margin-right: 15px;
+
+    .small-text {
+      font-size: 16px;
+      line-height: 120%;
+      color: #8d8f8e;
+    }
+  }
+}
+
+.audio-game__next-word {
+  background: #24282c;
+  border-radius: 10px;
+  width: 160px;
+  height: 59px;
+  font-size: 24px;
+  line-height: 29px;
+  color: #f7f6f0;
+  padding: 15px 20px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background: #3f4850;
+  }
+}
+
+.audio-game__content .audio-game__results-header {
+  display: flex;
+  align-items: center;
+
+  h1 {
+    margin: 0 80px 0 0;
+  }
+
+  .audio-game__play-again {
+    height: 62px;
+    background: #24282c;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding: 15px 20px;
+    font-size: 24px;
+    line-height: 29px;
+    color: #f7f6f0;
+
+    .play__icon {
+      margin-right: 20px;
+      color: #d3f36b;
+    }
+
+    &:hover {
+      background: #3f4850;
+    }
+  }
+}
+
+.audio-game__results {
+  display: flex;
+}
+
+.audio-game__results-table {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    border-radius: 5px;
+    display: block;
+    padding: 10px 20px;
+    font-family: "Anonymous Pro";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 80%;
+    height: 52px;
+    margin-bottom: 60px;
+
+    &.correct-answers {
+      background: #d3f36b;
+    }
+    &.wrong-answers {
+      background: #eb5757;
+    }
+  }
+}
+
+.audio-game__answers-list {
+  margin-right: 100px;
+
+  li {
+    margin-bottom: 10px;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+
+    .answer-audio {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      background: #E9E9E3;     
+       
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    span {
+      color: #8d8f8e;
     }
   }
 }

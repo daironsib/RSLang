@@ -1,6 +1,11 @@
 <div class="audio-game-item">
-  <button mat-mini-fab color="primary" (click)="this.audioPlayerService.newAudio([word.audio])">
-    <mat-icon>volume_up</mat-icon>
+  <div class="audio-game-image">
+    <img src="/assets/images/question.png" alt="">
+  </div>
+  <button
+  class="audio-game-sound"
+  (click)="this.audioPlayerService.newAudio([word.audio])">
+    <img src="/assets/svg/sound-black.svg" alt="">
   </button>
   <ul class="audio-game-variants">
     <li *ngFor="let variant of variants; let i = index" class="audio-game-variants__item" (click)="add(variant)">{{ i + 1 }} {{ variant | titlecase }}</li>

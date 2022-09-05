@@ -4,23 +4,58 @@
   align-items: center;
   justify-content: center;
 
-  .mat-button-base {
-    margin-bottom: 15px;
+  .audio-game-image {
+    width: 195px;
+    height: 130px;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+    }
+  }
+
+  .audio-game-sound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #d3f36b;
+    border-radius: 50%;
+    margin-top: -35px;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 50px;
+    height: 50px;
   }
 
   .audio-game-variants {
     display: flex;
-    margin-bottom: 15px;
+    flex-direction: column;
+    align-items: center;
+    margin: 80px auto 45px;
 
     .audio-game-variants__item {
-      transition: .3s;
+      display: block;
+      background: #f7f6f0;
+      border-radius: 30px;
+      transition: all 0.2s ease-in-out;
       cursor: pointer;
-      margin: 0 10px;
-      padding: 10px;
-      border-radius: 5px;
+      margin: 10px 0;
+      padding: 5px 15px;
+      font-size: 24px;
+      line-height: 29px;
 
       &:hover {
-        background-color: rgba(0,0,0,.1);
+        background: #E6FF96;
+      }
+      
+      &.correct {
+        background: #D3F36B;
+      }
+      
+      &.false {
+        background: #EB5757;
       }
     }
   }
