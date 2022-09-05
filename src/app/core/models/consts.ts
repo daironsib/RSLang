@@ -6,5 +6,6 @@ export enum Paths {
     Dictionary = "dictionary",
     SprintGame = "sprint-game",
     AudioGame = "audio-game",
-    Statistic = "statistic"
+    Statistic = "statistic",
+    TeamPage = "team-page"
 }

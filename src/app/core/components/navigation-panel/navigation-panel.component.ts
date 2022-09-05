@@ -16,5 +16,5 @@ export class NavigationPanelComponent implements OnInit {
     this.user = this.tokenStorageService.getUser();
    }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

@@ -6,3 +6,4 @@ export * from './authorization/authorization.component';
 export * from './login/login.component';
 export * from './register/register.component';
 export * from './audio-game/audio-game.component';
+export * from './team-page/team-page.component';

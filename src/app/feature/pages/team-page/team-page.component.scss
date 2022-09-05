@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@700&display=swap');
+
+$light: #F7F6F0;
+$dark: #24282C;
+$green: #D3F36B;
+$modal: #E9E9E3;
+$text: #8D8F8E;
+%font80 {
+  font-family: 'Anonymous Pro', monospace;
+  font-style: bold;
+  font-size: 80px;
+  line-height: 80px;
+  color: $dark;
+}
+%font40 {
+    font-family: 'Anonymous Pro', monospace;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 32px;
+}
+%font20 {
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: $text;
+}
+%photo {
+    width: 195px;
+    height: 195px;
+    border-radius: 15px;
+}
+
+.team-wrapper {
+    background: $light;
+    width: 100%;
+}
+
+.team-container {
+    margin: 0 auto;
+    width: 1440px;
+    padding: 60px 220px 200px 220px;
+    min-height: 60vh;
+    
+    h1 {
+        @extend %font80;
+        text-align: center;
+    }
+}
+
+.team-content {
+    margin-top: 50px;
+    display: flex;
+    gap: 40px;
+
+    .team-mentor {
+        flex: 20%;
+        width: 235px;
+        height: 341px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        border-radius: 30px;
+        background-color: $dark;
+
+        .team-mentor__photo {
+            @extend %photo;
+            background: url(/assets/images/Olya.jpg);
+        }
+
+        .team-mentor__text {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .team-mentor__link {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                text-decoration: none;
+
+                h2 {
+                    @extend %font40;
+                    color: $green;
+                    margin-bottom: 0;
+                }
+            }
+
+            p {
+                @extend %font20 
+            }
+        }
+    }
+    .team-content__members {
+        flex: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+
+        .team-member {
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            border-radius: 30px;
+            background-color: $modal;
+
+            .team-member__photo {
+                @extend %photo;
+            }
+
+            .artem {
+                background: url(/assets/images/Artem.jpg);
+            }
+
+            .pavel {
+                background: url(/assets/images/Pavel.jpg);
+            }
+
+            .anna {
+                background: url(/assets/images/Anna.jpg);
+            }
+            
+            .team-member__text {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    text-decoration: none;
+
+                    h2 {
+                        @extend %font40;
+                        color: $dark;
+                        margin-bottom: 0;
+                    }
+                }
+
+                p {
+                    @extend %font20;
+                    width: 470px;
+                }
+            }
+        }
+    }    
+}
+
