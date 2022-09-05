@@ -288,6 +288,8 @@ export class AudioGameComponent implements OnInit {
       this.wordDifficulty = WordDifficulty.Learned;
       this.optionalStats.learnedWords++;
       this.wordStatistic[this.currentDate].learnedWords++;
+    } else if (this.wordDifficulty === WordDifficulty.Hard) {
+      this.wordDifficulty = WordDifficulty.HardAndInProgress;
     } else {
       this.wordDifficulty = WordDifficulty.InProgress;
     }

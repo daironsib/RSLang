@@ -10,16 +10,12 @@ import { TokenStorageService } from '@core/services/token-storage.service';
 import { FooterComponent } from '@core/components/footer/footer.component';
 import { FooterService } from '@core/services/footer.service';
 import { HeaderComponent } from '@core/components/header/header.component';
-import { WordComponent } from '@core/components/word/word.component';
-import { AudioGameItemComponent } from '@core/components/audio-game-item/audio-game-item.component';
 
 @NgModule({
   declarations: [
     NavigationPanelComponent,
     FooterComponent,
-    HeaderComponent,
-    WordComponent,
-    AudioGameItemComponent
+    HeaderComponent
   ],
   imports: [
     HttpClientModule,
@@ -31,9 +27,7 @@ import { AudioGameItemComponent } from '@core/components/audio-game-item/audio-g
   exports: [
     NavigationPanelComponent,
     FooterComponent,
-    HeaderComponent,
-    WordComponent,
-    AudioGameItemComponent
+    HeaderComponent
   ],
   providers: [
   	ApiService,

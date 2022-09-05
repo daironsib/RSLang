@@ -9,7 +9,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card'; 
 import { AudioGameComponent, AuthorizationComponent, DictionaryComponent, SprintGameComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
-import { CoreModule } from '@core/core.module';
+import { WordComponent } from './components/word/word.component';
+import { AudioGameItemComponent } from './components/audio-game-item/audio-game-item.component';
 
 const PAGES = [
   HomeComponent,
@@ -24,7 +25,9 @@ const PAGES = [
 
 @NgModule({
   declarations: [
-    ...PAGES
+    ...PAGES,
+    WordComponent,
+    AudioGameItemComponent
   ],
   imports: [
     CommonModule,
@@ -36,8 +39,7 @@ const PAGES = [
     RouterModule,
     MatTabsModule,
     MatPaginatorModule,
-    MatCardModule,
-    CoreModule
+    MatCardModule
   ],
   exports: [
     ...PAGES
