@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { AudioGameComponent, AuthorizationComponent, DictionaryComponent, SprintGameComponent, HomeComponent, LoginComponent, RegisterComponent, StatisticComponent } from './pages';
 import { WordComponent } from './components/word/word.component';
 import { AudioGameItemComponent } from './components/audio-game-item/audio-game-item.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const PAGES = [
   HomeComponent,
@@ -39,7 +40,8 @@ const PAGES = [
     RouterModule,
     MatTabsModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule
   ],
   exports: [
     ...PAGES
