@@ -6,7 +6,7 @@ import { FooterService } from '@core/services/footer.service';
 import { SvgService } from '@core/services/svg.service';
 import { TokenStorageService } from '@core/services/token-storage.service';
 import { WordService } from '@core/services/word.service';
-import { combineLatest, switchMap } from 'rxjs';
+import { combineLatest, of, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const LAST_PAGE = 'last-page';
@@ -51,12 +51,16 @@ export class DictionaryComponent implements OnInit {
     this.pageNo = page;
     this.currentGroupIndex = group;
     this.wordService.getAll(group, page).pipe(
-      switchMap((data) => combineLatest([this.wordService.getHardWords(), this.wordService.getLearnedWords()]).pipe(
-        map(() => data)
-      ))
-    ).subscribe((value: IWord[]) => {
-      this.words = [...value];
-    });
+      map((value: IWord[]) => {
+        this.words = [...value];
+      }),
+      switchMap((data) => {
+        if (this.tokenStorageService.getUser().id) {
+          return combineLatest([this.wordService.getHardWords(), this.wordService.getLearnedWords()])
+        }
+        return of();
+      })
+    ).subscribe();
   }
 
   public showHardWords() {
