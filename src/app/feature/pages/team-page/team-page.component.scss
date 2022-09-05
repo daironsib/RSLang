@@ -41,6 +41,7 @@ $text: #8D8F8E;
     width: 1440px;
     padding: 60px 220px 200px 220px;
     min-height: 60vh;
+    
     h1 {
         @extend %font80;
         text-align: center;
@@ -51,6 +52,7 @@ $text: #8D8F8E;
     margin-top: 50px;
     display: flex;
     gap: 40px;
+
     .team-mentor {
         flex: 20%;
         width: 235px;
@@ -61,25 +63,30 @@ $text: #8D8F8E;
         gap: 30px;
         border-radius: 30px;
         background-color: $dark;
+
         .team-mentor__photo {
             @extend %photo;
             background: url(/assets/images/Olya.jpg);
         }
+
         .team-mentor__text {
             display: flex;
             flex-direction: column;
             gap: 10px;
+
             .team-mentor__link {
                 display: flex;
                 align-items: center;
                 gap: 10px;
                 text-decoration: none;
+
                 h2 {
                     @extend %font40;
                     color: $green;
                     margin-bottom: 0;
                 }
             }
+
             p {
                 @extend %font20 
             }
@@ -91,40 +98,49 @@ $text: #8D8F8E;
         flex-direction: column;
         gap: 20px;
         padding: 20px;
+
         .team-member {
             padding: 20px;
             display: flex;
             gap: 20px;
             border-radius: 30px;
             background-color: $modal;
+
             .team-member__photo {
                 @extend %photo;
             }
+
             .artem {
                 background: url(/assets/images/Artem.jpg);
             }
+
             .pavel {
                 background: url(/assets/images/Pavel.jpg);
             }
+
             .anna {
                 background: url(/assets/images/Anna.jpg);
             }
+            
             .team-member__text {
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
                 padding: 20px;
+
                 a {
                     display: flex;
                     align-items: center;
                     gap: 10px;
                     text-decoration: none;
+
                     h2 {
                         @extend %font40;
                         color: $dark;
                         margin-bottom: 0;
                     }
                 }
+
                 p {
                     @extend %font20;
                     width: 470px;
