@@ -1,27 +1,38 @@
-# RsLang
+# **Welcome to RS Lang!**
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.2.
+---
 
-## Development server
+`npm install`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Installs all dependencies of the application
 
-## Code scaffolding
+`npm start`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Runs the app in the development mode.
+Open http://localhost:4200 to view it in your browser.
 
-## Build
+The page will reload when you make changes.
+You may also see any lint errors in the console.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+You can see the url of our application here: (here we have to pass deploy link)
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<h3><strong>RS Lang</strong> is a project for learning English</h3>
 
-## Further help
+You can learn 4000 words in a textbook, mark difficult ones, check what you have learned in games, follow your progress in statistics. To get full service you have to register and then sign in into application.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
+
+We hope you'll find our application interesting and fun. Enjoy your time! :)
+
+---
+
+Our DreamTeam:
+* Olga Papkovskaya - Mentor
+* Artem Sokolov - Team Leader, Full Stack developer
+* Pavel Titov - Frontend developer
+* Anna Butkova - Frontend developer
