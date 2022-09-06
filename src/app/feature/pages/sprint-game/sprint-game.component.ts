@@ -116,9 +116,9 @@ export class SprintGameComponent implements OnInit, OnDestroy {
 
   public scorePoints(isCorrectAnswer: boolean): void {
     const trueSound = new Audio();
-    trueSound.src = '/assets/sounds/true.mp3';
+    trueSound.src = './assets/sounds/true.mp3';
     const falseSound = new Audio();
-    falseSound.src = '/assets/sounds/false.mp3';
+    falseSound.src = './assets/sounds/false.mp3';
 
     if (isCorrectAnswer) {
       this.winStreak++;

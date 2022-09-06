@@ -160,9 +160,9 @@ export class AudioGameComponent implements OnInit {
 
   public checkVariant(variant: string): void {
     const trueSound = new Audio();
-    trueSound.src = '/assets/sounds/true.mp3';
+    trueSound.src = './assets/sounds/true.mp3';
     const falseSound = new Audio();
-    falseSound.src = '/assets/sounds/false.mp3';
+    falseSound.src = './assets/sounds/false.mp3';
 
     if (this.isCorrect(variant)) {
       this.goodWords.push(this.words[this.currentIndexWord]);
