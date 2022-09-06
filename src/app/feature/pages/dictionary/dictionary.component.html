@@ -40,7 +40,8 @@
         <div *ngIf="!this.isHardWordsPage" class="dictionary-pagination">
             <button *ngIf="this.pageNo > 0" class="btn prev" (click)="this.prevPage()"></button>
             <div class="btn current-page" (click)="this.pagesMenu = !this.pagesMenu">
-                <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                <svg *ngIf="!isPageLearned" [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                <svg *ngIf="isPageLearned" [innerHTML]="svgService.getLernedIcon()"></svg>
                 Страница {{ this.pageNo + 1}}
             </div>
             <ul class="pages-select" [ngClass]="this.pagesMenu ? 'is-opened' : ''">
@@ -55,7 +56,7 @@
         </div>
     </div>
 </div>
-<div class="dictionary-body">
+<div [ngClass]="isPageLearned ? 'dictionary-body learned' : 'dictionary-body'">
     <div *ngIf="this.isHardWordsPage && !tokenStorageService.getToken(); else allowed">
         <div class="dictionary__not-allowed">
             <h4 class="oops">Упс!</h4>
@@ -123,7 +124,8 @@
         <div *ngIf="!this.isHardWordsPage" class="dictionary-pagination">
             <button *ngIf="this.pageNo > 0" class="btn prev" (click)="this.prevPage()"></button>
             <div class="btn current-page" (click)="this.pagesMenuFooter = !this.pagesMenuFooter">
-                <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                <svg *ngIf="!isPageLearned" [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                <svg *ngIf="isPageLearned" [innerHTML]="svgService.getLernedIcon()"></svg>
                 Страница {{ this.pageNo + 1}}
             </div>
             <ul class="pages-select-footer" [ngClass]="this.pagesMenuFooter ? 'is-opened' : ''">
