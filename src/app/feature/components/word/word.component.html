@@ -35,21 +35,25 @@
                         <ng-template #add>
                             <button class="wordCard__btn" (click)="this.wordService.addLearnedWord(word)">
                                 <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                                <span class="tooltip">Mark as Learned</span>
                             </button>
                         </ng-template>
                         <div *ngIf="this.wordService.isHardWord(word) && this.dictionaryComponent.isHardWordsPage">
                             <button class="wordCard__btn" (click)="this.wordService.addInProgressWord(word)">
                                 <svg [innerHTML]="svgService.getRemoveHardWordIcon()"></svg>
+                                <span class="tooltip">Mark as Hard</span>
                             </button>
                         </div>
                         <div *ngIf="this.wordService.isHardWord(word) && !this.dictionaryComponent.isHardWordsPage">
                             <button class="wordCard__btn is-disabled">
                                 <svg [innerHTML]="svgService.getHardWordIcon()"></svg>
+                                <span class="tooltip">Mark as Hard</span>
                             </button>
                         </div>
                         <div *ngIf="!this.wordService.isHardWord(word)">
                             <button class="wordCard__btn" (click)="this.wordService.addHardWord(word)">
                                 <svg [innerHTML]="svgService.getNotHardWordIcon()"></svg>
+                                <span class="tooltip">Mark as Hard</span>
                             </button>
                         </div>
                         <button class="wordCard__btn statistic__btn is-disabled">
@@ -57,6 +61,7 @@
                             <ng-template #notProgressWord>
                                 <svg [innerHTML]="svgService.getNoStatisticIcon()"></svg>
                             </ng-template>
+                            <span class="tooltip">Word in progress</span>
                         </button>
                     </div>
                 </div>

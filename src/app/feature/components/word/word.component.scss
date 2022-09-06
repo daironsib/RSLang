@@ -6,6 +6,23 @@ $sec_dark: #3f4850;
 $prim_green: #d3f36b;
 $sec_green: #e6ff96;
 
+%tooltip {
+  position: absolute;
+	width: max-content;
+  opacity: 0;
+	padding: 0.75rem 0.875rem;
+	font-size: 0.875rem;
+	text-align: left;
+	z-index: 1;
+	transition: all 0.2s ease-in-out;
+	border-radius: 0.188rem;
+	color: #fff;
+  top: 50%;
+	left: calc(100% + 0.625rem);
+	transform: translate(0.25rem, -50%);
+  background-color: #24282c;
+}
+
 .wordCard {
   width: 100%;
   min-height: 400px;
@@ -133,6 +150,18 @@ $sec_green: #e6ff96;
   cursor: pointer;
   background: transparent;
   margin-bottom: 15px;
+  position: relative;
+
+  &:hover {
+		.tooltip {
+			opacity: 1;
+      transform: translate(0, -50%);
+		}
+	}
+
+  .tooltip {
+    @extend %tooltip;
+  }
 }
 
 .wordCard__btn:hover svg {
