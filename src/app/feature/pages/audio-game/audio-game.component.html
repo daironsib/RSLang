@@ -9,32 +9,32 @@
       <h6>выбери сложность</h6>
       <form class="audio-game__form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="difficulty-wrapper">
-          <label>
+          <label [ngClass]="{'is-active': form.difficulty == 0}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="0">
             1
           </label>
-          <label>
+          <label [ngClass]="{'is-active': form.difficulty == 1}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="1">
             2
           </label>
-          <label>
+          <label [ngClass]="{'is-active': form.difficulty == 2}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="2">
             3
           </label>
-          <label>
+          <label [ngClass]="{'is-active': form.difficulty == 3}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="3">
             4
           </label>
-          <label>
+          <label [ngClass]="{'is-active': form.difficulty == 4}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="4">
             5
           </label>
-          <label>
+          <label [ngClass]="{'is-active': form.difficulty == 5}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="5">
             6

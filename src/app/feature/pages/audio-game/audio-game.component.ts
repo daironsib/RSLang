@@ -211,6 +211,8 @@ export class AudioGameComponent implements OnInit {
             })
           });
         });
+    } else {
+      this.nextWord();
     }
   }
 
