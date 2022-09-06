@@ -30,7 +30,7 @@
                         <div *ngIf="this.wordService.isLearnedWord(word); else add">
                             <button class="wordCard__btn is-disabled">
                                 <svg [innerHTML]="svgService.getLernedIcon()"></svg>
-                                <span class="tooltip">Отметить как изученное</span>
+                                <span class="tooltip">Изученное слово</span>
                             </button>
                         </div>
                         <ng-template #add>
@@ -42,13 +42,13 @@
                         <div *ngIf="this.wordService.isHardWord(word) && this.dictionaryComponent.isHardWordsPage">
                             <button class="wordCard__btn" (click)="this.wordService.addInProgressWord(word)">
                                 <svg [innerHTML]="svgService.getRemoveHardWordIcon()"></svg>
-                                <span class="tooltip">Отметить как сложное</span>
+                                <span class="tooltip">Удалить из сложных</span>
                             </button>
                         </div>
                         <div *ngIf="this.wordService.isHardWord(word) && !this.dictionaryComponent.isHardWordsPage">
                             <button class="wordCard__btn is-disabled">
                                 <svg [innerHTML]="svgService.getHardWordIcon()"></svg>
-                                <span class="tooltip">Отметить как сложное</span>
+                                <span class="tooltip">Сложное слово</span>
                             </button>
                         </div>
                         <div *ngIf="!this.wordService.isHardWord(word)">
@@ -63,6 +63,7 @@
                                 <svg [innerHTML]="svgService.getNoStatisticIcon()"></svg>
                             </ng-template>
                             <span *ngIf="this.wordService.isProgressWord(word.id)" class="tooltip">В процессе изучения</span>
+                            <span *ngIf="!this.wordService.isProgressWord(word.id)" class="tooltip">Новое слово</span>
                         </button>
                     </div>
                 </div>
