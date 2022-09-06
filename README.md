@@ -17,7 +17,7 @@ You may also see any lint errors in the console.
 
 ---
 
-You can see the url of our application here: (here we have to pass deploy link)
+You can see the url of our application here: (https://rolling-scopes-school.github.io/daironsib-JSFE2022Q1/rs-lang/)
 
 ---
 
