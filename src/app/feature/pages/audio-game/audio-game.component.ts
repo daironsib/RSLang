@@ -163,6 +163,10 @@ export class AudioGameComponent implements OnInit {
     const falseSound = new Audio();
     falseSound.src = './assets/sounds/false.mp3';
 
+    if (this.goodWords.includes(this.words[this.currentIndexWord]) || this.badWords.includes(this.words[this.currentIndexWord])) {
+      return;
+    }
+
     if (this.isCorrect(variant)) {
       this.goodWords.push(this.words[this.currentIndexWord]);
       this.optionalStats.correctAnswers++;
