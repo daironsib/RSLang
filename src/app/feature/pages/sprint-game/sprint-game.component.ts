@@ -37,7 +37,7 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   public storedLongestSeries: number = 0;
   public intervalSubscription!: Subscription;
 
-  constructor(private api: ApiService, public state: FooterService, private route: ActivatedRoute, private token: TokenStorageService, public audioPlayerService: AudioPlayerService) {
+  constructor(private api: ApiService, public state: FooterService, private route: ActivatedRoute, private tokenStorage: TokenStorageService, public audioPlayerService: AudioPlayerService) {
     this.footerState = false;
     this.setupWordSubject();
   }
@@ -236,21 +236,21 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   }
 
   public sendWordStatistics(wordStatistic: SprintGameWordStatistic): void {
-    if (this.token.getUser().id) {
+    if (this.tokenStorage.getUser().id) {
       const optional: IUserWordProgress = {
         correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0
       }
       const payload: IUserWord = {difficulty: WordDifficulty.InProgress, optional};
 
-      this.api.createUserWordById(this.token.getUser().id, wordStatistic.wordId, payload).subscribe(
+      this.api.createUserWordById(this.tokenStorage.getUser().id, wordStatistic.wordId, payload).subscribe(
         () => {
           this.sendStatistics(wordStatistic, payload, true);
         },
         (error) => {
-          this.api.getUserWordById(this.token.getUser().id, wordStatistic.wordId).subscribe((userWord: IUserWord) => {
+          this.api.getUserWordById(this.tokenStorage.getUser().id, wordStatistic.wordId).subscribe((userWord: IUserWord) => {
             const payload = this.updateOptionalAndDifficult(userWord, wordStatistic);
 
-            this.api.updateUserWordById(this.token.getUser().id, wordStatistic.wordId, payload).subscribe(
+            this.api.updateUserWordById(this.tokenStorage.getUser().id, wordStatistic.wordId, payload).subscribe(
               () => {
                 this.sendStatistics(wordStatistic, payload, false);
               }
@@ -296,8 +296,8 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   }
 
   public sendStatistics(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): void {
-    if (this.token.getUser().id) {
-      this.api.getStatistics(this.token.getUser().id).subscribe((data: IStatistics) => {
+    if (this.tokenStorage.getUser().id) {
+      this.api.getStatistics(this.tokenStorage.getUser().id).subscribe((data: IStatistics) => {
         const optional: IOptionStatistics = {
           audio: data.optional?.audio,
           wordsStatistics: data.optional?.wordsStatistics
@@ -307,13 +307,13 @@ export class SprintGameComponent implements OnInit, OnDestroy {
             ? this.updateSprintStatistic(data.optional?.sprint, wordStatistic, payload, isNewWord) 
             : this.generateSprintStatistic(wordStatistic, payload, isNewWord),
         }
-        this.api.updateStatistics(this.token.getUser().id, 0, optional).subscribe();
+        this.api.updateStatistics(this.tokenStorage.getUser().id, 0, optional).subscribe();
       }, error => {
         const optional: IOptionStatistics = {
           sprint: this.generateSprintStatistic(wordStatistic, payload, isNewWord),
           wordsStatistics: this.generateWordStatistics(wordStatistic, payload, isNewWord)
         }
-        this.api.updateStatistics(this.token.getUser().id, 0, optional).subscribe();
+        this.api.updateStatistics(this.tokenStorage.getUser().id, 0, optional).subscribe();
       });
     }
   }

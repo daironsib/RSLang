@@ -18,7 +18,7 @@ export class WordService {
 
   constructor(
     public apiService: ApiService,
-    public tokenStorageService: TokenStorageService
+    public tokenStorage: TokenStorageService
   ) { }
 
   public getLearnedWordObservable(): Observable<IWord[]> {
@@ -38,29 +38,29 @@ export class WordService {
   }
 
   public addHardWord(word: IWord): void {
-    this.apiService.createUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Hard }).subscribe(
+    this.apiService.createUserWordById(this.tokenStorage.getUser().id, word.id, { difficulty: WordDifficulty.Hard }).subscribe(
       () => this.updateWords(),
       err => {
-        this.apiService.getUserWordById(this.tokenStorageService.getUser().id, word.id).subscribe(() => {
-          this.apiService.updateUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Hard, optional: { correctAnswers: 0 } }).subscribe(() => this.updateWords())
+        this.apiService.getUserWordById(this.tokenStorage.getUser().id, word.id).subscribe(() => {
+          this.apiService.updateUserWordById(this.tokenStorage.getUser().id, word.id, { difficulty: WordDifficulty.Hard, optional: { correctAnswers: 0 } }).subscribe(() => this.updateWords())
         })
       }
     );
   }
 
   public addInProgressWord(word: IWord): void {
-    this.apiService.createUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(
+    this.apiService.createUserWordById(this.tokenStorage.getUser().id, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(
       () => this.updateWords(),
       err => {
-        this.apiService.getUserWordById(this.tokenStorageService.getUser().id, word.id).subscribe(() => {
-          this.apiService.updateUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(() => this.updateWords())
+        this.apiService.getUserWordById(this.tokenStorage.getUser().id, word.id).subscribe(() => {
+          this.apiService.updateUserWordById(this.tokenStorage.getUser().id, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(() => this.updateWords())
         })
       }
     );
   }
 
   public getHardWords(): Observable<IWord[]> {
-    return this.apiService.getUserWords(this.tokenStorageService.getUser().id).pipe(
+    return this.apiService.getUserWords(this.tokenStorage.getUser().id).pipe(
       switchMap((data) => {
         return this.updateHardWords(data).pipe(
           map(() => {
@@ -89,18 +89,18 @@ export class WordService {
   }
 
   public addLearnedWord(word: IWord): void {
-    this.apiService.createUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Learned }).subscribe(
+    this.apiService.createUserWordById(this.tokenStorage.getUser().id, word.id, { difficulty: WordDifficulty.Learned }).subscribe(
       () => this.updateWords(),
       err => {
-        this.apiService.getUserWordById(this.tokenStorageService.getUser().id, word.id).subscribe(() => {
-          this.apiService.updateUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Learned }).subscribe(() => this.updateWords())
+        this.apiService.getUserWordById(this.tokenStorage.getUser().id, word.id).subscribe(() => {
+          this.apiService.updateUserWordById(this.tokenStorage.getUser().id, word.id, { difficulty: WordDifficulty.Learned }).subscribe(() => this.updateWords())
         })
       }
     );
   }
 
   public getLearnedWords(): Observable<IWord[]> {
-    return this.apiService.getUserWords(this.tokenStorageService.getUser().id).pipe(
+    return this.apiService.getUserWords(this.tokenStorage.getUser().id).pipe(
       switchMap((data: IUserWord[]) => {
         return this.updateLearnWords(data).pipe(
           map(() => {
@@ -113,7 +113,7 @@ export class WordService {
   }
 
   private updateWords(): void {
-    this.apiService.getUserWords(this.tokenStorageService.getUser().id).subscribe((data) => {
+    this.apiService.getUserWords(this.tokenStorage.getUser().id).subscribe((data) => {
       this.updateLearnWords(data).subscribe((words: IWord[]) => {
         this.learnedWords = [...new Set(words)];
         this.learnedWordsSource.next(this.learnedWords);

@@ -25,15 +25,15 @@ export class StatisticComponent implements OnInit {
 
   constructor(
     public state: FooterService,
-    public tokenStorageService: TokenStorageService,
+    public tokenStorage: TokenStorageService,
     private api: ApiService
   ) {
     this.footerState = true;
   }
 
   private getStatistic() {
-    if (this.tokenStorageService.getUser().id) {
-      this.api.getStatistics(this.tokenStorageService.getUser().id).subscribe(
+    if (this.tokenStorage.getUser().id) {
+      this.api.getStatistics(this.tokenStorage.getUser().id).subscribe(
         (data: IStatistics) => {
           const optional: IOptionStatistics = {
             audio: data.optional.audio,
