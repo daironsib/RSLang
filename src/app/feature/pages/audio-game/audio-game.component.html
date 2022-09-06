@@ -1,7 +1,7 @@
 <div class="audio-game">
   <div *ngIf="currentSlide === 1" class="screen1">
     <div class="audio-game__girl">
-      <img src="/assets/images/girl.png" alt="">
+      <img src="./assets/images/girl.png" alt="">
     </div>
     <div class="audio-game__content">
       <h1>Аудиовызов</h1>
@@ -46,19 +46,19 @@
       </form>
       <div class="audio-game__rules">
         <div class="audio-game__rule">
-          <img src="/assets/svg/correct.svg" alt="">
+          <img src="./assets/svg/correct.svg" alt="">
           <p class="small-text">
             Используй мышь или клавиши от 1 до 5 для выбора ответа
           </p>
         </div>
         <div class="audio-game__rule">
-          <img src="/assets/svg/sound.svg" alt="">
+          <img src="./assets/svg/sound.svg" alt="">
           <p class="small-text">
             Используй пробел для повторного воспроизведения слова
           </p>
         </div>
         <div class="audio-game__rule">
-          <img src="/assets/svg/next.svg" alt="">
+          <img src="./assets/svg/next.svg" alt="">
           <p class="small-text">
             Используй клавишу Enter для перехода к следующему слову
           </p>
@@ -66,12 +66,12 @@
       </div>
     </div>
     <div class="audio-game__man">
-      <img src="/assets/images/man.png" alt="">
+      <img src="./assets/images/man.png" alt="">
     </div>
   </div>
   <div *ngIf="currentSlide === 2" class="screen2">
     <div class="audio-game__girl">
-      <img src="/assets/images/girl.png" alt="">
+      <img src="./assets/images/girl.png" alt="">
     </div>
     <div class="audio-game__content">
       <app-audio-game-item *ngIf="words.length !== 0" [word]="words[currentIndexWord]" [variants]="variantWords"
@@ -79,7 +79,7 @@
       <button class="audio-game__next-word" (click)="dontKnow()">Не знаю :(</button>
     </div>
     <div class="audio-game__man">
-      <img src="/assets/images/man.png" alt="">
+      <img src="./assets/images/man.png" alt="">
     </div>
   </div>
   <div *ngIf="currentSlide === 3" class="screen3">
@@ -96,7 +96,7 @@
           <ul class="audio-game__answers-list">
             <li *ngFor="let goodWord of goodWords; let i = index">
               <button class="answer-audio" (click)="this.audioPlayerService.newAudio([goodWord.audio])">
-                <img src="/assets/svg/sound.svg" alt="">
+                <img src="./assets/svg/sound.svg" alt="">
               </button>
               {{ goodWord.word }}
               <span>
@@ -110,7 +110,7 @@
           <ul class="audio-game__answers-list">
             <li *ngFor="let badWord of badWords; let i = index">
               <button class="answer-audio" (click)="this.audioPlayerService.newAudio([badWord.audio])">
-                <img src="/assets/svg/sound.svg" alt="">
+                <img src="./assets/svg/sound.svg" alt="">
               </button>
               {{ badWord.word }}
               <span>
