@@ -37,6 +37,14 @@ $sec_green: #e6ff96;
   font-weight: 500;
 }
 
+.dictionary-body {
+  padding: 20px;
+  &.learned {
+    border: 2px solid #d3f36b;
+    border-radius: 24px;
+  }
+}   
+
 .dictionary-container,
 .dictionary-body,
 .dictionary-nav {
