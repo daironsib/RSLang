@@ -53,6 +53,10 @@ $sec_green: #e6ff96;
   margin: 0 auto;
 }
 
+.dictionary-body {
+  min-height: 90vh;
+}
+
 .dictionary-container {
   display: flex;
   flex-direction: column;
