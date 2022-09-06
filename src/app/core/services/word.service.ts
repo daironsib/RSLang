@@ -10,7 +10,6 @@ import { Subject, switchMap } from 'rxjs';
   providedIn: 'root',
 })
 export class WordService {
-  public userId = this.tokenStorageService.getUser().id;
   public hardWords: IWord[] = [];
   public learnedWords: IWord[] = [];
   public learnedWordsSource: Subject<IWord[]> = new Subject<IWord[]>();
@@ -39,29 +38,29 @@ export class WordService {
   }
 
   public addHardWord(word: IWord): void {
-    this.apiService.createUserWordById(this.userId, word.id, { difficulty: WordDifficulty.Hard }).subscribe(
+    this.apiService.createUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Hard }).subscribe(
       () => this.updateWords(),
       err => {
-        this.apiService.getUserWordById(this.userId, word.id).subscribe(() => {
-          this.apiService.updateUserWordById(this.userId, word.id, { difficulty: WordDifficulty.Hard, optional: { correctAnswers: 0 } }).subscribe(() => this.updateWords())
+        this.apiService.getUserWordById(this.tokenStorageService.getUser().id, word.id).subscribe(() => {
+          this.apiService.updateUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Hard, optional: { correctAnswers: 0 } }).subscribe(() => this.updateWords())
         })
       }
     );
   }
 
   public addInProgressWord(word: IWord): void {
-    this.apiService.createUserWordById(this.userId, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(
+    this.apiService.createUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(
       () => this.updateWords(),
       err => {
-        this.apiService.getUserWordById(this.userId, word.id).subscribe(() => {
-          this.apiService.updateUserWordById(this.userId, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(() => this.updateWords())
+        this.apiService.getUserWordById(this.tokenStorageService.getUser().id, word.id).subscribe(() => {
+          this.apiService.updateUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.InProgress }).subscribe(() => this.updateWords())
         })
       }
     );
   }
 
   public getHardWords(): Observable<IWord[]> {
-    return this.apiService.getUserWords(this.userId).pipe(
+    return this.apiService.getUserWords(this.tokenStorageService.getUser().id).pipe(
       switchMap((data) => {
         return this.updateHardWords(data).pipe(
           map(() => {
@@ -90,18 +89,18 @@ export class WordService {
   }
 
   public addLearnedWord(word: IWord): void {
-    this.apiService.createUserWordById(this.userId, word.id, { difficulty: WordDifficulty.Learned }).subscribe(
+    this.apiService.createUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Learned }).subscribe(
       () => this.updateWords(),
       err => {
-        this.apiService.getUserWordById(this.userId, word.id).subscribe(() => {
-          this.apiService.updateUserWordById(this.userId, word.id, { difficulty: WordDifficulty.Learned }).subscribe(() => this.updateWords())
+        this.apiService.getUserWordById(this.tokenStorageService.getUser().id, word.id).subscribe(() => {
+          this.apiService.updateUserWordById(this.tokenStorageService.getUser().id, word.id, { difficulty: WordDifficulty.Learned }).subscribe(() => this.updateWords())
         })
       }
     );
   }
 
   public getLearnedWords(): Observable<IWord[]> {
-    return this.apiService.getUserWords(this.userId).pipe(
+    return this.apiService.getUserWords(this.tokenStorageService.getUser().id).pipe(
       switchMap((data: IUserWord[]) => {
         return this.updateLearnWords(data).pipe(
           map(() => {
@@ -114,7 +113,7 @@ export class WordService {
   }
 
   private updateWords(): void {
-    this.apiService.getUserWords(this.userId).subscribe((data) => {
+    this.apiService.getUserWords(this.tokenStorageService.getUser().id).subscribe((data) => {
       this.updateLearnWords(data).subscribe((words: IWord[]) => {
         this.learnedWords = [...new Set(words)];
         this.learnedWordsSource.next(this.learnedWords);

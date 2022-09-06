@@ -236,23 +236,21 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   }
 
   public sendWordStatistics(wordStatistic: SprintGameWordStatistic): void {
-    const userId = this.token.getUser().id;
-
-    if (userId) {
+    if (this.token.getUser().id) {
       const optional: IUserWordProgress = {
         correctAnswers: wordStatistic.isCorrectAnswer ? 1 : 0
       }
       const payload: IUserWord = {difficulty: WordDifficulty.InProgress, optional};
 
-      this.api.createUserWordById(userId, wordStatistic.wordId, payload).subscribe(
+      this.api.createUserWordById(this.token.getUser().id, wordStatistic.wordId, payload).subscribe(
         () => {
           this.sendStatistics(wordStatistic, payload, true);
         },
         (error) => {
-          this.api.getUserWordById(userId, wordStatistic.wordId).subscribe((userWord: IUserWord) => {
+          this.api.getUserWordById(this.token.getUser().id, wordStatistic.wordId).subscribe((userWord: IUserWord) => {
             const payload = this.updateOptionalAndDifficult(userWord, wordStatistic);
 
-            this.api.updateUserWordById(userId, wordStatistic.wordId, payload).subscribe(
+            this.api.updateUserWordById(this.token.getUser().id, wordStatistic.wordId, payload).subscribe(
               () => {
                 this.sendStatistics(wordStatistic, payload, false);
               }
@@ -298,10 +296,8 @@ export class SprintGameComponent implements OnInit, OnDestroy {
   }
 
   public sendStatistics(wordStatistic: SprintGameWordStatistic, payload: IUserWord, isNewWord: boolean): void {
-    const userId = this.token.getUser().id;
-
-    if (userId) {
-      this.api.getStatistics(userId).subscribe((data: IStatistics) => {
+    if (this.token.getUser().id) {
+      this.api.getStatistics(this.token.getUser().id).subscribe((data: IStatistics) => {
         const optional: IOptionStatistics = {
           audio: data.optional?.audio,
           wordsStatistics: data.optional?.wordsStatistics
@@ -311,13 +307,13 @@ export class SprintGameComponent implements OnInit, OnDestroy {
             ? this.updateSprintStatistic(data.optional?.sprint, wordStatistic, payload, isNewWord) 
             : this.generateSprintStatistic(wordStatistic, payload, isNewWord),
         }
-        this.api.updateStatistics(userId, 0, optional).subscribe();
+        this.api.updateStatistics(this.token.getUser().id, 0, optional).subscribe();
       }, error => {
         const optional: IOptionStatistics = {
           sprint: this.generateSprintStatistic(wordStatistic, payload, isNewWord),
           wordsStatistics: this.generateWordStatistics(wordStatistic, payload, isNewWord)
         }
-        this.api.updateStatistics(userId, 0, optional).subscribe();
+        this.api.updateStatistics(this.token.getUser().id, 0, optional).subscribe();
       });
     }
   }

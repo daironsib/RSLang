@@ -48,7 +48,6 @@ export class AudioGameComponent implements OnInit {
     newWords: 0,
     lastChanged: this.currentDate
   };
-  private userID = this.tokenStorage.getUser().id;
   private answerIsRight: boolean = false;
 
   constructor(private api: ApiService, public audioPlayerService: AudioPlayerService, private tokenStorage: TokenStorageService, public state: FooterService, private route: ActivatedRoute) {
@@ -194,19 +193,19 @@ export class AudioGameComponent implements OnInit {
   }
 
   private sendUserWord(): void {
-    if (this.userID) {
+    if (this.tokenStorage.getUser().id) {
       const wordID = this.words[this.currentIndexWord].id;
-      this.api.createUserWordById(this.userID, wordID, this.getWordPayload()).subscribe(() => {
+      this.api.createUserWordById(this.tokenStorage.getUser().id, wordID, this.getWordPayload()).subscribe(() => {
         this.optionalStats.newWords++;
         this.wordStatistic[this.currentDate].newWords++;
         this.sendStatistics();
       },
         err => {
-          this.api.getUserWordById(this.userID, wordID).subscribe((data: IUserWord) => {
+          this.api.getUserWordById(this.tokenStorage.getUser().id, wordID).subscribe((data: IUserWord) => {
             this.updateUserWordsData(data);
             this.applyAnswerToUserWordsData();
             this.applyWordDifficulty();
-            this.api.updateUserWordById(this.userID, wordID, this.getWordPayload()).subscribe(() => {
+            this.api.updateUserWordById(this.tokenStorage.getUser().id, wordID, this.getWordPayload()).subscribe(() => {
               this.sendStatistics();
             })
           });
@@ -245,8 +244,8 @@ export class AudioGameComponent implements OnInit {
   }
 
   private getStatistics(): void {
-    if (this.userID) {
-      this.api.getStatistics(this.userID).subscribe((data: IStatistics) => {
+    if (this.tokenStorage.getUser().id) {
+      this.api.getStatistics(this.tokenStorage.getUser().id).subscribe((data: IStatistics) => {
         if (data.learnedWords) {
           this.learnedWords = data.learnedWords;
         }
@@ -262,15 +261,15 @@ export class AudioGameComponent implements OnInit {
   }
 
   private sendStatistics(): void {
-    if (this.userID) {
-      this.api.getStatistics(this.userID).subscribe((data: IStatistics) => {
+    if (this.tokenStorage.getUser().id) {
+      this.api.getStatistics(this.tokenStorage.getUser().id).subscribe((data: IStatistics) => {
         const optional: IOptionStatistics = {
           audio: this.optionalStats,
           sprint: data.optional?.sprint,
           wordsStatistics: this.wordStatistic
         }
 
-        this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
+        this.api.updateStatistics(this.tokenStorage.getUser().id, this.learnedWords, optional).subscribe(() => {
           this.nextWord();
         });
       }, err => {
@@ -278,7 +277,7 @@ export class AudioGameComponent implements OnInit {
           audio: this.optionalStats,
           wordsStatistics: this.wordStatistic
         }
-        this.api.updateStatistics(this.userID, this.learnedWords, optional).subscribe(() => {
+        this.api.updateStatistics(this.tokenStorage.getUser().id, this.learnedWords, optional).subscribe(() => {
           this.nextWord();
         });
       });

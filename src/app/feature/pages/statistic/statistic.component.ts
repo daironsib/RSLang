@@ -12,7 +12,6 @@ import { TokenStorageService } from '@core/services/token-storage.service';
 export class StatisticComponent implements OnInit {
   public footerState: boolean;
   public paths = Paths;
-  private userID = this.tokenStorageService.getUser().id;
   public statisticData: IOptionStatistics = {};
   public currentDate = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
   public wordStatistic: IWordStatistics = {
@@ -33,8 +32,8 @@ export class StatisticComponent implements OnInit {
   }
 
   private getStatistic() {
-    if (this.userID) {
-      this.api.getStatistics(this.userID).subscribe(
+    if (this.tokenStorageService.getUser().id) {
+      this.api.getStatistics(this.tokenStorageService.getUser().id).subscribe(
         (data: IStatistics) => {
           const optional: IOptionStatistics = {
             audio: data.optional.audio,
