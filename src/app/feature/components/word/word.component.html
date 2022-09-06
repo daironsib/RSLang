@@ -30,30 +30,31 @@
                         <div *ngIf="this.wordService.isLearnedWord(word); else add">
                             <button class="wordCard__btn is-disabled">
                                 <svg [innerHTML]="svgService.getLernedIcon()"></svg>
+                                <span class="tooltip">Отметить как изученное</span>
                             </button>
                         </div>
                         <ng-template #add>
                             <button class="wordCard__btn" (click)="this.wordService.addLearnedWord(word)">
                                 <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
-                                <span class="tooltip">Mark as Learned</span>
+                                <span class="tooltip">Отметить как изученное</span>
                             </button>
                         </ng-template>
                         <div *ngIf="this.wordService.isHardWord(word) && this.dictionaryComponent.isHardWordsPage">
                             <button class="wordCard__btn" (click)="this.wordService.addInProgressWord(word)">
                                 <svg [innerHTML]="svgService.getRemoveHardWordIcon()"></svg>
-                                <span class="tooltip">Mark as Hard</span>
+                                <span class="tooltip">Отметить как сложное</span>
                             </button>
                         </div>
                         <div *ngIf="this.wordService.isHardWord(word) && !this.dictionaryComponent.isHardWordsPage">
                             <button class="wordCard__btn is-disabled">
                                 <svg [innerHTML]="svgService.getHardWordIcon()"></svg>
-                                <span class="tooltip">Mark as Hard</span>
+                                <span class="tooltip">Отметить как сложное</span>
                             </button>
                         </div>
                         <div *ngIf="!this.wordService.isHardWord(word)">
                             <button class="wordCard__btn" (click)="this.wordService.addHardWord(word)">
                                 <svg [innerHTML]="svgService.getNotHardWordIcon()"></svg>
-                                <span class="tooltip">Mark as Hard</span>
+                                <span class="tooltip">Отметить как сложное</span>
                             </button>
                         </div>
                         <button class="wordCard__btn statistic__btn is-disabled">
@@ -61,7 +62,7 @@
                             <ng-template #notProgressWord>
                                 <svg [innerHTML]="svgService.getNoStatisticIcon()"></svg>
                             </ng-template>
-                            <span class="tooltip">Word in progress</span>
+                            <span *ngIf="this.wordService.isProgressWord(word.id)" class="tooltip">В процессе изучения</span>
                         </button>
                     </div>
                 </div>
