@@ -32,6 +32,7 @@ export class DictionaryComponent implements OnInit {
   public gameMenuFooter: boolean = false;
   public pagesMenu: boolean = false;
   public pagesMenuFooter: boolean = false;
+  public isPageLearned: boolean = false;
 
   constructor(
     public state: FooterService,
@@ -90,6 +91,12 @@ export class DictionaryComponent implements OnInit {
         this.words = words;
       }
     });
+
+    this.wordService.getLearnedWordObservable().subscribe((words: IWord[]) => {
+      if (!this.isHardWordsPage) {
+        this.isPageLearned = this.words.every((word: IWord) => words.some((learnedWord: IWord) => learnedWord.id === word.id))
+      }
+    })
 
     if (page) {
       const value = JSON.parse(page);

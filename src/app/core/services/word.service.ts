@@ -104,6 +104,7 @@ export class WordService {
       switchMap((data: IUserWord[]) => {
         return this.updateLearnWords(data).pipe(
           map(() => {
+            this.learnedWordsSource.next(this.learnedWords);
             this.getProgressWords(data);
             return this.learnedWords;
           })
