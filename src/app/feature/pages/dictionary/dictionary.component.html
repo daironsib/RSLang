@@ -55,7 +55,7 @@
             <button *ngIf="this.pageNo < 19" class="btn next" (click)="this.nextPage()"></button>
         </div>
     </div>
-    <div [ngClass]="isPageLearned ? 'dictionary-body learned' : 'dictionary-body'">
+    <div [ngClass]="isPageLearned ? 'dictionary-page learned' : 'dictionary-body'">
         <div *ngIf="this.isHardWordsPage && !tokenStorageService.getToken(); else allowed">
             <div class="not-allowed">
                 <img src="./assets/gif/cat.gif" class="cat-gif" alt="">
