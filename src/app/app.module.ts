@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeatureModule } from '@feature/feature.module';
 import { CoreModule } from '@core/core.module';
 import { AudioPlayerService } from '@core/services/audio-player.service';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,10 @@ import { AudioPlayerService } from '@core/services/audio-player.service';
     BrowserAnimationsModule,
     FeatureModule,
   ],
-  providers: [AudioPlayerService],
+  providers: [
+    AudioPlayerService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
