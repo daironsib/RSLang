@@ -1,4 +1,4 @@
-<div class="dictionary-container">
+<div class="dictionary-page">
     <h3 class="dictionary-title">Учебник</h3>
     <div class="dictionary-nav">
         <div class="dictionary-btns">
@@ -30,7 +30,7 @@
                         [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Спринт
                     </li>
-                    <li class="btn game__btn" [routerLink]="['/', paths.AudioGame]" 
+                    <li class="btn game__btn" [routerLink]="['/', paths.AudioGame]"
                         [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Аудиовызов
                     </li>
@@ -55,36 +55,35 @@
             <button *ngIf="this.pageNo < 19" class="btn next" (click)="this.nextPage()"></button>
         </div>
     </div>
-</div>
-<div [ngClass]="isPageLearned ? 'dictionary-body learned' : 'dictionary-body'">
-    <div *ngIf="this.isHardWordsPage && !tokenStorageService.getToken(); else allowed">
-        <div class="dictionary__not-allowed">
-            <h4 class="oops">Упс!</h4>
-            <p>Этот раздел доступен только авторизованным пользователям</p>
-            <div class="dictionary__authorization-btns">
-                <button class="btn dictionary__login-btn" [routerLink]="['/', paths.Login]">Войти</button>
-                <button class="btn dictionary__register-btn"
-                    [routerLink]="['/', paths.Register]">Зарегистрироваться</button>
+    <div [ngClass]="isPageLearned ? 'dictionary-page learned' : 'dictionary-body'">
+        <div *ngIf="this.isHardWordsPage && !tokenStorageService.getToken(); else allowed">
+            <div class="not-allowed">
+                <img src="./assets/gif/cat.gif" class="cat-gif" alt="">
+                <h5 class="oops">Упс...</h5>
+                <p>Этот раздел доступен только авторизованным пользователям</p>
+                <div class="authorization-btns">
+                    <button class="btn login-btn" [routerLink]="['/', paths.Login]">Войти</button>
+                    <a class="register-btn" [routerLink]="['/', paths.Register]">Зарегистрироваться</a>
+                </div>
             </div>
         </div>
-    </div>
-    <ng-template #allowed>
-
-        <div *ngIf="this.isHardWordsPage && !this.words.length; else display">
-            <div class="dictionary__not-allowed">
-                <h4 class="oops">Нет сложных слов</h4>
-                <p>В этом разделе отображаются слова из учебника,<br>отмеченные как сложные 
-                <svg [innerHTML]="svgService.getHardWordIcon()"></svg></p>
+        <ng-template #allowed>
+            <div *ngIf="this.isHardWordsPage && !this.words.length; else display">
+                <div class="not-allowed no-words">
+                    <h5 class="oops">Нет сложных слов</h5>
+                    <p>В этом разделе отображаются слова из учебника,<br>отмеченные как сложные
+                        <svg [innerHTML]="svgService.getHardWordIcon()"></svg>
+                    </p>
+                </div>
             </div>
-        </div>
-        <ng-template #display>
-            <app-word *ngFor="let word of words; let i = index" [word]="word">
-            </app-word>
+            <ng-template #display>
+                <app-word *ngFor="let word of words; let i = index" [word]="word">
+                </app-word>
+            </ng-template>
         </ng-template>
-    </ng-template>
-</div>
-<div class="dictionary-container">
-    <div class="dictionary-nav dictionary-nav-footer">
+    </div>
+    <div class="dictionary-nav dictionary-nav-footer"
+    [ngClass]="!this.words.length ? 'is-hidden' : ''">
         <div class="dictionary-btns">
             <div class="dictionary-select-container">
                 <button class="btn dictionary__open-select" [ngClass]="this.isHardWordsPage ? '' : 'is-active'"
@@ -114,7 +113,7 @@
                         [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Спринт
                     </li>
-                    <li class="btn game__btn" [routerLink]="['/', paths.AudioGame]" 
+                    <li class="btn game__btn" [routerLink]="['/', paths.AudioGame]"
                         [queryParams]="{group: currentGroupIndex, page: pageNo}">
                         <img src="./assets/svg/puzzle.svg" alt=""> Аудиовызов
                     </li>
