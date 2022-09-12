@@ -378,3 +378,41 @@ $hoverBtn: #3F4850;
     }
   }
 }
+
+@media (max-width: 405px) {
+  .hero-section__image {
+    width: 300px;
+    height: 300px;
+  }
+
+  .hero-text__content {
+    padding: 10px;
+    
+    h1 {
+      font-size: 44px;
+      line-height: 44px;
+    }
+
+    button {
+      width: 250px;
+    }
+  }
+
+  .about-section__triangle {
+    padding: 20px 10px 10px 10px;
+  }
+
+  .about-section__content {
+    padding: 20px 10px;
+    height: 300px;
+    
+    h2 {
+      padding: 0 10px;
+    }
+
+    p:last-of-type  {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+}
