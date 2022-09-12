@@ -63,14 +63,18 @@ $hoverBtn: #3F4850;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
   h1 {
     @extend %font80;
   }
+
   p {
     @extend %font20;
   }
+
   button {
     @extend %button;
+
     &:hover {
       background: $hoverBtn;
     }
@@ -89,8 +93,6 @@ $hoverBtn: #3F4850;
   padding: 60px 220px 40px 220px;
 }
 
-
-
 .about-section__content {
   z-index: 3;
   margin: 0 auto;
@@ -99,31 +101,37 @@ $hoverBtn: #3F4850;
   background-color: $modal;
   border-radius: 70px;
   text-align: center;
-  padding: 68px 50px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 50px;
+
   h2 {
     @extend %font80;
   }
+
   button {
     @extend %button;
     width: 200px;
+
     &:hover {
       background: $hoverBtn;
     }
   }
+
   p {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 36px;
     line-height: 54px;
     color: $dark;
+
     span {
       text-decoration: underline;
     }
   }
+
   p:last-of-type  {
     @extend %font20;
   }
@@ -147,22 +155,15 @@ $hoverBtn: #3F4850;
     padding: 10px 0;
     width: 400px;
     height: 300px;
+
     h1 {
       font-size: 60px;
       line-height: 60px;
     }
+
     p {
       font-size: 18px;
       line-height: 18px;
-    }
-    button {
-      @extend %button;
-      &:hover {
-        background: $hoverBtn;
-      }
-    }
-    mat-icon {
-      color: $green;
     }
   }
   
@@ -174,7 +175,7 @@ $hoverBtn: #3F4850;
     max-width: 1000px;
     height: 500px;
     padding: 38px 30px;
-    gap: 30px;
+    gap: 20px;
 
     h2 {
       font-size: 60px;
@@ -185,6 +186,60 @@ $hoverBtn: #3F4850;
     p {
       font-size: 26px;
       line-height: 44px;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .hero-section__block {
+    padding: 20px 100px;
+  }
+
+  .about-section__triangle {
+    padding: 60px 110px 40px 110px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .hero-section__image {
+    width: 350px;
+    height: 350px;
+  }
+
+  .hero-text__image {
+    width: 300px;
+  }
+
+  .hero-text__content {
+    padding: 10px 0;
+    width: 300px;
+    height: 260px;
+
+    h1 {
+      font-size: 40px;
+      line-height: 40px;
+    }
+
+  }
+  
+  .about-section {
+    height: 500px;
+  }
+
+  .about-section__content {
+    height: 400px;
+    padding: 20px 50px;
+    gap: 20px;
+
+    h2 {
+      font-size: 40px;
+      line-height: 40px;
+      padding: 0 100px;
+    }
+
+    p {
+      font-size: 20px;
+      line-height: 20px;
     }
   }
 }
