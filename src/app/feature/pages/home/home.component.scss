@@ -94,7 +94,7 @@ $hoverBtn: #3F4850;
 .about-section__content {
   z-index: 3;
   margin: 0 auto;
-  width: 1000px;
+  max-width: 1000px;
   height: 700px;
   background-color: $modal;
   border-radius: 70px;
@@ -130,5 +130,61 @@ $hoverBtn: #3F4850;
   
   mat-icon {
     color: $green;
+  }
+}
+
+@media (max-width: 1400px) {
+  .hero-section__image {
+    width: 400px;
+    height: 400px;
+  }
+
+  .hero-text__image {
+    width: 300px;
+  }
+
+  .hero-text__content {
+    padding: 10px 0;
+    width: 400px;
+    height: 300px;
+    h1 {
+      font-size: 60px;
+      line-height: 60px;
+    }
+    p {
+      font-size: 18px;
+      line-height: 18px;
+    }
+    button {
+      @extend %button;
+      &:hover {
+        background: $hoverBtn;
+      }
+    }
+    mat-icon {
+      color: $green;
+    }
+  }
+  
+  .about-section {
+    height: 620px;
+  }
+
+  .about-section__content {
+    max-width: 1000px;
+    height: 500px;
+    padding: 38px 30px;
+    gap: 30px;
+
+    h2 {
+      font-size: 60px;
+      line-height: 60px;
+      padding: 0 100px;
+    }
+
+    p {
+      font-size: 26px;
+      line-height: 44px;
+    }
   }
 }
