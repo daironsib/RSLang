@@ -316,3 +316,65 @@ $hoverBtn: #3F4850;
     padding: 30px 50px 20px 50px;
   }
 }
+
+@media (max-width: 570px) {
+  .hero-section__image {
+    width: 350px;
+    height: 350px;
+  }
+
+  .hero-text__image {
+    width: 300px;
+  }
+
+  .hero-text__content {
+    padding: 10px 0;
+    width: 300px;
+    height: 300px;
+
+    h1 {
+      font-size: 55px;
+      line-height: 44px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+
+  .about-section {
+    height: 400px;
+  }
+
+  .about-section__content {
+    height: 350px;
+    gap: 0;
+
+    h2 {
+      font-size: 40px;
+      line-height: 44px;
+      padding: 0;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+}
+
+@media (max-width: 490px) {
+  .about-section__content {
+    height: 350px;
+
+    h2 {
+      font-size: 30px;
+      line-height: 30px;
+    }
+
+    button {
+      width: 250px;
+    }
+  }
+}
