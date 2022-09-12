@@ -243,3 +243,76 @@ $hoverBtn: #3F4850;
     }
   }
 }
+
+@media (max-width: 850px) {
+  .hero-section__block {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .hero-section__image {
+    width: 500px;
+    height: 500px;
+  }
+
+  .hero-text__image {
+    width: 440px;
+    height: 80px;
+  }
+
+  .hero-text__content {
+    width: 500px;
+    height: 400px;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+      font-size: 80px;
+      line-height: 80px;
+    }
+  
+    p {
+      font-size: 20px;
+      line-height: 29px;
+    }
+
+    button {
+      width: 350px;
+    }
+  }
+  
+  .about-section {
+    height: 500px;
+  }
+
+  .about-section__content {
+    height: 400px;
+    padding: 20px;
+    gap: 20px;
+
+    h2 {
+      font-size: 40px;
+      line-height: 40px;
+      padding: 0 50px;
+    }
+
+    p {
+      font-size: 20px;
+      line-height: 20px;
+    }
+
+    button {
+      width: 350px;
+    }
+  }
+}
+
+@media (max-width: 690px) {
+  .hero-section__block {
+    padding: 20px 50px;
+  }
+
+  .about-section__triangle {
+    padding: 30px 50px 20px 50px;
+  }
+}
