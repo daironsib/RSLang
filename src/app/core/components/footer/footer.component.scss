@@ -44,3 +44,28 @@ $green: #D3F36B;
     filter: invert(100%) sepia(31%) saturate(3872%) hue-rotate(24deg) brightness(115%) contrast(84%);
   }
 }
+
+@media (max-width: 800px) {
+  .container {
+    padding: 10px 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 10px 50px;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 10px 30px;
+  }
+}
+
+@media (max-width: 420px) {
+  .footer-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}
