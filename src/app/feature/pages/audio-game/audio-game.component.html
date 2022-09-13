@@ -9,32 +9,32 @@
       <h6>выбери сложность</h6>
       <form class="audio-game__form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="difficulty-wrapper">
-          <label [ngClass]="{'is-active': form.difficulty == 0}">
+          <label [ngClass]="{'is-active': form.difficulty === 0}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="0">
             1
           </label>
-          <label [ngClass]="{'is-active': form.difficulty == 1}">
+          <label [ngClass]="{'is-active': form.difficulty === 1}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="1">
             2
           </label>
-          <label [ngClass]="{'is-active': form.difficulty == 2}">
+          <label [ngClass]="{'is-active': form.difficulty === 2}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="2">
             3
           </label>
-          <label [ngClass]="{'is-active': form.difficulty == 3}">
+          <label [ngClass]="{'is-active': form.difficulty === 3}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="3">
             4
           </label>
-          <label [ngClass]="{'is-active': form.difficulty == 4}">
+          <label [ngClass]="{'is-active': form.difficulty === 4}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="4">
             5
           </label>
-          <label [ngClass]="{'is-active': form.difficulty == 5}">
+          <label [ngClass]="{'is-active': form.difficulty === 5}">
             <input class="difficulty-btn" type="radio" name="difficulty" [(ngModel)]="form.difficulty"
               #difficulty="ngModel" value="5">
             6
@@ -92,34 +92,33 @@
       </div>
       <div class="audio-game__results">
         <div class="audio-game__results-table">
-          <h3 class="correct-answers">Выучено - ({{ goodWords.length }})</h3>
+          <h3 class="correct-answers">Выучено — {{ goodWords.length }}</h3>
           <ul class="audio-game__answers-list">
             <li *ngFor="let goodWord of goodWords; let i = index">
               <button class="answer-audio" (click)="this.audioPlayerService.newAudio([goodWord.audio])">
                 <img src="./assets/svg/sound.svg" alt="">
               </button>
-              {{ goodWord.word }}
-              <span>
-                — {{ goodWord.wordTranslate }}
+              {{ goodWord.word }} <span> — {{ goodWord.wordTranslate }}
               </span>
             </li>
           </ul>
         </div>
         <div class="audio-game__results-table">
-          <h3 class="wrong-answers">Надо повторить - ({{ badWords.length }})</h3>
+          <h3 class="wrong-answers">Надо повторить — {{ badWords.length }}</h3>
           <ul class="audio-game__answers-list">
             <li *ngFor="let badWord of badWords; let i = index">
               <button class="answer-audio" (click)="this.audioPlayerService.newAudio([badWord.audio])">
                 <img src="./assets/svg/sound.svg" alt="">
               </button>
-              {{ badWord.word }}
-              <span>
-                — {{ badWord.wordTranslate }}
+              {{ badWord.word }} <span> — {{ badWord.wordTranslate }}
               </span>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+    <div class="research-img">
+      <img src="./assets/images/research.png" alt="">
     </div>
   </div>
 </div>
