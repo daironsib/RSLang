@@ -92,6 +92,7 @@ $text: #8D8F8E;
             }
         }
     }
+
     .team-content__members {
         display: flex;
         flex: 80%;
@@ -157,3 +158,104 @@ $text: #8D8F8E;
     }
 }
 
+@media (max-width: 1000px) {
+    .team-container {
+        padding: 60px 200px 60px 200px;
+    }
+
+    .team-content {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .team-container {
+        padding: 60px 100px 100px 100px;
+
+        h1 {
+            font-size: 55px;
+            line-height: 44px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .team-container {
+        padding: 30px 50px 50px 50px;
+    }
+}
+
+@media (max-width: 390px) {
+    .team-container {
+        padding: 0 50px;
+
+        h1 {
+            font-size: 40px;
+            line-height: 30px;
+        }
+    }
+
+    .team-content {
+        margin-top: 30px;
+        gap: 15px;
+    
+        .team-mentor {
+            height: 310px;
+            gap: 10px;
+    
+            .team-mentor__text {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+    
+                .team-mentor__link {
+                    gap: 7px;
+                    
+                    .team-mentor__icon {
+                        width: 24px;
+                        height: 24px;
+                    }
+
+                    h2 {
+                        font-size: 24px;
+                        line-height: 20px;
+                    }
+                }
+            }
+        }
+    
+        .team-content__members {
+            gap: 15px;
+    
+            .team-member {
+                padding: 20px;
+                gap: 10px;
+                
+                .team-member__text {
+                    gap: 10px;
+                    padding: 0;
+    
+                    a {
+                        gap: 7px;
+    
+                        .team-member__icon {
+                            width: 24px;
+                            height: 24px;
+                        }
+    
+                        h2 {
+                            font-size: 24px;
+                            line-height: 20px;
+                        }
+                    }
+    
+                    p {
+                        font-size: 14px;
+                        line-height: 19px;
+                    }
+                }
+            }
+        }    
+    }
+}
