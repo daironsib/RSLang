@@ -290,12 +290,15 @@ $sec_green: #e6ff96;
   .dictionary-page {
     max-width: 100%;
     padding: 0 30px;
-  }
-  
-  .dictionary-page {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+  }
+  
+  .dictionary-body {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .btn {
