@@ -5,26 +5,39 @@
   background: #e9e9e3;
   border-radius: 30px;
   padding: 70px 95px;
+  position: relative;
 
   .audio-game__girl {
-    margin-right: -30px;
+    position: absolute;
+    left: 15px;
+
+    img {
+      width: 100%;
+    }
   }
 
   .audio-game__man {
-    margin-left: -30px;
+    position: absolute;
+    right: 15px;
+
+    img {
+      width: 100%;
+    }
   }
 
   .screen1,
-  .screen2,
-  .screen3 {
+  .screen2 {
     display: flex;
     justify-content: center;
+    position: relative;
   }
 
   .audio-game__content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 570px;
+    width: 570px;
 
     h1 {
       font-family: "Anonymous Pro";
@@ -33,6 +46,7 @@
       font-size: 100px;
       line-height: 80%;
       margin-bottom: 30px;
+      text-align: center;
     }
 
     p {
@@ -49,6 +63,12 @@
       text-transform: uppercase;
       margin: 40px 0 15px;
     }
+  }
+  .screen3 .audio-game__content {
+    justify-content: space-between;
+    max-width: 100%;
+    align-items: start;
+    width: 100%;
   }
 
   .difficulty-wrapper {
@@ -149,6 +169,9 @@
 }
 
 .audio-game__next-word {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #24282c;
   border-radius: 10px;
   width: 160px;
@@ -175,6 +198,10 @@
   }
 
   .audio-game__play-again {
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 62px;
     background: #24282c;
     border-radius: 10px;
@@ -198,17 +225,21 @@
 
 .audio-game__results {
   display: flex;
+  justify-content: space-between;
 }
 
 .audio-game__results-table {
   margin-top: 60px;
   display: flex;
   flex-direction: column;
-  margin-right: 60px;
-
+  width: 45%;
+  
+  
   h3 {
     border-radius: 5px;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px 20px;
     font-family: "Anonymous Pro";
     font-style: normal;
@@ -217,6 +248,7 @@
     line-height: 80%;
     height: 52px;
     margin-bottom: 60px;
+    width: max-content;
 
     &.correct-answers {
       background: #d3f36b;
@@ -231,7 +263,7 @@
   li {
     margin-bottom: 10px;
     font-size: 24px;
-    line-height: 29px;
+    line-height: 120%;
     display: flex;
     align-items: center;
 
@@ -243,8 +275,10 @@
       width: 24px;
       height: 24px;
       margin-right: 10px;
-      background: #E9E9E3;     
-       
+      background: #e9e9e3;
+      padding: 0;
+      cursor: pointer;
+
       img {
         width: 100%;
         height: auto;
@@ -253,6 +287,219 @@
 
     span {
       color: #8d8f8e;
+      margin-left: 5px;
+    }
+  }
+}
+
+.research-img {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  bottom: 0;
+  right: -10px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (max-width: 1300px) {
+  .audio-game {
+    max-width: calc(100% - 60px);
+    padding: 40px 30px 50px;
+
+    .audio-game__girl,
+    .audio-game__man {
+      position: static;
+      min-width: 200px;
+    }
+  }
+  
+  .audio-game__results-table {
+    min-width: 30%;
+    max-width: 50%;
+    width: max-content;
+    margin-right: 30px;
+  }
+  .screen1,
+  .screen2 {
+    align-items: center;
+  }
+}
+
+@media (max-width: 1100px) {
+  .audio-game {
+    .audio-game__girl,
+    .audio-game__man {
+      max-width: 200px;
+    }
+
+    .audio-game__content {
+      width: 100%;
+
+      h1 {
+        font-size: 55px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      h6 {
+        margin: 20px 0 10px;
+      }
+
+      .audio-game__start,
+      .audio-game__next-word,
+      .audio-game__play-again {
+        height: 54px;
+        font-size: 20px;
+      }
+
+      .audio-game__rule {
+        margin-right: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        .small-text {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  
+  .audio-game__results-table {
+    h3 {
+      font-size: 30px;
+    }
+  }
+  
+  .audio-game__answers-list {
+    li {
+      font-size: 20px;
+    }
+    
+    .answer-audio {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .research-img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .audio-game {
+    padding: 40px 15px 50px;
+    max-width: calc(100% - 30px);
+    min-height: calc(100vh - 140px);
+
+    .audio-game__girl,
+    .audio-game__man {
+      display: none;
+    }
+
+    .audio-game__content {
+      max-width: 100%;
+
+      .audio-game__rule {
+        display: none;
+      }
+    }
+  }
+  
+  .audio-game__results {
+    flex-wrap: wrap;
+    
+    h3 {
+      margin-bottom: 30px;
+    }
+  }
+  
+  .audio-game__results-table {
+    max-width: 100%;
+    width: 50%;
+    margin-right: 0;
+    margin-top: 20px;
+  }
+  .audio-game__answers-list {
+    li {
+      font-size: 16px;
+    }
+    
+    .answer-audio {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .audio-game__content .audio-game__results-header {
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 40px;
+    
+    h1 {
+      margin: 0;
+    }
+  }
+  
+  .audio-game__play-again {
+    margin: 20px 0 0;
+  }
+  
+  .audio-game__results {
+    flex-wrap: wrap;
+  }
+  
+  .audio-game__results-table {
+    width: 100%;
+    
+    h3 {
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .research-img {
+    width: 100px;
+    height: 100px;
+    right: 0px;
+  }
+}
+
+@media (max-width: 500px) {
+  .audio-game {
+    .audio-game__content {
+      align-items: initial;
+      
+      .audio-game__next-word {
+        margin: 0 auto;
+      }
+    }
+
+    .difficulty-wrapper {
+      justify-content: space-between;
+      max-width: 400px;
+      margin: 0 auto 30px;
+
+      label {
+        width: 45px;
+        height: 45px;
+        margin-right: 5px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
     }
   }
 }
