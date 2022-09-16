@@ -134,13 +134,14 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
 .modal-content {
   background: $green;
   @extend %flexColumn;
-  width: 550px;
+  max-width: 550px;
   height: 470px;
   border-radius: 10px;
   margin: 0 auto; 
-  margin-top: 1%;
+  margin-top: 5%;
   text-align: center;
   color: $white;
+  gap: 15px;
 
   p {
     font-size: 24px;
@@ -301,9 +302,15 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   .main-container {
     padding-top: 80px;
   }
+  
 }
 
 @media (max-width: 925px) {
+  .main-container {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  
   .start-screen {
   
     h1 {
@@ -322,7 +329,8 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   
     ul {
       margin-bottom: 1rem;
-  
+      padding: 0 7rem;
+
       li {
         margin: 5px;
   
@@ -333,25 +341,161 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
       }
     }
   }
+
+  .modal-content {
+  
+    p {
+      font-size: 20px;
+    }
+  }
+  
+  .modal-title {
+    font-size: 2rem;
+  }
+
+  .modal-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .board-btns {
+    gap: 1.3rem;
+    justify-content: center;
+  }
+
+  .btn-try-again {
+    padding: 10px 25px;
+    font-size: 24px;
+  }
+
+  .line {
+    width: 16rem;
+  }
+
+  .table-page {
+    padding: 0 0.5rem;
+  
+    table, th, td {
+      border: 2px solid $white;
+      color: white;
+  
+      tr {
+        margin: 1.5px;
+  
+        td {
+          text-align: center;
+          padding: 0.3rem;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 716px) {
   .main-container {
-    padding-left: 100px;
-    padding-right: 100px;
-}
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .start-screen {
+
+    ul {
+      padding: 0 4rem;
+    }
+  }
+
+  #answers-tracker {
+
+    div {
+      height:  2rem;
+      width: 2rem;
+    }
+  }
+
+  .table-page {
+    height: 200px;
+    padding: 0 0.3rem;
+  
+    table, th, td {
+      border: 2px solid $white;
+      color: white;
+  
+      tr {
+        margin: 0;
+  
+        td {  
+          font-size: 10px;
+
+          button {
+            transform: scale(0.7);
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 510px) {
   .main-container {
-    padding-left: 50px;
-    padding-right: 50px;
-}
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 
   .start-screen {
 
     ul {
       padding: 0;
+    }
+  }
+
+  .modal-content {
+    
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .board-btns {
+    gap: 1rem;
+  }
+
+  .btn-try-again {
+    padding: 10px 15px;
+    font-size: 1rem;
+  }
+
+  .line {
+    width: 14rem;
+  }
+
+  .table-page {
+    padding: 0 0.2rem;
+  
+    table, th, td {
+      border: 2px solid $white;
+      color: white;
+  
+      tr {
+  
+        td {  
+          font-size: 9px;
+        }
+
+        button {
+          transform: scale(0.5);
+        }
+      }
     }
   }
 }
@@ -394,5 +538,21 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
         }
       }
     }
+  }
+
+  .modal-content {
+    gap: 5px;
+  }
+
+  #answers-tracker {
+
+    div {
+      height:  1.8rem;
+      width: 1.8rem;
+    }
+  }
+
+  .result-icon {
+    transform: scale(0.8);
   }
 }

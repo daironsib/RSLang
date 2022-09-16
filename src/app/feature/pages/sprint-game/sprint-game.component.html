@@ -74,7 +74,7 @@
                     <tbody>
                         <tr *ngFor="let result of sprintGameWordStatistic">
                             <td>
-                                <button mat-mini-fab (click)="this.audioPlayerService.newAudio([result.audio])">
+                                <button class="word-btn" mat-mini-fab (click)="this.audioPlayerService.newAudio([result.audio])">
                                     <mat-icon>volume_up</mat-icon>
                                 </button>
                             </td>
@@ -82,8 +82,8 @@
                             <td>{{result.transcription}}</td>
                             <td>{{result.translation}}</td>
                             <td>
-                                <mat-icon *ngIf="result.isCorrectAnswer" class="correct-icon">check_circle</mat-icon>
-                                <mat-icon *ngIf="!result.isCorrectAnswer" class="wrong-icon">cancel</mat-icon>
+                                <mat-icon *ngIf="result.isCorrectAnswer" class="result-icon correct-icon">check_circle</mat-icon>
+                                <mat-icon *ngIf="!result.isCorrectAnswer" class="result-icon wrong-icon">cancel</mat-icon>
                             </td>
                         </tr>
                     </tbody>
