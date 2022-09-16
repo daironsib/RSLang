@@ -134,7 +134,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
 .modal-content {
   background: $green;
   @extend %flexColumn;
-  max-width: 500px;
+  max-width: 550px;
   height: 470px;
   border-radius: 10px;
   margin: 0 auto; 
@@ -343,7 +343,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   }
 
   .modal-content {
-    max-width: 400px;
+    padding: 1rem 0.5rem;
 
     p {
       font-size: 20px;
@@ -373,7 +373,8 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   }
 
   .table-page {
-    padding: 0 0.5rem;
+    padding: 0.5rem;
+    height: auto;
   
     table, th, td {
       border: 2px solid $white;
@@ -389,6 +390,8 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
       }
     }
   }
+
+  
 }
 
 @media (max-width: 716px) {
@@ -413,7 +416,6 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   }
 
   .table-page {
-    height: 200px;
     padding: 0 0.3rem;
   
     table, th, td {
@@ -441,7 +443,12 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
     padding-right: 10px;
   }
 
+  .start-wrapper {
+    max-width: 300px;
+  }
+
   .start-screen {
+    padding: 0 1rem;
 
     ul {
       padding: 0;
@@ -451,6 +458,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   .modal-content {
     max-width: 300px;
     height: 370px;
+    gap: 0;
 
     h1 {
       font-size: 22px;
@@ -483,17 +491,14 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   }
 
   .table-page {
-    padding: 0 0.2rem;
+    padding: 0.2rem;
+    transform: scale(0.8);
   
     table, th, td {
       border: 2px solid $white;
       color: white;
   
       tr {
-  
-        td {  
-          font-size: 9px;
-        }
 
         button {
           transform: scale(0.5);
@@ -509,12 +514,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   }
 
   .start-screen {
-    border-radius: 10px;
-    @extend %flexColumn;
-    transition: margin 0.5s ease-out;
-    background: $green;
     padding: 0 1rem;
-    color: $white;
   
     h1 {
       font-size: 20px;
@@ -543,19 +543,11 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
     }
   }
 
-  .modal-content {
-    gap: 5px;
-  }
-
   #answers-tracker {
 
     div {
       height:  1.8rem;
       width: 1.8rem;
     }
-  }
-
-  .result-icon {
-    transform: scale(0.8);
   }
 }
