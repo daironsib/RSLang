@@ -134,7 +134,7 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
 .modal-content {
   background: $green;
   @extend %flexColumn;
-  max-width: 550px;
+  max-width: 500px;
   height: 470px;
   border-radius: 10px;
   margin: 0 auto; 
@@ -343,7 +343,8 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   }
 
   .modal-content {
-  
+    max-width: 400px;
+
     p {
       font-size: 20px;
     }
@@ -448,7 +449,9 @@ $green: linear-gradient(120deg, #1e6742 0%, #49a174 100%);
   }
 
   .modal-content {
-    
+    max-width: 300px;
+    height: 370px;
+
     h1 {
       font-size: 22px;
     }
