@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@700&display=swap');
+
+$light: #F7F6F0;
+$dark: #24282C;
+$green: #D3F36B;
+$modal: #E9E9E3;
+$text: #8D8F8E;
+%font80 {
+  font-family: 'Anonymous Pro', monospace;
+  font-style: bold;
+  font-size: 80px;
+  line-height: 80px;
+  color: $dark;
+}
+%font40 {
+    font-family: 'Anonymous Pro', monospace;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 32px;
+}
+%font20 {
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: $text;
+}
+%photo {
+    width: 195px;
+    height: 195px;
+    border-radius: 15px;
+}
+
+.team-wrapper {
+    background: $light;
+    width: 100%;
+}
+
+.team-container {
+    margin: 0 auto;
+    max-width: 1440px;
+    padding: 60px 220px 200px 220px;
+    min-height: 60vh;
+    
+    h1 {
+        @extend %font80;
+        text-align: center;
+    }
+}
+
+.team-content {
+    margin-top: 50px;
+    display: flex;
+    gap: 40px;
+
+    .team-mentor {
+        flex: 20%;
+        width: 235px;
+        height: 341px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        border-radius: 30px;
+        background-color: $dark;
+
+        .team-mentor__photo {
+            @extend %photo;
+            background: url('../../../../assets/images/Olya.jpg');
+        }
+
+        .team-mentor__text {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .team-mentor__link {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                text-decoration: none;
+
+                h2 {
+                    @extend %font40;
+                    color: $green;
+                    margin-bottom: 0;
+                }
+            }
+
+            p {
+                @extend %font20 
+            }
+        }
+    }
+
+    .team-content__members {
+        display: flex;
+        flex: 80%;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+
+        .team-member {
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            border-radius: 30px;
+            background-color: $modal;
+
+            .team-member__photo {
+                @extend %photo;
+            }
+
+            .artem {
+                background: url('../../../../assets/images/Artem.jpg');
+            }
+
+            .pavel {
+                background: url('../../../../assets/images/Pavel.jpg');
+            }
+
+            .anna {
+                background: url('../../../../assets/images/Anna.jpg');
+            }
+            
+            .team-member__text {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    text-decoration: none;
+
+                    h2 {
+                        @extend %font40;
+                        color: $dark;
+                        margin-bottom: 0;
+                    }
+                }
+
+                p {
+                    @extend %font20;
+                    max-width: 470px;
+                }
+            }
+        }
+    }    
+}
+
+@media (max-width: 1400px) {
+    .team-member {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 1000px) {
+    .team-container {
+        padding: 60px 200px 60px 200px;
+    }
+
+    .team-content {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .team-container {
+        padding: 60px 100px 100px 100px;
+
+        h1 {
+            font-size: 55px;
+            line-height: 44px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .team-container {
+        padding: 30px 50px 50px 50px;
+    }
+}
+
+@media (max-width: 390px) {
+    .team-container {
+        padding: 0 50px;
+
+        h1 {
+            font-size: 40px;
+            line-height: 30px;
+        }
+    }
+
+    .team-content {
+        margin-top: 30px;
+        gap: 15px;
+    
+        .team-mentor {
+            height: 310px;
+            gap: 10px;
+    
+            .team-mentor__text {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+    
+                .team-mentor__link {
+                    gap: 7px;
+                    
+                    .team-mentor__icon {
+                        width: 24px;
+                        height: 24px;
+                    }
+
+                    h2 {
+                        font-size: 24px;
+                        line-height: 20px;
+                    }
+                }
+            }
+        }
+    
+        .team-content__members {
+            gap: 15px;
+    
+            .team-member {
+                padding: 20px;
+                gap: 10px;
+                
+                .team-member__text {
+                    gap: 10px;
+                    padding: 0;
+    
+                    a {
+                        gap: 7px;
+    
+                        .team-member__icon {
+                            width: 24px;
+                            height: 24px;
+                        }
+    
+                        h2 {
+                            font-size: 24px;
+                            line-height: 20px;
+                        }
+                    }
+    
+                    p {
+                        font-size: 14px;
+                        line-height: 19px;
+                    }
+                }
+            }
+        }    
+    }
+}

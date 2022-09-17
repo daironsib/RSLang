@@ -1,0 +1,52 @@
+<div class="header-wrapper">
+    <button class="burger-btn"
+    (click)="this.burgerMenu = !this.burgerMenu"></button>
+    <div class="header-container">
+        <div class="header-container__logo" [routerLink]="[paths.Home]"></div>
+        <nav class="nav-container">
+            <div class="nav-container__btns" [ngClass]="{'is-showed': this.burgerMenu === true}">
+                <button mat-stroked-button [routerLink]="[paths.Home]">
+                    <mat-icon>home</mat-icon> Главная
+                </button>
+                <button mat-stroked-button [routerLink]="['/', paths.Dictionary]">
+                    <mat-icon> import_contacts</mat-icon> Учебник
+                </button>
+                <div class="games-select-container">
+                    <button mat-stroked-button class="games-select__btn games__open-select" (click)="this.gameMenu = !this.gameMenu">
+                        <mat-icon>extension</mat-icon> Игры
+                    </button>
+                    <ul class="games-select" [ngClass]="this.gameMenu ? 'is-opened' : ''">
+                        <li>
+                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.AudioGame]" (click)="this.gameMenu = !this.gameMenu">
+                                <mat-icon>audiotrack</mat-icon> Аудиовызов
+                            </button>
+                        </li>
+                        <li>
+                            <button class="games-select__btn" mat-stroked-button [routerLink]="['/', paths.SprintGame]" (click)="this.gameMenu = !this.gameMenu">
+                                <mat-icon>av_timer</mat-icon> Спринт
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <button mat-stroked-button [routerLink]="['/', paths.Statistic]">
+                    <mat-icon>assessment</mat-icon> Статистика
+                </button>
+            </div>
+        </nav>
+        <div *ngIf="tokenStorageService.getToken(); else login">
+            <div class="logout-menu">
+                <div class="user-info">
+                    <span class="user-name">{{ user.name }}</span>
+                </div>
+                <button class="user-btn" mat-stroked-button (click)="tokenStorageService.signOut()">
+                    <mat-icon class="user-icon">exit_to_app</mat-icon> Выйти
+                </button>
+            </div>
+        </div>
+        <ng-template #login>
+            <button class="user-btn" mat-stroked-button [routerLink]="['/', paths.Login]">
+                <mat-icon class="user-icon">person icon</mat-icon> Войти
+            </button>
+        </ng-template>
+    </div>    
+</div>
