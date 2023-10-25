@@ -1,0 +1,88 @@
+<div class="wordCard">
+    <div class="wordCard-image">
+        <img [src]="API_URL + word.image" alt="image">
+    </div>
+    <div class="wordCard-content">
+        <div class="wordCard-header">
+            <div class="wordCard-header__block"
+                [ngClass]="{'is-hard-word': this.wordService.isHardWord(word), 'is-learned-word': this.wordService.isLearnedWord(word) }">
+                <div class="wordCard-header__container">
+                    <button class="wordCard-header__audio-btn"
+                        (click)="this.audioPlayerService.newAudio([word.audio, word.audioMeaning, word.audioExample])">
+                        <img [src]="AUDIO_ICON_URL" alt="">
+                    </button>
+                    <div class="wordCard-header__panel">
+                        <h3 class="wordCard-header__title">
+                            {{word.word}}
+                        </h3>
+                        <p class="wordCard-header__transcription">
+                            {{ word.transcription }}
+                        </p>
+                        <p class="wordCard-header__translate">
+                            {{ word.wordTranslate }}
+                        </p>
+                    </div>
+                    <div class="wordCard-folder-icon">
+                        <svg
+                            [innerHTML]="this.svgService.getFolderIcon(this.dictionaryComponent.folderColors[word.group])"></svg>
+                    </div>
+                    <div *ngIf="tokenStorageService.getToken()" class="wordCard-header__btns">
+                        <div *ngIf="this.wordService.isLearnedWord(word); else add">
+                            <button class="wordCard__btn is-disabled">
+                                <svg [innerHTML]="svgService.getLernedIcon()"></svg>
+                                <span class="tooltip">Изученное слово</span>
+                            </button>
+                        </div>
+                        <ng-template #add>
+                            <button class="wordCard__btn" (click)="this.wordService.addLearnedWord(word)">
+                                <svg [innerHTML]="svgService.getNotLernedIcon()"></svg>
+                                <span class="tooltip">Отметить как изученное</span>
+                            </button>
+                        </ng-template>
+                        <div *ngIf="this.wordService.isHardWord(word) && this.dictionaryComponent.isHardWordsPage">
+                            <button class="wordCard__btn" (click)="this.wordService.addInProgressWord(word)">
+                                <svg [innerHTML]="svgService.getRemoveHardWordIcon()"></svg>
+                                <span class="tooltip">Удалить из сложных</span>
+                            </button>
+                        </div>
+                        <div *ngIf="this.wordService.isHardWord(word) && !this.dictionaryComponent.isHardWordsPage">
+                            <button class="wordCard__btn is-disabled">
+                                <svg [innerHTML]="svgService.getHardWordIcon()"></svg>
+                                <span class="tooltip">Сложное слово</span>
+                            </button>
+                        </div>
+                        <div *ngIf="!this.wordService.isHardWord(word)">
+                            <button class="wordCard__btn" (click)="this.wordService.addHardWord(word)">
+                                <svg [innerHTML]="svgService.getNotHardWordIcon()"></svg>
+                                <span class="tooltip">Отметить как сложное</span>
+                            </button>
+                        </div>
+                        <button class="wordCard__btn statistic__btn is-disabled">
+                            <svg *ngIf="this.wordService.isProgressWord(word.id); else notProgressWord" [innerHTML]="svgService.getStatisticIcon()"></svg>
+                            <ng-template #notProgressWord>
+                                <svg [innerHTML]="svgService.getNoStatisticIcon()"></svg>
+                            </ng-template>
+                            <span *ngIf="this.wordService.isProgressWord(word.id)" class="tooltip">В процессе изучения</span>
+                            <span *ngIf="!this.wordService.isProgressWord(word.id)" class="tooltip">Новое слово</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wordCard-footer">
+            <div class="wordCard-footer__block">
+                <p class="wordCard-footer__text" [innerHTML]="word.textMeaning"></p>
+                <p class="wordCard-footer__subtext">
+                    {{word.textMeaningTranslate}}
+                </p>
+            </div>
+            <div class="wordCard-footer__block">
+                <p class="wordCard-footer__text" [innerHTML]="word.textExample">
+                </p>
+                <p class="wordCard-footer__subtext">
+                    {{word.textExampleTranslate}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

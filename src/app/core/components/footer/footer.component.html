@@ -1,0 +1,17 @@
+<footer  *ngIf="isShowFooter" id="footer" class="footer">
+  <div class="container">
+    <div class="footer-wrapper">
+      <button mat-stroked-button [routerLink]="[paths.TeamPage]">
+        <mat-icon>supervisor_account</mat-icon> Our Dream Team
+      </button>
+      <div class="copyright">
+        <span>©</span><span>2022</span>
+      </div>
+      <div class="rs-logo">
+        <a href="https://rs.school/" target="_blank">
+          <img src="./assets/svg/rs_school_js.svg" alt="Rolling Scopes School">
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

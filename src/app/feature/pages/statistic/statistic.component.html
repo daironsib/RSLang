@@ -1,0 +1,87 @@
+<div *ngIf="tokenStorage.getToken(); else login">
+    <div class="statistic-container">
+        <h3 class="statistic-container__title">Прогресс</h3>
+        <div class="statistic-overall">
+            <h5>Общая статистика</h5>
+            <div class="statistic-overall__table">
+                <div class="statistic-cell">
+                    <span class="big-digit green-digit"
+                        [innerText]="this.wordStatistic[currentDate].newWords ? this.wordStatistic[currentDate].newWords : '-'">
+                    </span>
+                    <p>Новых слов за день</p>
+                </div>
+                <div class="statistic-cell">
+                    <span class="big-digit green-digit"
+                        [innerText]="this.wordStatistic[currentDate].learnedWords ? this.wordStatistic[currentDate].learnedWords : '-'">
+                    </span>
+                    <p>Изученных слов за день</p>
+                </div>
+                <div class="statistic-cell">
+                    <span class="big-digit green-digit">
+                        {{ this.getPercentCorrectAnswers() }}
+                    </span>
+                    <p>Правильных ответов за день</p>
+                </div>
+            </div>
+        </div>
+        <div class="statistic-games">
+            <div class="statistic-games__table">
+                <h5>Спринт</h5>
+                <div class="statistic-cell">
+                    <span class="big-digit"
+                        [innerText]="statisticData.sprint?.newWords ? statisticData.sprint?.newWords : '-'">
+                    </span>
+                    <p>Новых слов за день</p>
+                </div>
+                <div class="statistic-cell">
+                    <span class="big-digit"
+                        [innerText]="statisticData.sprint?.longestSeries ? statisticData.sprint?.longestSeries : '-'">
+                    </span>
+                    <p>Самая длинная серия правильных ответов</p>
+                </div>
+                <div class="statistic-cell">
+                    <span class="big-digit">
+                        {{ this.getPercentSprint() }}
+                    </span>
+                    <p>Правильных ответов</p>
+                </div>
+            </div>
+            <div class="statistic-games__table">
+                <h5>Аудиовызов</h5>
+                <div class="statistic-cell">
+                    <span class="big-digit"
+                        [innerText]="statisticData.audio?.newWords ? statisticData.audio?.newWords : '-'">
+                    </span>
+                    <p>Новых слов за день</p>
+                </div>
+                <div class="statistic-cell">
+                    <span class="big-digit"
+                        [innerText]="statisticData.audio?.longestSeries ? statisticData.audio?.longestSeries : '-'">
+                    </span>
+                    <p>Самая длинная серия правильных ответов</p>
+                </div>
+                <div class="statistic-cell">
+                    <span class="big-digit">
+                        {{ this.getPercentAudio() }}
+                    </span>
+                    <p>Правильных ответов</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #login>
+    <div class="statistic-container">
+        <h3 class="statistic-container__title">Прогресс</h3>
+        <div class="not-allowed">
+            <img src="./assets/gif/cat.gif" class="cat-gif" alt="">
+            <h5 class="oops">Упс...</h5>
+            <p>Этот раздел доступен только авторизованным пользователям</p>
+            <div class="authorization-btns">
+                <button class="btn login-btn" [routerLink]="['/', paths.Login]">Войти</button>
+                <a class="btn register-btn"
+                    [routerLink]="['/', paths.Register]">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+</ng-template>

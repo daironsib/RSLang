@@ -1,0 +1,40 @@
+<main class="main-container">
+    <section class="hero-section">
+        <div class="hero-section__block">
+            <div class="hero-section__text">
+                <div class="hero-text__image"></div>
+                <div class="hero-text__content">
+                    <h1 class="hero-content__title">Скорее учи английский!</h1>
+                    <div class="hero-content__text">
+                        <p>
+                            Британские учёные подсчитали, что для свободного общения достаточно 4000 слов!
+                        </p>
+                        <p>
+                            Здесь ты выучишь их быстро и весело!
+                        </p>
+                    </div>
+                    <button class="hero-content__btn" mat-stroked-button [routerLink]="['/', paths.Dictionary]">
+                        <mat-icon class="hero-btn__icon">play_arrow</mat-icon> Начать учить!
+                    </button>
+                </div>
+            </div>
+            <div class="hero-section__image"></div>
+        </div>
+    </section>
+    <section class="about-section">
+        <div class="about-section__triangle">
+            <div class="about-section__content">
+                <h2 class="hero-content__title">Всего несколько шагов до мечты:</h2>
+                <p>
+                    Учишь слова в <span>учебнике</span>, отмечаешь сложные, <span>в играх</span> проверяешь заученное, следишь за успехами <span>в статистике</span>.
+                </p>
+                <p>
+                    Зарегистрируйся, чтобы получить полный доступ к нашему сервису
+                </p>
+                <button mat-stroked-button class="user-btn" [routerLink]="['/', paths.Register]">
+                    <mat-icon>person_add</mat-icon> Зарегистрироваться
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
